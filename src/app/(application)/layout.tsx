@@ -1,4 +1,5 @@
 import Sidebar from "@/components/application/Sidebar";
+import Header from "@/components/globals/Header";
 import PrivatePage from "@/guards/PrivatePage";
 import React, { ReactNode } from "react";
 
@@ -9,9 +10,12 @@ type Props = {
 const AppLayout = ({ children }: Props) => {
   return (
     <PrivatePage>
-      <div className="flex bg-bg-2 h-screen">
+      <div className="h-screen bg-bg-2">
         <Sidebar />
-        {children}
+        <div className="p-6 grid gap-4">
+          <Header />
+          <div className="text-text-1">{children}</div>
+        </div>
       </div>
     </PrivatePage>
   );

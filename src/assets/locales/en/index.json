@@ -135,7 +135,8 @@
   },
   "sidebar": {
     "brand": {
-      "text": "Housy"
+      "text": "Housy",
+      "subtitle": "App managment"
     },
     "links": {
       "dashboard": "Dashboard",
@@ -146,5 +147,8 @@
       "profile": "Profile",
       "settings": "Settings"
     }
+  },
+  "header": {
+    "brand": "Housy"
   }
 }

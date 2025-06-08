@@ -1,7 +1,7 @@
 import React from "react";
 
 const PropertiesPage = () => {
-  return <div>PropertiesPage</div>;
+  return <div>Properties</div>;
 };
 
 export default PropertiesPage;
