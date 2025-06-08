@@ -51,7 +51,7 @@ const Login = () => {
   const { t, i18n } = useTranslation();
   const dispath = useAppDispatch();
   const router = useRouter();
-  const theme = useAppSelector((state) => state.theme.currentTheme);
+  const theme = useAppSelector((state) => state.config.currentTheme);
   const {
     register,
     handleSubmit,
