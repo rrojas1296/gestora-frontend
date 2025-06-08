@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 type SidebarOption = {
   path: string;

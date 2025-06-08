@@ -7,13 +7,13 @@ type Props = {
 };
 
 const PublicPage = async ({ children }: Props) => {
-  // const client = await createClient();
-  //
-  // const { data } = await client.auth.getSession();
-  // console.log({ data });
-  // if (data?.session) {
-  //   redirect("/dashboard");
-  // }
+  const client = await createClient();
+
+  const { data } = await client.auth.getSession();
+  console.log({ data });
+  if (data?.session) {
+    redirect("/dashboard");
+  }
   return children;
 };
 
