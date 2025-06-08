@@ -1,0 +1,150 @@
+{
+  "login": {
+    "title": "Welcome to Housy",
+    "description": "Welcome to Housy and start to manage your condominium status",
+    "buttons": {
+      "google": "Log in with Google"
+    },
+    "or": "Or continue with",
+    "forgotPassword": "Forgot Password ?",
+    "register": {
+      "question": "Dont you have an account ?",
+      "link": "Register"
+    },
+    "form": {
+      "errors": {
+        "too_many_requests": "Too many requests. Please try again in a bit.",
+        "form_identifier_not_found": "Account was not found",
+        "form_password_incorrect": "Password is incorrect",
+        "session_exists": "You already have an active session",
+        "invalid_credentials": "Email or password is incorrect.",
+        "server_error": "Error server, plese try later."
+      },
+      "email": {
+        "name": "email",
+        "placeholder": "email@example.com",
+        "label": "Email",
+        "errors": {
+          "required": "Enter your email",
+          "invalid": "Invalid Email"
+        }
+      },
+      "password": {
+        "name": "password",
+        "placeholder": "Insert password here",
+        "label": "Password",
+        "errors": {
+          "required": "Insert your password"
+        }
+      },
+      "button": {
+        "text": "Log in"
+      }
+    }
+  },
+  "register": {
+    "step1": {
+      "social": {
+        "google": "Register with google"
+      },
+      "form": {
+        "title": "Create an Account",
+        "description": "Join now to housy and start to manage your properties",
+        "email": {
+          "label": "Email",
+          "placeholder": "email@example.com",
+          "errors": {
+            "invalid": "Email is invalid",
+            "required": "Enter your email",
+            "inUse": "Email already in use"
+          }
+        },
+        "password": {
+          "placeholder": "Enter a secure password",
+          "label": "Password",
+          "errors": {
+            "required": "Password is required",
+            "minLength": "Password lenth must be over 6 characters."
+          }
+        },
+        "confirmPassword": {
+          "placeholder": "Confirm password here",
+          "label": "Confirm Password",
+          "errors": {
+            "required": "Confirm password is required",
+            "not_matching": "Passwords dosent match"
+          }
+        },
+        "button": {
+          "text": "Continue"
+        },
+        "question": {
+          "text": "Already have an account ?",
+          "link": "Log in"
+        }
+      },
+      "or": "Or continue with"
+    },
+    "step2": {
+      "form": {
+        "title": "Enter your name",
+        "description": "Enter your full name to allow us to manage your data",
+        "button": {
+          "text": "Finish Register"
+        },
+        "firstName": {
+          "placeholder": "Enter your first name here",
+          "label": "First Name",
+          "errors": {
+            "required": "First Name is required"
+          }
+        },
+        "lastName": {
+          "placeholder": "Enter your last name here",
+          "label": "Last Name",
+          "errors": {
+            "required": "Last Name is required"
+          }
+        }
+      }
+    },
+    "step3": {
+      "form": {
+        "title": "Choose a password",
+        "description": "Create a secure password to get access to your account",
+        "password": {
+          "placeholder": "Enter a secure password",
+          "label": "Password",
+          "errors": {
+            "required": "Password is required"
+          }
+        },
+        "confirmPassword": {
+          "placeholder": "Confirm password here",
+          "label": "Confirm Password",
+          "errors": {
+            "required": "Confirm password is required",
+            "not_matching": "Passwords dosent match"
+          }
+        },
+        "button": {
+          "text": "Register"
+        }
+      }
+    }
+  },
+  "sidebar": {
+    "brand": {
+      "text": "Housy"
+    },
+    "links": {
+      "dashboard": "Dashboard",
+      "properties": "Properties",
+      "tenants": "Tenants",
+      "requests": "Service Requests",
+      "reservations": "Reservations",
+      "profile": "Profile",
+      "settings": "Settings"
+    }
+  }
+}

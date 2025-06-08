@@ -1,0 +1,110 @@
+{
+  "login": {
+    "title": "Bienvenido a Housy",
+    "description": "Bienvenido a Housy y comienza a gestionar el estado de tu condominio",
+    "buttons": {
+      "google": "Ingresa con Google"
+    },
+    "or": "O ingresa con",
+    "forgotPassword": "Olvidaste la contraseña ?",
+    "register": {
+      "question": "No tienes una cuenta ?",
+      "link": "Registrate"
+    },
+    "form": {
+      "errors": {
+        "too_many_requests": "Demasiados intentos. Porfavor prueba en un momento.",
+        "form_identifier_not_found": "La cuenta no se encontro.",
+        "form_password_incorrect": "La contrasena no es correcta.",
+        "session_exists": "Ya tienes una sesion activa."
+      },
+      "email": {
+        "name": "email",
+        "placeholder": "correo@ejemplo.com",
+        "label": "Correo",
+        "errors": {
+          "required": "Ingresa tu correo",
+          "invalid": "Correo Invalido"
+        }
+      },
+      "password": {
+        "name": "password",
+        "placeholder": "Ingresa tu contraseña aqui",
+        "label": "Contraseña",
+        "errors": {
+          "required": "Ingresa una contraseña"
+        }
+      },
+      "button": {
+        "text": "Ingresa"
+      }
+    }
+  },
+  "register": {
+    "step1": {
+      "social": {
+        "google": "Registrate con google"
+      },
+      "form": {
+        "title": "Crea una cuenta",
+        "description": "Unete ahora a housy y empieza a administrar tus propiedades",
+        "email": {
+          "label": "Correo",
+          "placeholder": "correo@ejemplo.com",
+          "errors": {
+            "invalid": "El correo es invalido",
+            "required": "Ingresa un correo",
+            "inUse": "El correo ya esta en uso"
+          }
+        },
+        "password": {
+          "placeholder": "Ingresa una contraseña segura.",
+          "label": "Contraseña",
+          "errors": {
+            "required": "La contraseña es requerida.",
+            "minLength": "La contraseña debe contener mas de 6 caracteres."
+          }
+        },
+        "confirmPassword": {
+          "placeholder": "Confirma la contraseña aqui",
+          "label": "Confirma contraseña",
+          "errors": {
+            "required": "Confirma la contraseña.",
+            "not_matching": "Las contraseñas no coinciden"
+          }
+        },
+        "button": {
+          "text": "Continuar"
+        },
+        "question": {
+          "text": "Ya tienes una cuenta ?",
+          "link": "Ingresa"
+        }
+      },
+      "or": "O continua con"
+    },
+    "step2": {
+      "form": {
+        "title": "Ingresa tu nombre",
+        "description": "Ingresa tu nombre completo para habilitarnos administrar tu informacion",
+        "button": {
+          "text": "Continuar"
+        },
+        "firstName": {
+          "placeholder": "Ingresa tu nombre aqui",
+          "label": "Nombre",
+          "errors": {
+            "required": "El nombre es requerido"
+          }
+        },
+        "lastName": {
+          "placeholder": "Ingresa tu apellido aqui",
+          "label": "Apellido",
+          "errors": {
+            "required": "El apellido es requerido"
+          }
+        }
+      }
+    }
+  }
+}
