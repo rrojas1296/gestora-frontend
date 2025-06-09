@@ -13,7 +13,7 @@ export const registerUser = async (data: RegisterUserData) => {
   try {
     const response = await apiInstance.post("/users/createUser", data);
     return response;
-  } catch (err: any) {
+  } catch (err) {
     return { err };
   }
 };

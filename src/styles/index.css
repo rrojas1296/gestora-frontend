@@ -1,8 +1,12 @@
-@import "tailwindcss";
 @import "housy-lib/dist/index.css";
+@import "tailwindcss";
 
 /* Theme Colors*/
 @import "./theme.css";
+
+* {
+  interpolate-size: allow-keywords;
+}
 
 @theme {
   --color-bg-1: var(--bg-1);

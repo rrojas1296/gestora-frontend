@@ -7,6 +7,7 @@ import EmailIcon from "@/components/Icons/EmailIcon";
 import GoogleIcon from "@/components/Icons/GoogleIcon";
 import LoaderIcon from "@/components/Icons/LoaderIcon";
 import OpenEyeIcon from "@/components/Icons/OpenEyeIcon";
+import { useRouter } from "@/i18n/navigation";
 import {
   registerStepOneSchema,
   type RegisterSchemaFieldsStepOne,
@@ -21,41 +22,40 @@ import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "housy-lib";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
   {
     name: "email",
     type: "email",
-    label: "register.step1.form.email.label",
-    placeholder: "register.step1.form.email.placeholder",
+    label: "step1.form.email.label",
+    placeholder: "step1.form.email.placeholder",
     icon: EmailIcon,
   },
   {
     name: "password",
     type: "password",
-    label: "register.step1.form.password.label",
-    placeholder: "register.step1.form.password.placeholder",
+    label: "step1.form.password.label",
+    placeholder: "step1.form.password.placeholder",
   },
   {
     name: "confirmPassword",
     type: "password",
-    label: "register.step1.form.confirmPassword.label",
-    placeholder: "register.step1.form.confirmPassword.placeholder",
+    label: "step1.form.confirmPassword.label",
+    placeholder: "step1.form.confirmPassword.placeholder",
   },
 ];
 const RegisterPage = () => {
-  const { t } = useTranslation();
+  const t = useTranslations("Register");
   const [loading, setLoading] = useState(false);
   const { data: sessionSupabase, isLoading } = useQuery({
     queryKey: ["supabaseUser"],
     queryFn: async () => await createClient().auth.getSession(),
   });
-  console.log({ sessionSupabase });
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -95,10 +95,10 @@ const RegisterPage = () => {
     <>
       <div className="grid gap-3">
         <h1 className="text-center text-text-1 text-2xl font-bold">
-          {t("register.step1.form.title")}
+          {t("step1.form.title")}
         </h1>
         <p className="text-center text-sm text-text-2">
-          {t("register.step1.form.description")}
+          {t("step1.form.description")}
         </p>
       </div>
       <Button
@@ -107,9 +107,9 @@ const RegisterPage = () => {
         onClick={registerGoogle}
       >
         <GoogleIcon className="w-6 h-6 mr-2" />
-        {t("register.step1.social.google")}
+        {t("step1.social.google")}
       </Button>
-      <Or text={t("register.step1.or")} />
+      <Or text={t("step1.or")} />
       <form className="grid gap-6" onSubmit={handleSubmit(continueForm)}>
         {controls.map((control) => {
           const { placeholder, name, label, type } = control;
@@ -157,12 +157,12 @@ const RegisterPage = () => {
           disabled={loading}
         >
           {loading && <LoaderIcon className="animate-spin" />}
-          {t("register.step1.form.button.text")}
+          {t("step1.form.button.text")}
         </Button>
         <p className="text-sm text-text-1 text-center">
-          {t("register.step1.form.question.text")}
+          {t("step1.form.question.text")}
           <Link href="/login" className="text-primary font-semibold ml-2">
-            {t("register.step1.form.question.link")}
+            {t("step1.form.question.link")}
           </Link>
         </p>
       </form>

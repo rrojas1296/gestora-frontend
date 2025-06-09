@@ -4,13 +4,13 @@ export const loginSchema = z.object({
   email: z
     .string()
     .min(1, {
-      message: "login.form.email.errors.required",
+      message: "form.email.errors.required",
     })
     .email({
-      message: "login.form.email.errors.invalid",
+      message: "form.email.errors.invalid",
     }),
   password: z.string().min(1, {
-    message: "login.form.password.errors.required",
+    message: "form.password.errors.required",
   }),
 });
 

@@ -1,5 +1,5 @@
 {
-  "login": {
+  "Login": {
     "title": "Welcome to Housy",
     "description": "Welcome to Housy and start to manage your condominium status",
     "buttons": {
@@ -42,7 +42,7 @@
       }
     }
   },
-  "register": {
+  "Register": {
     "step1": {
       "social": {
         "google": "Register with google"
@@ -133,7 +133,7 @@
       }
     }
   },
-  "sidebar": {
+  "Sidebar": {
     "brand": {
       "text": "Housy",
       "subtitle": "App managment"
@@ -148,7 +148,10 @@
       "settings": "Settings"
     }
   },
-  "header": {
-    "brand": "Housy"
+  "Header": {
+    "brand": "Housy",
+    "greeting": {
+      "text": "Welcome back"
+    }
   }
 }

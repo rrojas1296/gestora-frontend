@@ -12,7 +12,7 @@ const AppLayout = ({ children }: Props) => {
     <PrivatePage>
       <div className="h-screen bg-bg-2">
         <Sidebar />
-        <div className="p-6 grid gap-4">
+        <div className="p-6 flex flex-col gap-4 lg:pl-[92px] h-screen">
           <Header />
           <div className="text-text-1">{children}</div>
         </div>

@@ -9,30 +9,31 @@ export const registerStepOneSchema = z
     email: z
       .string()
       .min(1, {
-        message: "register.step1.form.email.errors.required",
+        message: "step1.form.email.errors.required",
       })
       .email({
-        message: "register.step1.form.email.errors.invalid",
+        message: "step1.form.email.errors.invalid",
       })
       .refine(
         async (val) => {
+          if (!val) return false;
           const inUse = await debouncedCheckEmail(val);
           return !inUse;
         },
         {
-          message: "register.step1.form.email.errors.inUse",
+          message: "step1.form.email.errors.inUse",
         },
       ),
     password: z
       .string()
       .min(1, {
-        message: "register.step1.form.password.errors.required",
+        message: "step1.form.password.errors.required",
       })
       .min(6, {
-        message: "register.step1.form.password.errors.minLength",
+        message: "step1.form.password.errors.minLength",
       }),
     confirmPassword: z.string().min(1, {
-      message: "register.step1.form.confirmPassword.errors.required",
+      message: "step1.form.confirmPassword.errors.required",
     }),
   })
   .refine(({ confirmPassword, password }) => confirmPassword === password, {

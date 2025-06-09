@@ -1,5 +1,4 @@
 "use client";
-import { useTranslation } from "react-i18next";
 import { Button, Toast } from "housy-lib";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -20,37 +19,39 @@ import WorldIcon from "@/components/Icons/WorldIcon";
 import SunIcon from "@/components/Icons/SunIcon";
 import MoonIcon from "@/components/Icons/MoonIcon";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { LANGUAGE_KEY } from "@/providers/TranslationProvider";
 import { setTheme } from "@/store/slices/config.slice";
 import { toast } from "sonner";
 import Or from "@/components/globals/Or";
-import { useRouter } from "next/navigation";
 import FormControl from "@/components/globals/FormControl";
 import { logginGoogle } from "@/utils/supabase/auth";
 import { createClient } from "@/utils/supabase/client";
 import { FormControlType } from "@/types/controls";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 const fields: FormControlType<LoginSchemaFields>[] = [
   {
     name: "email",
-    label: "login.form.email.label",
+    label: "form.email.label",
     type: "email",
-    placeholder: "login.form.email.placeholder",
+    placeholder: "form.email.placeholder",
     icon: EmailIcon,
   },
   {
     name: "password",
-    label: "login.form.password.label",
+    label: "form.password.label",
     type: "password",
-    placeholder: "login.form.password.placeholder",
+    placeholder: "form.password.placeholder",
   },
 ];
 
 const Login = () => {
-  const { t, i18n } = useTranslation();
+  const t = useTranslations("Login");
   const dispath = useAppDispatch();
   const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
   const theme = useAppSelector((state) => state.config.currentTheme);
   const {
     register,
@@ -75,7 +76,7 @@ const Login = () => {
           () => {
             return (
               <Toast
-                text={t(`login.form.errors.${error.code}`)}
+                text={t(`form.errors.${error.code}`)}
                 type="error"
                 className="justify-self-center bg-bg-1 text-text-1 border-border-2"
               />
@@ -87,12 +88,12 @@ const Login = () => {
         );
       }
       router.push("/dashboard");
-    } catch (err: any) {
+    } catch (err) {
       toast.custom(
         () => {
           return (
             <Toast
-              text={t(`login.form.errors.server_error`)}
+              text={t(`form.errors.server_error`)}
               type="error"
               className="bg-bg-1 text-text-1 border-border-2 max-w-[350px]"
             />
@@ -114,11 +115,9 @@ const Login = () => {
       <div className="grid gap-6 w-full max-w-md px-8 md:bg-bg-1 p-0 md:max-w-[480px] md:px-14 md:rounded-xl md:py-14 md:shadow-lg md:shadow-shadow-1 2xl:py-20">
         <div className="grid gap-3">
           <h1 className="text-center text-text-1 text-2xl font-bold">
-            {t("login.title")}
+            {t("title")}
           </h1>
-          <p className="text-center text-sm text-text-2">
-            {t("login.description")}
-          </p>
+          <p className="text-center text-sm text-text-2">{t("description")}</p>
         </div>
         <Button
           className="font-semibold w-full border-border-1 text-text-1 hover:bg-bg-2/30"
@@ -126,10 +125,10 @@ const Login = () => {
           onClick={googleLogin}
         >
           <GoogleIcon className="w-6 h-6 mr-2" />
-          {t("login.buttons.google")}
+          {t("buttons.google")}
         </Button>
 
-        <Or text={t("login.or")} />
+        <Or text={t("or")} />
         <form onSubmit={handleSubmit(handleLogin)} className="grid gap-6">
           {fields.map((field) => {
             const { placeholder, name, label, icon, type } = field;
@@ -173,7 +172,7 @@ const Login = () => {
             href="/forgotPassword"
             className="text-primary font-semibold text-sm w-fit"
           >
-            {t("login.forgotPassword")}
+            {t("forgotPassword")}
           </Link>
           <Button
             variant="filled"
@@ -182,12 +181,12 @@ const Login = () => {
             disabled={loading}
           >
             {loading && <LoaderIcon className="animate-spin" />}
-            {t("login.form.button.text")}
+            {t("form.button.text")}
           </Button>
           <p className="text-sm font-normal text-text-1 text-center">
-            {t("login.register.question")}
+            {t("register.question")}
             <Link href="/register" className="text-primary ml-2 font-bold">
-              {t("login.register.link")}
+              {t("register.link")}
             </Link>
           </p>
         </form>
@@ -196,9 +195,13 @@ const Login = () => {
       <div className="flex gap-4 items-center absolute bottom-4 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-6 lg:bottom-6">
         <Button
           onClick={() => {
-            const l = i18n.language === "es" ? "en" : "es";
-            i18n.changeLanguage(l);
-            localStorage.setItem(LANGUAGE_KEY, l);
+            const newLocale = locale === "es" ? "en" : "es";
+            router.replace(
+              { pathname },
+              {
+                locale: newLocale,
+              },
+            );
           }}
           variant="icon"
           className="p-0 hover:bg-bg-2"

@@ -1,0 +1,157 @@
+{
+  "Login": {
+    "title": "Bienvenido a Housy",
+    "description": "Bienvenido a Housy, comienza a gestionar el estado de tu condominio",
+    "buttons": {
+      "google": "Iniciar sesión con Google"
+    },
+    "or": "O continúa con",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "register": {
+      "question": "¿No tienes una cuenta?",
+      "link": "Regístrate"
+    },
+    "form": {
+      "errors": {
+        "too_many_requests": "Demasiadas solicitudes. Intenta nuevamente en un momento.",
+        "form_identifier_not_found": "No se encontró la cuenta",
+        "form_password_incorrect": "La contraseña es incorrecta",
+        "session_exists": "Ya tienes una sesión activa",
+        "invalid_credentials": "Correo o contraseña incorrectos.",
+        "server_error": "Error del servidor, por favor intenta más tarde."
+      },
+      "email": {
+        "name": "correo",
+        "placeholder": "correo@ejemplo.com",
+        "label": "Correo electrónico",
+        "errors": {
+          "required": "Ingresa tu correo electrónico",
+          "invalid": "Correo inválido"
+        }
+      },
+      "password": {
+        "name": "contraseña",
+        "placeholder": "Ingresa la contraseña aquí",
+        "label": "Contraseña",
+        "errors": {
+          "required": "Ingresa tu contraseña"
+        }
+      },
+      "button": {
+        "text": "Iniciar sesión"
+      }
+    }
+  },
+  "Register": {
+    "step1": {
+      "social": {
+        "google": "Regístrate con Google"
+      },
+      "form": {
+        "title": "Crea una cuenta",
+        "description": "Únete a Housy y comienza a gestionar tus propiedades",
+        "email": {
+          "label": "Correo electrónico",
+          "placeholder": "correo@ejemplo.com",
+          "errors": {
+            "invalid": "Correo electrónico inválido",
+            "required": "Ingresa tu correo electrónico",
+            "inUse": "Este correo ya está en uso"
+          }
+        },
+        "password": {
+          "placeholder": "Ingresa una contraseña segura",
+          "label": "Contraseña",
+          "errors": {
+            "required": "La contraseña es obligatoria",
+            "minLength": "La contraseña debe tener al menos 6 caracteres."
+          }
+        },
+        "confirmPassword": {
+          "placeholder": "Confirma tu contraseña aquí",
+          "label": "Confirmar contraseña",
+          "errors": {
+            "required": "La confirmación de contraseña es obligatoria",
+            "not_matching": "Las contraseñas no coinciden"
+          }
+        },
+        "button": {
+          "text": "Continuar"
+        },
+        "question": {
+          "text": "¿Ya tienes una cuenta?",
+          "link": "Inicia sesión"
+        }
+      },
+      "or": "O continúa con"
+    },
+    "step2": {
+      "form": {
+        "title": "Ingresa tu nombre",
+        "description": "Ingresa tu nombre completo para poder gestionar tu información",
+        "button": {
+          "text": "Finalizar registro"
+        },
+        "firstName": {
+          "placeholder": "Ingresa tu nombre aquí",
+          "label": "Nombre",
+          "errors": {
+            "required": "El nombre es obligatorio"
+          }
+        },
+        "lastName": {
+          "placeholder": "Ingresa tu apellido aquí",
+          "label": "Apellido",
+          "errors": {
+            "required": "El apellido es obligatorio"
+          }
+        }
+      }
+    },
+    "step3": {
+      "form": {
+        "title": "Elige una contraseña",
+        "description": "Crea una contraseña segura para acceder a tu cuenta",
+        "password": {
+          "placeholder": "Ingresa una contraseña segura",
+          "label": "Contraseña",
+          "errors": {
+            "required": "La contraseña es obligatoria"
+          }
+        },
+        "confirmPassword": {
+          "placeholder": "Confirma tu contraseña aquí",
+          "label": "Confirmar contraseña",
+          "errors": {
+            "required": "La confirmación de contraseña es obligatoria",
+            "not_matching": "Las contraseñas no coinciden"
+          }
+        },
+        "button": {
+          "text": "Registrarse"
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "brand": {
+      "text": "Housy",
+      "subtitle": "Gestión de la app"
+    },
+    "links": {
+      "dashboard": "Panel de control",
+      "properties": "Propiedades",
+      "tenants": "Inquilinos",
+      "requests": "Solicitudes de servicio",
+      "reservations": "Reservas",
+      "profile": "Perfil",
+      "settings": "Configuración"
+    }
+  },
+  "Header": {
+    "brand": "Housy",
+    "greeting": {
+      "text": "Bienvenido de nuevo"
+    }
+  }
+}

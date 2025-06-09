@@ -15,7 +15,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "housy-lib";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { redirect, useRouter } from "next/navigation";
 import Loader from "@/components/globals/Loader";
 import Image from "next/image";
@@ -23,24 +22,25 @@ import FormControl from "@/components/globals/FormControl";
 import { createClient } from "@/utils/supabase/client";
 import { getUserInfo } from "@/utils/api/users/getUserInfo";
 import { AuthProvider, registerUser } from "@/utils/api/auth/registerUser";
+import { useTranslations } from "next-intl";
 
 const controls: FormControlType<RegisterSchemaFieldsStepTwo>[] = [
   {
     name: "firstName",
     type: "text",
-    placeholder: "register.step2.form.firstName.placeholder",
-    label: "register.step2.form.firstName.label",
+    placeholder: "step2.form.firstName.placeholder",
+    label: "step2.form.firstName.label",
   },
   {
     name: "lastName",
     type: "text",
-    placeholder: "register.step2.form.lastName.placeholder",
-    label: "register.step2.form.lastName.label",
+    placeholder: "step2.form.lastName.placeholder",
+    label: "step2.form.lastName.label",
   },
 ];
 
 const FullName = () => {
-  const { t } = useTranslation();
+  const t = useTranslations("Register");
   const [userSupabase, setUserSupabase] = useState<User | null>(null);
   const [supabaseUserLoading, setSupabaseUserLoading] = useState(true);
   const { data: dataQuery, isLoading: queryLoading } = useQuery({
@@ -79,6 +79,7 @@ const FullName = () => {
           last_name: lastName,
           id: userSupabase.id,
           provider: userSupabase?.app_metadata?.provider as AuthProvider,
+          photo_url: userSupabase?.user_metadata.avatar_url,
         };
         await registerUser(newUser);
         router.push("/dashboard");
@@ -124,10 +125,10 @@ const FullName = () => {
           </div>
         )}
         <h1 className="text-center text-text-1 text-2xl font-bold">
-          {t("register.step2.form.title")}
+          {t("step2.form.title")}
         </h1>
         <p className="text-center text-sm text-text-2">
-          {t("register.step2.form.description")}
+          {t("step2.form.description")}
         </p>
       </div>
       <form className="grid gap-6" onSubmit={handleSubmit(continueForm)}>
@@ -153,7 +154,7 @@ const FullName = () => {
           disabled={loading}
         >
           {loading && <LoaderIcon className="animate-spin" />}
-          {t("register.step2.form.button.text")}
+          {t("step2.form.button.text")}
         </Button>
       </form>
     </>

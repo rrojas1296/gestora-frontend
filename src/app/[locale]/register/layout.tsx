@@ -2,20 +2,22 @@
 import MoonIcon from "@/components/Icons/MoonIcon";
 import SunIcon from "@/components/Icons/SunIcon";
 import WorldIcon from "@/components/Icons/WorldIcon";
-import { LANGUAGE_KEY } from "@/providers/TranslationProvider";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setTheme } from "@/store/slices/config.slice";
 import { Button } from "housy-lib";
+import { useLocale } from "next-intl";
 import { ReactNode } from "react";
-import { useTranslation } from "react-i18next";
 
 type Props = {
   children: ReactNode;
 };
 
 const Register = ({ children }: Props) => {
-  const { i18n } = useTranslation();
   const dispath = useAppDispatch();
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
   const theme = useAppSelector((state) => state.config.currentTheme);
   return (
     <div className="bg-bg-1 gap-8 md:h-screen md:bg-bg-2 grid place-items-center py-8 lg:py-0">
@@ -25,9 +27,10 @@ const Register = ({ children }: Props) => {
       <div className="flex gap-4 items-center md:absolute md:translate-x-0 md:left-auto md:right-6 md:bottom-6">
         <Button
           onClick={() => {
-            const l = i18n.language === "es" ? "en" : "es";
-            i18n.changeLanguage(l);
-            localStorage.setItem(LANGUAGE_KEY, l);
+            const newLocale = locale === "en" ? "es" : "en";
+            router.replace(pathname, {
+              locale: newLocale,
+            });
           }}
           variant="icon"
           className="p-0 hover:bg-bg-2"

@@ -10,7 +10,7 @@ export const THEME_KEY = "theme_app";
 
 const initialState: ConfigState = {
   currentTheme: undefined,
-  sidebarOpen: true,
+  sidebarOpen: false,
 };
 
 const themeSlice = createSlice({
