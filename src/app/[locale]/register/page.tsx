@@ -1,7 +1,7 @@
 "use client";
-import FormControl from "@/components/globals/FormControl";
-import Loader from "@/components/globals/Loader";
-import Or from "@/components/globals/Or";
+import FormControl from "@/components/shared/FormControl";
+import Loader from "@/components/shared/Loader";
+import Or from "@/components/shared/Or";
 import CloseEyeIcon from "@/components/Icons/CloseEyeIcon";
 import EmailIcon from "@/components/Icons/EmailIcon";
 import GoogleIcon from "@/components/Icons/GoogleIcon";

@@ -37,8 +37,10 @@ const Header = () => {
       </div>
       <div className="hidden lg:block">
         <p className="text-2xl text-text-1">
-          {t("greeting.text")}
-          <span className="font-bold"> Diego Raul</span>
+          {t("greeting.text")}{" "}
+          <span className="font-bold">
+            {userInfo?.first_name} {userInfo?.last_name}
+          </span>
         </p>
         <p className="text-text-2 text-base">{formatted}</p>
       </div>
@@ -49,12 +51,12 @@ const Header = () => {
       >
         <MenuIcon className="w-6 h-6 text-text-1 stroke-current" />
       </Button>
-      <div className="items-center gap-6 hidden lg:flex">
-        <Button variant="icon" className="p-0 w-fit h-fit hover:bg-bg-1">
+      <div className="items-center gap-4 hidden lg:flex">
+        <Button variant="icon" className="p-0 hover:bg-bg-1">
           <BellIcon className="w-6 h-6 text-text-1 stroke-current" />
         </Button>
         <Button
-          className="p-0 hover:bg-bg-1 w-fit h-fit"
+          className="p-0 hover:bg-bg-1"
           variant="icon"
           onClick={() =>
             dispatch(

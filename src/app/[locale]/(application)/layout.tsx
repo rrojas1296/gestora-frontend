@@ -1,5 +1,5 @@
 import Sidebar from "@/components/application/Sidebar";
-import Header from "@/components/globals/Header";
+import Header from "@/components/shared/Header";
 import PrivatePage from "@/guards/PrivatePage";
 import React, { ReactNode } from "react";
 

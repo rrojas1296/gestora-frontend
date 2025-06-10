@@ -28,3 +28,8 @@
 
   --font-primary: "Raleway Variable";
 }
+
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-1) var(--bg-2);
+}

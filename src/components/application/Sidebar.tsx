@@ -103,7 +103,7 @@ const Sidebar = () => {
             <div className="flex gap-[22px] items-center pl-[6px]">
               <MainLogoIcon className="text-text-1 w-6 h-6 stroke-current" />
               <div>
-                <p className="text-sm font-bold text-text-1">
+                <p className="text-lg font-bold text-text-1">
                   {t("brand.text")}
                 </p>
                 <p className="text-text-2 text-sm ">{t("brand.subtitle")}</p>
