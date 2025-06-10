@@ -153,5 +153,23 @@
     "greeting": {
       "text": "Welcome back"
     }
+  },
+  "Dashboard": {
+    "properties": {
+      "title": "Properties",
+      "description": "Number of properties that currently you have."
+    },
+    "tenants": {
+      "title": "Tenants",
+      "description": "Total tenants in your properties."
+    },
+    "requests": {
+      "title": "Pending Requests",
+      "description": "Amount of requests made by your residents."
+    },
+    "reservations": {
+      "title": "Reservations",
+      "description": "Pending reservations in your properties."
+    }
   }
 }

@@ -7,6 +7,7 @@ import StoreProvider from "@/providers/StoreProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 import { Toaster } from "sonner";
 import { Raleway } from "next/font/google";
+import { cn } from "@/utils/cn";
 const font = Raleway({
   subsets: ["latin"],
 });
@@ -25,7 +26,7 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} className={font.className}>
+    <html lang={locale} className={cn(font.className, "bg-bg-1")}>
       <body>
         <TranslationProvider>
           <ReactQueryProvider>

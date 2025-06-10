@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import DashboardIcon from "../Icons/DashboardIcon";
 import PropertiesIcon from "../Icons/PropertiesIcon";
 import UsersIcon from "../Icons/UsersIcon";
@@ -64,9 +64,8 @@ const links: SidebarOption[] = [
 
 const Sidebar = () => {
   const t = useTranslations("Sidebar");
-  const sidebarRef = useRef<null | HTMLDivElement>(null);
+  const bgRef = useRef<null | HTMLDivElement>(null);
   const pathname = usePathname();
-  console.log({ pathname });
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const { sidebarOpen } = useAppSelector((state) => state.config);
   const dispatch = useAppDispatch();
@@ -75,32 +74,31 @@ const Sidebar = () => {
     dispatch(setSidebarOpen({ sidebarOpen: false }));
   };
 
+  useEffect(() => {
+    bgRef.current?.classList.add("-z-10");
+  }, []);
+
   return (
-    <div
-      className={cn(
-        "fixed top-0 left-0 w-full h-full lg:w-fit",
-        !isDesktop && "-z-10",
-      )}
-      ref={sidebarRef}
-    >
+    <>
       <div
         className={cn(
-          "pt-11 w-[272px] realtive h-screen transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg:w-fit",
+          "pt-11 w-[272px] fixed top-0 left-0 realtive h-screen z-20 transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg:w-fit",
           sidebarOpen ? "w-[272px]" : "w-0 lg:w-[68px]",
         )}
-        style={{
-          transitionDuration: "300ms",
-        }}
+        onTransitionStart={() =>
+          sidebarOpen && !isDesktop && bgRef.current?.classList.remove("-z-10")
+        }
+        onTransitionEnd={() =>
+          !sidebarOpen && !isDesktop && bgRef.current?.classList.add("-z-10")
+        }
+        onMouseEnter={() =>
+          isDesktop && dispatch(setSidebarOpen({ sidebarOpen: true }))
+        }
+        onMouseLeave={() =>
+          isDesktop && dispatch(setSidebarOpen({ sidebarOpen: false }))
+        }
       >
-        <div
-          className="w-[272px] px-4"
-          onMouseEnter={() =>
-            isDesktop && dispatch(setSidebarOpen({ sidebarOpen: true }))
-          }
-          onMouseLeave={() =>
-            isDesktop && dispatch(setSidebarOpen({ sidebarOpen: false }))
-          }
-        >
+        <div className="w-[272px] px-4">
           <div className="flex gap-6 justify-between items-center">
             <div className="flex gap-[22px] items-center pl-[6px]">
               <MainLogoIcon className="text-text-1 w-6 h-6 stroke-current" />
@@ -130,7 +128,7 @@ const Sidebar = () => {
                   className={cn(
                     "text-text-1 rounded-md flex gap-6 py-[10px] px-2 items-center cursor-pointer transition-colors",
                     active && "bg-primary",
-                    isDesktop && !active && "text-text-2 hover:text-text-3",
+                    isDesktop && !active && "text-text-2 hover:text-text-1",
                   )}
                 >
                   <Icon
@@ -155,23 +153,13 @@ const Sidebar = () => {
       </div>
       <div
         className={cn(
-          "w-full h-full bg-bg-3 absolute transition-opacity top-0 left-0 lg:hidden duration-200",
+          "w-full h-full bg-bg-3 fixed transition-opacity top-0 left-0 duration-200 lg:hidden",
           sidebarOpen ? "opacity-100" : "opacity-0",
-          !isDesktop && "-z-10",
         )}
-        onTransitionStart={() => {
-          if (sidebarOpen && !isDesktop) {
-            sidebarRef.current?.classList.remove("-z-10");
-          }
-        }}
-        onTransitionEnd={() => {
-          if (!sidebarOpen && !isDesktop) {
-            sidebarRef.current?.classList.add("-z-10");
-          }
-        }}
+        ref={bgRef}
         onClick={closeSidebar}
       />
-    </div>
+    </>
   );
 };
 

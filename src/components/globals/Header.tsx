@@ -3,26 +3,28 @@ import React from "react";
 import MainLogoIcon from "../Icons/MainLogoIcon";
 import { Button } from "housy-lib";
 import MenuIcon from "../Icons/MenuIcon";
-import { useAppDispatch } from "@/store/hooks";
-import { setSidebarOpen } from "@/store/slices/config.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setSidebarOpen, setTheme } from "@/store/slices/config.slice";
 import { useQuery } from "@tanstack/react-query";
-import { createClient } from "@/utils/supabase/client";
 import { useLocale, useTranslations } from "next-intl";
 import { formatDate } from "@/utils/formateDate";
+import { getUserInfo } from "@/utils/api/users/getUserInfo";
+import Image from "next/image";
+import { IMG_USER_DEFAULT } from "@/config/constants";
+import SunIcon from "../Icons/SunIcon";
+import MoonIcon from "../Icons/MoonIcon";
+import BellIcon from "../Icons/BellIcon";
 
 const Header = () => {
   const today = new Date();
   const locale = useLocale();
   const formatted = formatDate(today, locale);
+  const { currentTheme } = useAppSelector((state) => state.config);
   const t = useTranslations("Header");
   const dispatch = useAppDispatch();
-  const { data: userInfo, isLoading: queryLoading } = useQuery({
+  const { data: userInfo } = useQuery({
     queryKey: ["userInfo"],
-    queryFn: () => createClient().auth.getUser(),
-  });
-  console.log({
-    userInfo,
-    queryLoading,
+    queryFn: async () => await getUserInfo(),
   });
   const openSidebar = () => {
     dispatch(setSidebarOpen({ sidebarOpen: true }));
@@ -47,6 +49,35 @@ const Header = () => {
       >
         <MenuIcon className="w-6 h-6 text-text-1 stroke-current" />
       </Button>
+      <div className="items-center gap-6 hidden lg:flex">
+        <Button variant="icon" className="p-0 w-fit h-fit hover:bg-bg-1">
+          <BellIcon className="w-6 h-6 text-text-1 stroke-current" />
+        </Button>
+        <Button
+          className="p-0 hover:bg-bg-1 w-fit h-fit"
+          variant="icon"
+          onClick={() =>
+            dispatch(
+              setTheme({
+                currentTheme: currentTheme === "dark" ? "light" : "dark",
+              }),
+            )
+          }
+        >
+          {currentTheme === "light" ? (
+            <SunIcon className="w-6 h-6 text-text-1 stroke-current" />
+          ) : (
+            <MoonIcon className="w-6 h-6 text-text-1 stroke-current" />
+          )}
+        </Button>
+        <Image
+          src={userInfo?.photo_url || IMG_USER_DEFAULT}
+          className="h-[40px] object-cover w-[40px] xl:h-[50px] xl:w-[50px] rounded-full hidden lg:block"
+          width={60}
+          height={60}
+          alt="User image"
+        />
+      </div>
     </div>
   );
 };
