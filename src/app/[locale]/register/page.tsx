@@ -27,6 +27,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { emailInUse } from "@/utils/api/auth/emailInUse";
 
 const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
   {
@@ -62,6 +63,7 @@ const RegisterPage = () => {
   const {
     register,
     formState: { errors },
+    setError,
     handleSubmit,
   } = useForm({
     resolver: zodResolver(registerStepOneSchema),
@@ -70,6 +72,13 @@ const RegisterPage = () => {
   const continueForm = async (data: RegisterSchemaStepOneType) => {
     try {
       setLoading(true);
+      const inUse = await emailInUse(data.email);
+      if (inUse) {
+        return setError("email", {
+          type: "custom",
+          message: "step1.form.email.errors.inUse",
+        });
+      }
       const { email, password } = data;
       dispatch(setRegisterData({ email: email! }));
       const {
@@ -110,7 +119,12 @@ const RegisterPage = () => {
         {t("step1.social.google")}
       </Button>
       <Or text={t("step1.or")} />
-      <form className="grid gap-6" onSubmit={handleSubmit(continueForm)}>
+      <form
+        className="grid gap-6"
+        onSubmit={handleSubmit(continueForm, () => {
+          console.log({ errors });
+        })}
+      >
         {controls.map((control) => {
           const { placeholder, name, label, type } = control;
           const error = errors[name] ? t(errors[name].message!) : "";
@@ -152,7 +166,7 @@ const RegisterPage = () => {
         })}
         <Button
           variant="filled"
-          className="bg-primary w-full font-semibold hover:bg-primary/90"
+          className="bg-primary font-semibold hover:bg-primary/90"
           type="submit"
           disabled={loading}
         >

@@ -3,7 +3,6 @@ import { Button, Toast } from "housy-lib";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   loginSchema,
   type LoginSchemaFields,
@@ -111,8 +110,8 @@ const Login = () => {
 
   const googleLogin = () => logginGoogle();
   return (
-    <div className="h-screen bg-bg-1 md:bg-bg-2 grid place-items-center">
-      <div className="grid gap-6 w-full max-w-md px-8 md:bg-bg-1 p-0 md:max-w-[480px] md:px-14 md:rounded-xl md:py-14 md:shadow-lg md:shadow-shadow-1 2xl:py-20">
+    <div className="h-screen bg-bg-1 flex flex-col py-12 gap-12 place-items-center overflow-y-auto lg:bg-bg-2 lg:grid lg:place-items-center">
+      <div className="grid gap-6 w-full max-w-md px-8 lg:bg-bg-1 lg:px-14 lg:rounded-xl lg:py-14 lg:shadow-lg lg:shadow-shadow-1 2xl:py-20">
         <div className="grid gap-3">
           <h1 className="text-center text-text-1 text-2xl font-bold">
             {t("title")}
@@ -192,7 +191,7 @@ const Login = () => {
         </form>
       </div>
 
-      <div className="flex gap-4 items-center absolute bottom-4 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-6 lg:bottom-6">
+      <div className="flex h-fit gap-4 items-center lg:absolute lg:right-6 lg:bottom-6">
         <Button
           onClick={() => {
             const newLocale = locale === "es" ? "en" : "es";

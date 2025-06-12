@@ -20,11 +20,11 @@ const Register = ({ children }: Props) => {
   const pathname = usePathname();
   const theme = useAppSelector((state) => state.config.currentTheme);
   return (
-    <div className="bg-bg-1 gap-8 md:h-screen md:bg-bg-2 grid place-items-center py-8 lg:py-0">
-      <div className="w-10/12 grid gap-6 max-w-sm md:bg-bg-1 p-4 md:max-w-[480px] md:px-14 md:rounded-xl md:py-14 md:shadow-lg md:shadow-shadow-1 2xl:py-20">
+    <div className="h-screen bg-bg-1 flex flex-col py-12 gap-12 place-items-center overflow-y-auto lg:bg-bg-2 lg:grid lg:place-items-center">
+      <div className="grid gap-6 w-full max-w-md px-8 lg:bg-bg-1 lg:px-14 lg:rounded-xl lg:py-14 lg:shadow-lg lg:shadow-shadow-1 2xl:py-20">
         {children}
       </div>
-      <div className="flex gap-4 items-center md:absolute md:translate-x-0 md:left-auto md:right-6 md:bottom-6">
+      <div className="flex gap-4 items-center lg:absolute lg:right-6 lg:bottom-6">
         <Button
           onClick={() => {
             const newLocale = locale === "en" ? "es" : "en";

@@ -44,9 +44,10 @@ const FullName = () => {
   const [userSupabase, setUserSupabase] = useState<User | null>(null);
   const [supabaseUserLoading, setSupabaseUserLoading] = useState(true);
   const { data: dataQuery, isLoading: queryLoading } = useQuery({
-    queryKey: ["userInfo", userSupabase?.id],
-    queryFn: () => getUserInfo(userSupabase?.id),
+    queryKey: ["userInfo"],
+    queryFn: () => getUserInfo(),
   });
+  console.log({ dataQuery });
 
   const [loading, setLoading] = useState(false);
   const viewLoading = queryLoading || supabaseUserLoading;

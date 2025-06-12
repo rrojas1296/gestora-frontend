@@ -16,7 +16,7 @@ import ArrowLeft from "../Icons/CloseIcon";
 import { setSidebarOpen } from "@/store/slices/config.slice";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 type SidebarOption = {
   path: string;
@@ -66,6 +66,7 @@ const Sidebar = () => {
   const t = useTranslations("Sidebar");
   const bgRef = useRef<null | HTMLDivElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const { sidebarOpen } = useAppSelector((state) => state.config);
   const dispatch = useAppDispatch();
@@ -73,23 +74,27 @@ const Sidebar = () => {
   const closeSidebar = () => {
     dispatch(setSidebarOpen({ sidebarOpen: false }));
   };
+  const goToLink = (path: string) => router.push(path);
 
   useEffect(() => {
-    bgRef.current?.classList.add("-z-10");
+    bgRef.current?.classList.add("-z-20");
   }, []);
 
   return (
     <>
       <div
         className={cn(
-          "pt-11 w-[272px] fixed top-0 left-0 realtive h-screen z-20 transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg:w-fit",
+          "pt-11 w-fit absolute top-0 left-0 realtive h-screen z-30 transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg: border-r-[1px] border-border-2",
           sidebarOpen ? "w-[272px]" : "w-0 lg:w-[68px]",
         )}
-        onTransitionStart={() =>
-          sidebarOpen && !isDesktop && bgRef.current?.classList.remove("-z-10")
-        }
+        style={{
+          transition: "width 0.2s ease-in-out",
+        }}
         onTransitionEnd={() =>
-          !sidebarOpen && !isDesktop && bgRef.current?.classList.add("-z-10")
+          !sidebarOpen && !isDesktop && bgRef.current?.classList.add("-z-20")
+        }
+        onTransitionStart={() =>
+          sidebarOpen && !isDesktop && bgRef.current?.classList.remove("-z-20")
         }
         onMouseEnter={() =>
           isDesktop && dispatch(setSidebarOpen({ sidebarOpen: true }))
@@ -122,9 +127,9 @@ const Sidebar = () => {
               const Icon = link.icon;
               const active = pathname === link.path;
               return (
-                <Link
-                  href={link.path}
+                <div
                   key={index}
+                  onClick={() => goToLink(link.path)}
                   className={cn(
                     "text-text-1 rounded-md flex gap-6 py-[10px] px-2 items-center cursor-pointer transition-colors",
                     active && "bg-primary",
@@ -145,7 +150,7 @@ const Sidebar = () => {
                   >
                     {t(link.label)}
                   </span>
-                </Link>
+                </div>
               );
             })}
           </ul>
@@ -153,7 +158,7 @@ const Sidebar = () => {
       </div>
       <div
         className={cn(
-          "w-full h-full bg-bg-3 fixed transition-opacity top-0 left-0 duration-200 lg:hidden",
+          "w-full h-full duration-200 bg-bg-3 absolute transition-all top-0 left-0 lg:hidden",
           sidebarOpen ? "opacity-100" : "opacity-0",
         )}
         ref={bgRef}

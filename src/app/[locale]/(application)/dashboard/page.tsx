@@ -42,7 +42,7 @@ const Dashboard = () => {
           return (
             <div
               key={index}
-              className="p-[18px] grid gap-2 rounded-md bg-bg-1 shadow-lg shadow-shadow-1"
+              className="p-[18px] grid gap-2 rounded-xl bg-bg-1 shadow-lg shadow-shadow-1"
             >
               <div className="flex justify-between items-center">
                 <p className="text-xl font-medium">{t(title)}</p>

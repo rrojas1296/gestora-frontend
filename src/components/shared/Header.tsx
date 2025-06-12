@@ -1,7 +1,14 @@
 "use client";
 import React from "react";
 import MainLogoIcon from "../Icons/MainLogoIcon";
-import { Button } from "housy-lib";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Toast,
+} from "housy-lib";
 import MenuIcon from "../Icons/MenuIcon";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setSidebarOpen, setTheme } from "@/store/slices/config.slice";
@@ -14,10 +21,17 @@ import { IMG_USER_DEFAULT } from "@/config/constants";
 import SunIcon from "../Icons/SunIcon";
 import MoonIcon from "../Icons/MoonIcon";
 import BellIcon from "../Icons/BellIcon";
+import LogOutIcon from "../Icons/LogOutIcon";
+import UserIcon from "../Icons/UserIcon";
+import SettingsIcon from "../Icons/SettingsIcon";
+import { useRouter } from "@/i18n/navigation";
+import { toast } from "sonner";
+import { signOut } from "@/utils/supabase/actions/logout";
 
 const Header = () => {
   const today = new Date();
   const locale = useLocale();
+  const router = useRouter();
   const formatted = formatDate(today, locale);
   const { currentTheme } = useAppSelector((state) => state.config);
   const t = useTranslations("Header");
@@ -29,8 +43,30 @@ const Header = () => {
   const openSidebar = () => {
     dispatch(setSidebarOpen({ sidebarOpen: true }));
   };
+  const signOutUser = async () => {
+    try {
+      await signOut();
+      router.push("/login");
+    } catch {
+      toast.custom(() => (
+        <Toast
+          className="bg-bg-1 text-text-1 border-border-2"
+          text={t("errors.server_error")}
+          type="error"
+        />
+      ));
+    }
+  };
+
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex sticky top-0 left-0 py-4 lg:py-8 bg-bg-2 items-center justify-between w-full">
+      <Button
+        variant="icon"
+        className="p-0 hover:bg-bg-1 lg:hidden"
+        onClick={openSidebar}
+      >
+        <MenuIcon className="w-6 h-6 text-text-1 stroke-current" />
+      </Button>
       <div className="flex flex-row gap-2 items-center lg:hidden">
         <MainLogoIcon className="text-text-1 w-6 h-6 stroke-current" />
         <p className="text-text-1 text-sm font-bold">{t("brand")}</p>
@@ -44,19 +80,12 @@ const Header = () => {
         </p>
         <p className="text-text-2 text-base">{formatted}</p>
       </div>
-      <Button
-        variant="icon"
-        className="p-0 hover:bg-bg-1 lg:hidden"
-        onClick={openSidebar}
-      >
-        <MenuIcon className="w-6 h-6 text-text-1 stroke-current" />
-      </Button>
-      <div className="items-center gap-4 hidden lg:flex">
-        <Button variant="icon" className="p-0 hover:bg-bg-1">
+      <div className="items-center gap-4 lg:flex">
+        <Button variant="icon" className="p-0 hidden lg:block hover:bg-bg-1">
           <BellIcon className="w-6 h-6 text-text-1 stroke-current" />
         </Button>
         <Button
-          className="p-0 hover:bg-bg-1"
+          className="p-0 hover:bg-bg-1 hidden lg:block"
           variant="icon"
           onClick={() =>
             dispatch(
@@ -72,13 +101,34 @@ const Header = () => {
             <MoonIcon className="w-6 h-6 text-text-1 stroke-current" />
           )}
         </Button>
-        <Image
-          src={userInfo?.photo_url || IMG_USER_DEFAULT}
-          className="h-[40px] object-cover w-[40px] xl:h-[50px] xl:w-[50px] rounded-full hidden lg:block"
-          width={60}
-          height={60}
-          alt="User image"
-        />
+        <DropdownMenu>
+          <DropdownMenuTrigger className="outline-none">
+            <Image
+              src={userInfo?.photo_url || IMG_USER_DEFAULT}
+              className="h-[40px] object-cover w-[40px] rounded-full block cursor-pointer"
+              width={60}
+              height={60}
+              alt="User image"
+            />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-bg-1 border-[1px] border-border-2">
+            <DropdownMenuItem className="text-text-1 py-2 px-3 cursor-pointer hover:bg-bg-2">
+              <UserIcon className="w-5 h-5 stroke-current text-text-1" />
+              {t("dropdown.profile")}
+            </DropdownMenuItem>
+            <DropdownMenuItem className="text-text-1 px-3 py-2 cursor-pointer hover:bg-bg-2">
+              <SettingsIcon className="w-5 h-5 stroke-current text-text-1" />
+              {t("dropdown.settings")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={signOutUser}
+              className="text-red-500 py-2 px-3 cursor-pointer hover:bg-bg-2 hover:text-red-500"
+            >
+              <LogOutIcon className="w-5 h-5 stroke-current text-red-500" />
+              {t("dropdown.logout")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );

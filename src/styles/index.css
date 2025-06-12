@@ -4,10 +4,6 @@
 /* Theme Colors*/
 @import "./theme.css";
 
-* {
-  interpolate-size: allow-keywords;
-}
-
 @theme {
   --color-bg-1: var(--bg-1);
   --color-bg-2: var(--bg-2);
@@ -27,6 +23,10 @@
   --color-success: var(--success);
 
   --font-primary: "Raleway Variable";
+}
+
+* {
+  interpolate-size: allow-keywords;
 }
 
 .custom-scroll {

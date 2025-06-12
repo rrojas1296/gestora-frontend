@@ -145,13 +145,22 @@
       "requests": "Solicitudes de servicio",
       "reservations": "Reservas",
       "profile": "Perfil",
-      "settings": "Configuración"
+      "settings": "Configuración",
+      "logout": "Cerrar sesión"
     }
   },
   "Header": {
     "brand": "Housy",
     "greeting": {
       "text": "Bienvenido de nuevo"
+    },
+    "dropdown": {
+      "profile": "Perfil",
+      "settings": "Configuracion",
+      "logout": "Cerrar sesión"
+    },
+    "errors": {
+      "server_error": "Error del servidor, por favor intenta más tarde."
     }
   },
   "Dashboard": {
