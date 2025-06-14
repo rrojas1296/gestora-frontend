@@ -1,6 +1,8 @@
 @import "housy-lib/dist/index.css";
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Theme Colors*/
 @import "./theme.css";
 

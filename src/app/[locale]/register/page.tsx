@@ -13,6 +13,7 @@ import {
   type RegisterSchemaFieldsStepOne,
   type RegisterSchemaStepOneType,
 } from "@/schemas/registerSchema";
+import { toast } from "sonner";
 import { useAppDispatch } from "@/store/hooks";
 import { setRegisterData } from "@/store/slices/register.slice";
 import { FormControlType } from "@/types/controls";
@@ -21,7 +22,7 @@ import { logginGoogle } from "@/utils/supabase/auth";
 import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "housy-lib";
+import { Button, Toast } from "housy-lib";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -91,6 +92,20 @@ const RegisterPage = () => {
         router.push("/register/fullName");
       }
     } catch (err) {
+      toast.custom(
+        () => {
+          return (
+            <Toast
+              text={t(`step1.form.errors.server_error`)}
+              type="error"
+              className="bg-bg-1 text-text-1 border-border-2 max-w-[350px] justify-self-center"
+            />
+          );
+        },
+        {
+          position: "bottom-center",
+        },
+      );
       console.log({ err });
     } finally {
       setLoading(false);

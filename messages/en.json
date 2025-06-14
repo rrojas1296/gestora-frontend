@@ -1,7 +1,7 @@
 {
   "Login": {
-    "title": "Welcome to Housy",
-    "description": "Welcome to Housy and start to manage your condominium status",
+    "title": "Welcome to Gestora",
+    "description": "Welcome to Gestora and start to manage your business",
     "buttons": {
       "google": "Log in with Google"
     },
@@ -49,7 +49,10 @@
       },
       "form": {
         "title": "Create an Account",
-        "description": "Join now to housy and start to manage your properties",
+        "description": "Join now to Gestora and start to manage your business",
+        "errors": {
+          "server_error": "Server error, please try later."
+        },
         "email": {
           "label": "Email",
           "placeholder": "email@example.com",
@@ -135,22 +138,22 @@
   },
   "Sidebar": {
     "brand": {
-      "text": "Housy",
-      "subtitle": "App managment"
+      "text": "Gestora",
+      "subtitle": "App management"
     },
     "links": {
       "dashboard": "Dashboard",
-      "properties": "Properties",
-      "tenants": "Tenants",
-      "requests": "Service Requests",
-      "reservations": "Reservations",
+      "inventory": "Inventory",
+      "sales": "Sales",
+      "purchases": "Purchases",
+      "reports": "Reports",
       "profile": "Profile",
-      "settings": "Settings",
-      "logout": "Log out"
+      "users": "Users",
+      "settings": "Settings"
     }
   },
   "Header": {
-    "brand": "Housy",
+    "brand": "Gestora",
     "greeting": {
       "text": "Welcome back"
     },
@@ -164,21 +167,25 @@
     }
   },
   "Dashboard": {
-    "properties": {
-      "title": "Properties",
-      "description": "Number of properties that currently you have."
+    "earnings": {
+      "title": "Total Revenue",
+      "description": "Total earnings in your business."
     },
-    "tenants": {
-      "title": "Tenants",
-      "description": "Total tenants in your properties."
+    "sales": {
+      "title": "Sales",
+      "description": "Total sales per month."
     },
-    "requests": {
-      "title": "Pending Requests",
-      "description": "Amount of requests made by your residents."
+    "reports": {
+      "title": "Reports",
+      "description": "Total reports generated in the month"
     },
-    "reservations": {
-      "title": "Reservations",
-      "description": "Pending reservations in your properties."
+    "users": {
+      "title": "Users",
+      "description": "Total users registered in the system"
+    },
+    "chart": {
+      "title": "Total revenue per month",
+      "description": "Total revenue generated in the last 12 months"
     }
   }
 }

@@ -1,12 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import DashboardIcon from "../Icons/DashboardIcon";
-import PropertiesIcon from "../Icons/PropertiesIcon";
 import UsersIcon from "../Icons/UsersIcon";
-import RequestsIcon from "../Icons/RequestsIcon";
-import ReservationsIcon from "../Icons/ReservationsIcon";
-import UserIcon from "../Icons/UserIcon";
-import SettingsIcon from "../Icons/SettingsIcon";
 import { IconProps } from "@/types/icon";
 import MainLogoIcon from "../Icons/MainLogoIcon";
 import { cn } from "@/utils/cn";
@@ -17,6 +12,11 @@ import { setSidebarOpen } from "@/store/slices/config.slice";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import InventoryIcon from "../Icons/InventoryIcon";
+import CartIcon from "../Icons/CartIcon";
+import CreditCardIcon from "../Icons/CreditCardIcon";
+import ReportIcon from "../Icons/ReportIcon";
+import SettingsIcon from "../Icons/SettingsIcon";
 
 type SidebarOption = {
   path: string;
@@ -31,29 +31,29 @@ const links: SidebarOption[] = [
     icon: DashboardIcon,
   },
   {
-    path: "/properties",
-    label: "links.properties",
-    icon: PropertiesIcon,
+    path: "/inventory",
+    label: "links.inventory",
+    icon: InventoryIcon,
   },
   {
-    path: "/tenants",
-    label: "links.tenants",
+    path: "/sales",
+    label: "links.sales",
+    icon: CartIcon,
+  },
+  {
+    path: "/purchases",
+    label: "links.purchases",
+    icon: CreditCardIcon,
+  },
+  {
+    path: "/reports",
+    label: "links.reports",
+    icon: ReportIcon,
+  },
+  {
+    path: "/users",
+    label: "links.users",
     icon: UsersIcon,
-  },
-  {
-    path: "/requests",
-    label: "links.requests",
-    icon: RequestsIcon,
-  },
-  {
-    path: "/reservations",
-    label: "links.reservations",
-    icon: ReservationsIcon,
-  },
-  {
-    path: "/profile",
-    label: "links.profile",
-    icon: UserIcon,
   },
   {
     path: "/settings",
@@ -104,9 +104,9 @@ const Sidebar = () => {
         }
       >
         <div className="w-[272px] px-4">
-          <div className="flex gap-6 justify-between items-center">
-            <div className="flex gap-[22px] items-center pl-[6px]">
-              <MainLogoIcon className="text-text-1 w-6 h-6 stroke-current" />
+          <div className="flex gap-4 justify-between items-center">
+            <div className="flex gap-6 items-center pl-2">
+              <MainLogoIcon className="text-text-1 w-5 h-5 stroke-current" />
               <div>
                 <p className="text-lg font-bold text-text-1">
                   {t("brand.text")}

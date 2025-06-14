@@ -1,7 +1,7 @@
 {
   "Login": {
-    "title": "Bienvenido a Housy",
-    "description": "Bienvenido a Housy, comienza a gestionar el estado de tu condominio",
+    "title": "Bienvenido a Gestora",
+    "description": "Bienvenido a Gestora, comienza a gestionar tu negocio",
     "buttons": {
       "google": "Iniciar sesión con Google"
     },
@@ -14,11 +14,11 @@
     "form": {
       "errors": {
         "too_many_requests": "Demasiadas solicitudes. Intenta nuevamente en un momento.",
-        "form_identifier_not_found": "No se encontró la cuenta",
+        "form_identifier_not_found": "La cuenta no fue encontrada",
         "form_password_incorrect": "La contraseña es incorrecta",
         "session_exists": "Ya tienes una sesión activa",
-        "invalid_credentials": "Correo o contraseña incorrectos.",
-        "server_error": "Error del servidor, por favor intenta más tarde."
+        "invalid_credentials": "Correo electrónico o contraseña incorrectos.",
+        "server_error": "Error del servidor, intenta más tarde."
       },
       "email": {
         "name": "correo",
@@ -26,12 +26,12 @@
         "label": "Correo electrónico",
         "errors": {
           "required": "Ingresa tu correo electrónico",
-          "invalid": "Correo inválido"
+          "invalid": "Correo electrónico inválido"
         }
       },
       "password": {
         "name": "contraseña",
-        "placeholder": "Ingresa la contraseña aquí",
+        "placeholder": "Ingresa tu contraseña aquí",
         "label": "Contraseña",
         "errors": {
           "required": "Ingresa tu contraseña"
@@ -45,18 +45,21 @@
   "Register": {
     "step1": {
       "social": {
-        "google": "Regístrate con Google"
+        "google": "Registrarse con Google"
       },
       "form": {
-        "title": "Crea una cuenta",
-        "description": "Únete a Housy y comienza a gestionar tus propiedades",
+        "title": "Crear una cuenta",
+        "description": "Únete a Gestora y comienza a gestionar tu negocio",
+        "errors": {
+          "server_error": "Error del servidor, intenta más tarde."
+        },
         "email": {
           "label": "Correo electrónico",
           "placeholder": "correo@ejemplo.com",
           "errors": {
             "invalid": "Correo electrónico inválido",
             "required": "Ingresa tu correo electrónico",
-            "inUse": "Este correo ya está en uso"
+            "inUse": "El correo ya está en uso"
           }
         },
         "password": {
@@ -64,14 +67,14 @@
           "label": "Contraseña",
           "errors": {
             "required": "La contraseña es obligatoria",
-            "minLength": "La contraseña debe tener al menos 6 caracteres."
+            "minLength": "La contraseña debe tener más de 6 caracteres."
           }
         },
         "confirmPassword": {
           "placeholder": "Confirma tu contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "La confirmación de contraseña es obligatoria",
+            "required": "La confirmación de la contraseña es obligatoria",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -80,7 +83,7 @@
         },
         "question": {
           "text": "¿Ya tienes una cuenta?",
-          "link": "Inicia sesión"
+          "link": "Iniciar sesión"
         }
       },
       "or": "O continúa con"
@@ -88,7 +91,7 @@
     "step2": {
       "form": {
         "title": "Ingresa tu nombre",
-        "description": "Ingresa tu nombre completo para poder gestionar tu información",
+        "description": "Ingresa tu nombre completo para poder gestionar tus datos",
         "button": {
           "text": "Finalizar registro"
         },
@@ -123,7 +126,7 @@
           "placeholder": "Confirma tu contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "La confirmación de contraseña es obligatoria",
+            "required": "La confirmación de la contraseña es obligatoria",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -135,50 +138,55 @@
   },
   "Sidebar": {
     "brand": {
-      "text": "Housy",
-      "subtitle": "Gestión de la app"
+      "text": "Gestora",
+      "subtitle": "Gestión empresarial"
     },
     "links": {
-      "dashboard": "Panel de control",
-      "properties": "Propiedades",
-      "tenants": "Inquilinos",
-      "requests": "Solicitudes de servicio",
-      "reservations": "Reservas",
+      "dashboard": "Panel",
+      "inventory": "Inventario",
+      "sales": "Ventas",
+      "purchases": "Compras",
+      "reports": "Reportes",
       "profile": "Perfil",
-      "settings": "Configuración",
-      "logout": "Cerrar sesión"
+      "users": "Usuarios",
+      "settings": "Configuración"
     }
   },
   "Header": {
-    "brand": "Housy",
+    "brand": "Gestora",
     "greeting": {
       "text": "Bienvenido de nuevo"
     },
     "dropdown": {
       "profile": "Perfil",
-      "settings": "Configuracion",
+      "settings": "Configuración",
       "logout": "Cerrar sesión"
     },
     "errors": {
-      "server_error": "Error del servidor, por favor intenta más tarde."
+      "server_error": "Error del servidor, intenta más tarde."
     }
   },
   "Dashboard": {
-    "properties": {
-      "title": "Propiedades",
-      "description": "Número de propiedades que actualmente tienes."
+    "earnings": {
+      "title": "Ganancias",
+      "description": "Ganancias totales de tu negocio."
     },
-    "tenants": {
-      "title": "Inquilinos",
-      "description": "Total de inquilinos en tus propiedades."
+    "sales": {
+      "title": "Ventas",
+      "description": "Ventas totales por mes."
     },
-    "requests": {
-      "title": "Solicitudes Pendientes",
-      "description": "Cantidad de solicitudes realizadas por tus residentes."
+    "reports": {
+      "title": "Reportes",
+      "description": "Reportes generados en el mes"
     },
-    "reservations": {
-      "title": "Reservaciones",
-      "description": "Reservaciones pendientes en tus propiedades."
+    "users": {
+      "title": "Usuarios",
+      "description": "Usuarios registrados en el sistema"
+    },
+    "chart": {
+      "title": "Ingresos totales por mes",
+
+      "description": "Total de los ingressos generados en los últimos 12 meses"
     }
   }
 }

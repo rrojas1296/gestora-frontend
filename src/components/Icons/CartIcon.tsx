@@ -1,7 +1,7 @@
 import { IconProps } from "@/types/icon";
 import React from "react";
 
-const MainLogoIcon = (props: IconProps) => {
+const CartIcon = (props: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,11 +16,11 @@ const MainLogoIcon = (props: IconProps) => {
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M12 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-      <path d="M6.5 17m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-      <path d="M17.5 17m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+      <path d="M17.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
+      <path d="M6 8v11a1 1 0 0 0 1.806 .591l3.694 -5.091v.055" />
+      <path d="M6 8h15l-3.5 7l-7.1 -.747a4 4 0 0 1 -3.296 -2.493l-2.853 -7.13a1 1 0 0 0 -.928 -.63h-1.323" />
     </svg>
   );
 };
 
-export default MainLogoIcon;
+export default CartIcon;

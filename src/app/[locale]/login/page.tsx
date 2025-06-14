@@ -75,9 +75,9 @@ const Login = () => {
           () => {
             return (
               <Toast
-                text={t(`form.errors.${error.code}`)}
+                text={t(`form.errors.server_error`)}
                 type="error"
-                className="justify-self-center bg-bg-1 text-text-1 border-border-2"
+                className="bg-bg-1 text-text-1 border-border-2 w-fit justify-self-center"
               />
             );
           },
@@ -87,14 +87,14 @@ const Login = () => {
         );
       }
       router.push("/dashboard");
-    } catch (err) {
+    } catch {
       toast.custom(
         () => {
           return (
             <Toast
               text={t(`form.errors.server_error`)}
               type="error"
-              className="bg-bg-1 text-text-1 border-border-2 max-w-[350px]"
+              className="bg-bg-1 text-text-1 border-border-2 w-fit justify-self-center"
             />
           );
         },
@@ -102,7 +102,6 @@ const Login = () => {
           position: "bottom-center",
         },
       );
-      console.log({ err });
     } finally {
       setLoading(false);
     }

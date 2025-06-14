@@ -59,7 +59,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex sticky top-0 left-0 py-4 lg:py-8 bg-bg-2 items-center justify-between w-full">
+    <div className="flex sticky top-0 py-4 left-0 lg:py-6 bg-bg-2 items-center justify-between w-full">
       <Button
         variant="icon"
         className="p-0 hover:bg-bg-1 lg:hidden"
@@ -81,11 +81,14 @@ const Header = () => {
         <p className="text-text-2 text-base">{formatted}</p>
       </div>
       <div className="items-center gap-4 lg:flex">
-        <Button variant="icon" className="p-0 hidden lg:block hover:bg-bg-1">
+        <Button
+          variant="icon"
+          className="p-0 hidden place-items-center lg:block hover:bg-bg-1"
+        >
           <BellIcon className="w-6 h-6 text-text-1 stroke-current" />
         </Button>
         <Button
-          className="p-0 hover:bg-bg-1 hidden lg:block"
+          className="p-0 hover:bg-bg-1 hidden lg:block place-items-center"
           variant="icon"
           onClick={() =>
             dispatch(
