@@ -104,7 +104,7 @@ const CustomTooltip = ({ active, payload }: Props) => {
 const DashboardChart = () => {
   return (
     <div className="h-64 w-[1000px] lg:w-full">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" className="relative">
         <AreaChart
           data={dataSales}
           width={20}

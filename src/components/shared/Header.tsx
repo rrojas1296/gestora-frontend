@@ -27,12 +27,15 @@ import SettingsIcon from "../Icons/SettingsIcon";
 import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { signOut } from "@/utils/supabase/actions/logout";
+import { usePathname } from "next/navigation";
+import path from "path";
 
 const Header = () => {
   const today = new Date();
   const locale = useLocale();
   const router = useRouter();
   const formatted = formatDate(today, locale);
+  const pathname = usePathname();
   const { currentTheme } = useAppSelector((state) => state.config);
   const t = useTranslations("Header");
   const dispatch = useAppDispatch();
@@ -57,9 +60,10 @@ const Header = () => {
       ));
     }
   };
+  const section = pathname.split("/")[2];
 
   return (
-    <div className="flex sticky top-0 py-4 left-0 lg:py-6 bg-bg-2 items-center justify-between w-full">
+    <div className="flex sticky z-10 top-0 py-4 left-0 lg:py-6 bg-bg-2 items-center justify-between w-full">
       <Button
         variant="icon"
         className="p-0 hover:bg-bg-1 lg:hidden"
@@ -72,12 +76,18 @@ const Header = () => {
         <p className="text-text-1 text-sm font-bold">{t("brand")}</p>
       </div>
       <div className="hidden lg:block">
-        <p className="text-2xl text-text-1">
-          {t("greeting.text")}{" "}
-          <span className="font-bold">
-            {userInfo?.first_name} {userInfo?.last_name}
-          </span>
-        </p>
+        {section === "dashboard" ? (
+          <p className="text-2xl text-text-1">
+            {t("greeting.text")}{" "}
+            <span className="font-bold">
+              {userInfo?.first_name} {userInfo?.last_name}
+            </span>
+          </p>
+        ) : (
+          <p className="font-bold text-2xl text-text-1">
+            {t(`sections.${section}`)}
+          </p>
+        )}
         <p className="text-text-2 text-base">{formatted}</p>
       </div>
       <div className="items-center gap-4 lg:flex">

@@ -164,6 +164,14 @@
     },
     "errors": {
       "server_error": "Error del servidor, intenta más tarde."
+    },
+    "sections": {
+      "inventory": "Inventario",
+      "sales": "Ventas",
+      "purchases": "Compras",
+      "reports": "Reportes",
+      "users": "Usuarios",
+      "settings": "Configuración"
     }
   },
   "Dashboard": {
@@ -185,8 +193,14 @@
     },
     "chart": {
       "title": "Ingresos totales por mes",
-
       "description": "Total de los ingressos generados en los últimos 12 meses"
+    },
+    "topProducts": {
+      "title": "Productos más vendidos",
+      "description": "Los productos más vendidos en el último mes",
+      "data": {
+        "units": "unidades"
+      }
     }
   }
 }

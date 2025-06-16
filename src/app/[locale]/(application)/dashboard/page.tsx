@@ -1,7 +1,8 @@
-import ChartDashboard from "@/components/application/ChartDashboard";
-import BuildingIcon from "@/components/Icons/BuildingIcon";
+import DashboardChart from "@/components/application/Dashboard/DashboardChart";
+import DashboardTopProducts from "@/components/application/Dashboard/DashboardTopProducts";
 import RequestsIcon from "@/components/Icons/RequestsIcon";
 import ReservationsIcon from "@/components/Icons/ReservationsIcon";
+import TaxIcon from "@/components/Icons/TaxIcon";
 import TenantsIcon from "@/components/Icons/TenantsIcon";
 import CardApp from "@/components/shared/CardApp";
 import { useTranslations } from "next-intl";
@@ -11,7 +12,7 @@ const data = [
   {
     title: "earnings.title",
     description: "earnings.description",
-    icon: BuildingIcon,
+    icon: TaxIcon,
     mount: 10,
   },
   {
@@ -61,9 +62,24 @@ const Dashboard = () => {
           <p className="text-text-2 text-sm">{t("chart.description")}</p>
         </div>
         <div className="w-full overflow-x-auto">
-          <ChartDashboard />
+          <DashboardChart />
         </div>
       </CardApp>
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <CardApp className="col-start-1 col-end-2">
+          <div className="grid gap-1 mb-6">
+            <h1 className="text-xl text-text-1 font-medium">
+              {t("topProducts.title")}
+            </h1>
+            <p className="text-text-2 text-sm">
+              {t("topProducts.description")}
+            </p>
+          </div>
+          <DashboardTopProducts />
+        </CardApp>
+        <CardApp>Pending</CardApp>
+        <CardApp>Pending</CardApp>
+      </div>
     </div>
   );
 };

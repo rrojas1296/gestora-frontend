@@ -164,6 +164,14 @@
     },
     "errors": {
       "server_error": "Server error, please try later."
+    },
+    "sections": {
+      "inventory": "Inventory",
+      "sales": "Sales",
+      "purchases": "Purchases",
+      "reports": "Reports",
+      "users": "Users",
+      "settings": "Settings"
     }
   },
   "Dashboard": {
@@ -186,6 +194,13 @@
     "chart": {
       "title": "Total revenue per month",
       "description": "Total revenue generated in the last 12 months"
+    },
+    "topProducts": {
+      "title": "Tend Products",
+      "description": "The most sold products in the last 30 days",
+      "data": {
+        "units": "units"
+      }
     }
   }
 }
