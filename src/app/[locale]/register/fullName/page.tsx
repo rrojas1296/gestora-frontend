@@ -10,19 +10,20 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setRegisterData } from "@/store/slices/register.slice";
 import type { FormControlType } from "@/types/controls";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { User } from "@supabase/supabase-js";
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "housy-lib";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { redirect, useRouter } from "next/navigation";
-import Loader from "@/components/shared/Loader";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import FormControl from "@/components/shared/FormControl";
-import { createClient } from "@/utils/supabase/client";
-import { getUserInfo } from "@/utils/api/users/getUserInfo";
-import { AuthProvider, registerUser } from "@/utils/api/auth/registerUser";
+import {
+  AuthProvider,
+  registerUser,
+  RegisterUserData,
+} from "@/utils/api/auth/registerUser";
 import { useTranslations } from "next-intl";
+import useSupabaseUser from "@/hooks/useSupabaseUser";
+import { trimObject } from "@/utils/trimObject";
 
 const controls: FormControlType<RegisterSchemaFieldsStepTwo>[] = [
   {
@@ -41,16 +42,8 @@ const controls: FormControlType<RegisterSchemaFieldsStepTwo>[] = [
 
 const FullName = () => {
   const t = useTranslations("Register");
-  const [userSupabase, setUserSupabase] = useState<User | null>(null);
-  const [supabaseUserLoading, setSupabaseUserLoading] = useState(true);
-  const { data: dataQuery, isLoading: queryLoading } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: () => getUserInfo(),
-  });
-  console.log({ dataQuery });
-
+  const { user: userSupabase } = useSupabaseUser();
   const [loading, setLoading] = useState(false);
-  const viewLoading = queryLoading || supabaseUserLoading;
   const dispatch = useAppDispatch();
   const { lastName, firstName } = useAppSelector((state) => state.register);
   const router = useRouter();
@@ -63,8 +56,9 @@ const FullName = () => {
     resolver: zodResolver(registerStepTwoSchema),
   });
 
-  const continueForm = async (data: RegisterSchemaStepTwoType) => {
-    const { lastName, firstName } = data;
+  const submitMethod = async (data: RegisterSchemaStepTwoType) => {
+    console.log("here");
+    const { lastName, firstName } = trimObject<RegisterSchemaStepTwoType>(data);
     try {
       setLoading(true);
       dispatch(
@@ -73,14 +67,22 @@ const FullName = () => {
           lastName: data.lastName,
         }),
       );
+      console.log({ userSupabase });
       if (userSupabase) {
-        const newUser = {
-          email: userSupabase.email!,
+        const {
+          email,
+          app_metadata: { provider },
+          user_metadata: { avatar_url },
+        } = userSupabase;
+        if (!email || !provider) return;
+
+        const newUser: RegisterUserData = {
+          email: email,
           first_name: firstName,
           last_name: lastName,
           id: userSupabase.id,
-          provider: userSupabase?.app_metadata?.provider as AuthProvider,
-          photo_url: userSupabase?.user_metadata.avatar_url,
+          provider: provider as AuthProvider,
+          photo_url: avatar_url,
         };
         await registerUser(newUser);
         router.push("/dashboard");
@@ -96,20 +98,6 @@ const FullName = () => {
     setValue("firstName", firstName || "");
   }, [firstName, lastName, setValue]);
 
-  const getUserSupabase = async () => {
-    const {
-      data: { user },
-    } = await createClient().auth.getUser();
-    setSupabaseUserLoading(false);
-    setUserSupabase(user);
-  };
-
-  useEffect(() => {
-    getUserSupabase();
-  }, []);
-
-  if (viewLoading) return <Loader />;
-  if (dataQuery) redirect("/dashboard");
   return (
     <>
       <div className="grid gap-3">
@@ -132,7 +120,7 @@ const FullName = () => {
           {t("step2.form.description")}
         </p>
       </div>
-      <form className="grid gap-6" onSubmit={handleSubmit(continueForm)}>
+      <form className="grid gap-6" onSubmit={handleSubmit(submitMethod)}>
         {controls.map((control) => {
           const { placeholder, name, label, type } = control;
           const error = errors[name] ? t(errors[name].message!) : "";

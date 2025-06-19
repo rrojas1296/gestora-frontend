@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface ConfigState {
   currentTheme?: "light" | "dark";
   sidebarOpen?: boolean;
+  loader?: boolean;
 }
 
 export const THEME_KEY = "theme_app";
@@ -11,6 +12,7 @@ export const THEME_KEY = "theme_app";
 const initialState: ConfigState = {
   currentTheme: undefined,
   sidebarOpen: false,
+  loader: false,
 };
 
 const themeSlice = createSlice({
@@ -29,6 +31,10 @@ const themeSlice = createSlice({
     setSidebarOpen: (state, action: PayloadAction<ConfigState>) => {
       const { sidebarOpen } = action.payload;
       return { ...state, sidebarOpen };
+    },
+    setLoading: (state, action: PayloadAction<ConfigState>) => {
+      const { loader } = action.payload;
+      return { ...state, loader };
     },
   },
 });

@@ -23,7 +23,7 @@ import { toast } from "sonner";
 import Or from "@/components/shared/Or";
 import FormControl from "@/components/shared/FormControl";
 import { logginGoogle } from "@/utils/supabase/auth";
-import { createClient } from "@/utils/supabase/client";
+import { supabaseClient } from "@/utils/supabase/client";
 import { FormControlType } from "@/types/controls";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
@@ -66,7 +66,7 @@ const Login = () => {
     try {
       const { email, password } = data;
       setLoading(true);
-      const { error } = await createClient().auth.signInWithPassword({
+      const { error } = await supabaseClient.auth.signInWithPassword({
         password,
         email,
       });
@@ -75,7 +75,7 @@ const Login = () => {
           () => {
             return (
               <Toast
-                text={t(`form.errors.server_error`)}
+                text={t(`form.errors.${error.code || "server_error"}`)}
                 type="error"
                 className="bg-bg-1 text-text-1 border-border-2 w-fit justify-self-center"
               />
@@ -107,7 +107,9 @@ const Login = () => {
     }
   };
 
-  const googleLogin = () => logginGoogle();
+  const googleLogin = async () => {
+    await logginGoogle();
+  };
   return (
     <div className="h-screen bg-bg-1 flex flex-col py-12 gap-12 place-items-center overflow-y-auto lg:bg-bg-2 lg:grid lg:place-items-center">
       <div className="grid gap-6 w-full max-w-md px-8 lg:bg-bg-1 lg:px-14 lg:rounded-xl lg:py-14 lg:shadow-lg lg:shadow-shadow-1 2xl:py-20">

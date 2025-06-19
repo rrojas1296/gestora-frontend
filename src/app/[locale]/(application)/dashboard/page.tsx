@@ -1,9 +1,9 @@
 import DashboardChart from "@/components/application/Dashboard/DashboardChart";
 import DashboardTopProducts from "@/components/application/Dashboard/DashboardTopProducts";
-import RequestsIcon from "@/components/Icons/RequestsIcon";
-import ReservationsIcon from "@/components/Icons/ReservationsIcon";
+import CartIcon from "@/components/Icons/CartIcon";
+import ReportIcon from "@/components/Icons/ReportIcon";
 import TaxIcon from "@/components/Icons/TaxIcon";
-import TenantsIcon from "@/components/Icons/TenantsIcon";
+import UsersIcon from "@/components/Icons/UsersIcon";
 import CardApp from "@/components/shared/CardApp";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -13,25 +13,25 @@ const data = [
     title: "earnings.title",
     description: "earnings.description",
     icon: TaxIcon,
-    mount: 10,
+    mount: 3400,
   },
   {
     title: "sales.title",
     description: "sales.description",
-    icon: TenantsIcon,
+    icon: CartIcon,
     mount: 12,
   },
   {
     title: "reports.title",
     description: "reports.description",
-    icon: RequestsIcon,
+    icon: ReportIcon,
     mount: 25,
   },
   {
     title: "users.title",
     description: "users.description",
-    icon: ReservationsIcon,
-    mount: 200,
+    icon: UsersIcon,
+    mount: 3,
   },
 ];
 

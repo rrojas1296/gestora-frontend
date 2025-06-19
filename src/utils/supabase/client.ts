@@ -6,3 +6,5 @@ export const createClient = () =>
     environments.SUPABASE_PROJECT_URL,
     environments.SUPABASE_ANON_KEY,
   );
+
+export const supabaseClient = createClient();

@@ -15,7 +15,6 @@ import { setSidebarOpen, setTheme } from "@/store/slices/config.slice";
 import { useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { formatDate } from "@/utils/formateDate";
-import { getUserInfo } from "@/utils/api/users/getUserInfo";
 import Image from "next/image";
 import { IMG_USER_DEFAULT } from "@/config/constants";
 import SunIcon from "../Icons/SunIcon";
@@ -28,7 +27,8 @@ import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { signOut } from "@/utils/supabase/actions/logout";
 import { usePathname } from "next/navigation";
-import path from "path";
+import { getUserById } from "@/utils/api/users/getUserById";
+import useSupabaseUser from "@/hooks/useSupabaseUser";
 
 const Header = () => {
   const today = new Date();
@@ -37,11 +37,13 @@ const Header = () => {
   const formatted = formatDate(today, locale);
   const pathname = usePathname();
   const { currentTheme } = useAppSelector((state) => state.config);
+  const { user: userSupabase } = useSupabaseUser();
   const t = useTranslations("Header");
   const dispatch = useAppDispatch();
   const { data: userInfo } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: async () => await getUserInfo(),
+    queryKey: ["userInfo", userSupabase?.id],
+    queryFn: async () => await getUserById(userSupabase?.id),
+    enabled: !!userSupabase?.id,
   });
   const openSidebar = () => {
     dispatch(setSidebarOpen({ sidebarOpen: true }));
@@ -125,11 +127,17 @@ const Header = () => {
             />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-bg-1 border-[1px] border-border-2">
-            <DropdownMenuItem className="text-text-1 py-2 px-3 cursor-pointer hover:bg-bg-2">
+            <DropdownMenuItem
+              className="text-text-1 py-2 px-3 cursor-pointer hover:bg-bg-2"
+              onClick={() => router.push("/profile")}
+            >
               <UserIcon className="w-5 h-5 stroke-current text-text-1" />
               {t("dropdown.profile")}
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-text-1 px-3 py-2 cursor-pointer hover:bg-bg-2">
+            <DropdownMenuItem
+              className="text-text-1 px-3 py-2 cursor-pointer hover:bg-bg-2"
+              onClick={() => router.push("/settings")}
+            >
               <SettingsIcon className="w-5 h-5 stroke-current text-text-1" />
               {t("dropdown.settings")}
             </DropdownMenuItem>

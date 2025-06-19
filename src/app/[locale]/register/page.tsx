@@ -14,14 +14,11 @@ import {
   type RegisterSchemaStepOneType,
 } from "@/schemas/registerSchema";
 import { toast } from "sonner";
-import { useAppDispatch } from "@/store/hooks";
-import { setRegisterData } from "@/store/slices/register.slice";
 import { FormControlType } from "@/types/controls";
 import { cn } from "@/utils/cn";
 import { logginGoogle } from "@/utils/supabase/auth";
 import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
 import { Button, Toast } from "housy-lib";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -29,6 +26,8 @@ import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { emailInUse } from "@/utils/api/auth/emailInUse";
+import useSupabaseUser from "@/hooks/useSupabaseUser";
+import { trimObject } from "@/utils/trimObject";
 
 const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
   {
@@ -54,12 +53,9 @@ const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
 const RegisterPage = () => {
   const t = useTranslations("Register");
   const [loading, setLoading] = useState(false);
-  const { data: sessionSupabase, isLoading } = useQuery({
-    queryKey: ["supabaseUser"],
-    queryFn: async () => await createClient().auth.getSession(),
-  });
+  const { user: supabaseUser, loading: loadingUserSupabase } =
+    useSupabaseUser();
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const {
     register,
@@ -70,23 +66,22 @@ const RegisterPage = () => {
     resolver: zodResolver(registerStepOneSchema),
   });
   const registerGoogle = () => logginGoogle("/register/fullName");
-  const continueForm = async (data: RegisterSchemaStepOneType) => {
+  const registerUser = async (data: RegisterSchemaStepOneType) => {
     try {
       setLoading(true);
-      const inUse = await emailInUse(data.email);
+      const { email, password } = trimObject<RegisterSchemaStepOneType>(data);
+      const inUse = await emailInUse(email);
       if (inUse) {
         return setError("email", {
           type: "custom",
           message: "step1.form.email.errors.inUse",
         });
       }
-      const { email, password } = data;
-      dispatch(setRegisterData({ email: email! }));
       const {
         data: { session },
       } = await createClient().auth.signUp({
         password,
-        email: email!,
+        email,
       });
       if (session) {
         router.push("/register/fullName");
@@ -112,9 +107,9 @@ const RegisterPage = () => {
     }
   };
 
-  if (isLoading) return <Loader />;
+  if (loadingUserSupabase) return <Loader />;
 
-  if (sessionSupabase?.data.session) return redirect("/dashboard");
+  if (supabaseUser) return redirect("/dashboard");
   return (
     <>
       <div className="grid gap-3">
@@ -136,7 +131,7 @@ const RegisterPage = () => {
       <Or text={t("step1.or")} />
       <form
         className="grid gap-6"
-        onSubmit={handleSubmit(continueForm, () => {
+        onSubmit={handleSubmit(registerUser, () => {
           console.log({ errors });
         })}
       >

@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createSupabaseServer } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -8,9 +8,9 @@ export const GET = async (request: Request) => {
 
   if (!code) return NextResponse.redirect("/login");
 
-  const supabase = await createClient();
+  const client = await createSupabaseServer();
 
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { error } = await client.auth.exchangeCodeForSession(code);
   if (!error) {
     const forwardedHost = request.headers.get("x-forwarded-host");
     const devMode = process.env.NODE_ENV === "development";

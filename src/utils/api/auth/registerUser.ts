@@ -2,12 +2,13 @@ import { apiInstance } from "../instance";
 
 export type AuthProvider = "google" | "email";
 
-interface RegisterUserData {
+export interface RegisterUserData {
   email: string;
   first_name: string;
   last_name: string;
   id: string;
   provider: AuthProvider;
+  photo_url?: string;
 }
 export const registerUser = async (data: RegisterUserData) => {
   try {
