@@ -11,7 +11,11 @@ import {
 } from "housy-lib";
 import MenuIcon from "../Icons/MenuIcon";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setSidebarOpen, setTheme } from "@/store/slices/config.slice";
+import {
+  setLoading,
+  setSidebarOpen,
+  setTheme,
+} from "@/store/slices/config.slice";
 import { useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { formatDate } from "@/utils/formateDate";
@@ -36,7 +40,7 @@ const Header = () => {
   const router = useRouter();
   const formatted = formatDate(today, locale);
   const pathname = usePathname();
-  const { currentTheme } = useAppSelector((state) => state.config);
+  const { isDark } = useAppSelector((state) => state.config);
   const { user: userSupabase } = useSupabaseUser();
   const t = useTranslations("Header");
   const dispatch = useAppDispatch();
@@ -50,6 +54,7 @@ const Header = () => {
   };
   const signOutUser = async () => {
     try {
+      dispatch(setLoading({ loader: true }));
       await signOut();
       router.push("/login");
     } catch {
@@ -60,17 +65,15 @@ const Header = () => {
           type="error"
         />
       ));
+    } finally {
+      dispatch(setLoading({ loader: false }));
     }
   };
   const section = pathname.split("/")[2];
 
   return (
-    <div className="flex sticky z-10 top-0 py-4 left-0 lg:py-6 bg-bg-2 items-center justify-between w-full">
-      <Button
-        variant="icon"
-        className="p-0 hover:bg-bg-1 lg:hidden"
-        onClick={openSidebar}
-      >
+    <div className="flex sticky top-0 py-4 left-0 lg:py-6 bg-bg-2 items-center justify-between w-full">
+      <Button variant="icon" className="lg:hidden" onClick={openSidebar}>
         <MenuIcon className="w-6 h-6 text-text-1 stroke-current" />
       </Button>
       <div className="flex flex-row gap-2 items-center lg:hidden">
@@ -79,7 +82,7 @@ const Header = () => {
       </div>
       <div className="hidden lg:block">
         {section === "dashboard" ? (
-          <p className="text-2xl text-text-1">
+          <p className="text-xl text-text-1 font-light">
             {t("greeting.text")}{" "}
             <span className="font-bold">
               {userInfo?.first_name} {userInfo?.last_name}
@@ -90,30 +93,27 @@ const Header = () => {
             {t(`sections.${section}`)}
           </p>
         )}
-        <p className="text-text-2 text-base">{formatted}</p>
+        <p className="text-text-2 text-sm">{formatted}</p>
       </div>
       <div className="items-center gap-4 lg:flex">
-        <Button
-          variant="icon"
-          className="p-0 hidden place-items-center lg:block hover:bg-bg-1"
-        >
-          <BellIcon className="w-6 h-6 text-text-1 stroke-current" />
+        <Button variant="icon" className="hidden lg:flex hover:bg-bg-1">
+          <BellIcon className="w-5 h-5 text-text-1 stroke-current" />
         </Button>
         <Button
-          className="p-0 hover:bg-bg-1 hidden lg:block place-items-center"
+          className="hidden lg:flex hover:bg-bg-1"
           variant="icon"
           onClick={() =>
             dispatch(
               setTheme({
-                currentTheme: currentTheme === "dark" ? "light" : "dark",
+                isDark: !isDark,
               }),
             )
           }
         >
-          {currentTheme === "light" ? (
-            <SunIcon className="w-6 h-6 text-text-1 stroke-current" />
+          {isDark ? (
+            <SunIcon className="w-5 h-5 text-text-1 stroke-current" />
           ) : (
-            <MoonIcon className="w-6 h-6 text-text-1 stroke-current" />
+            <MoonIcon className="w-5 h-5 text-text-1 stroke-current" />
           )}
         </Button>
         <DropdownMenu>
@@ -126,24 +126,18 @@ const Header = () => {
               alt="User image"
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-bg-1 border-[1px] border-border-2">
-            <DropdownMenuItem
-              className="text-text-1 py-2 px-3 cursor-pointer hover:bg-bg-2"
-              onClick={() => router.push("/profile")}
-            >
+          <DropdownMenuContent className="w-36">
+            <DropdownMenuItem onClick={() => router.push("/profile")}>
               <UserIcon className="w-5 h-5 stroke-current text-text-1" />
               {t("dropdown.profile")}
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="text-text-1 px-3 py-2 cursor-pointer hover:bg-bg-2"
-              onClick={() => router.push("/settings")}
-            >
+            <DropdownMenuItem onClick={() => router.push("/settings")}>
               <SettingsIcon className="w-5 h-5 stroke-current text-text-1" />
               {t("dropdown.settings")}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={signOutUser}
-              className="text-red-500 py-2 px-3 cursor-pointer hover:bg-bg-2 hover:text-red-500"
+              className="text-red-500 hover:text-red-500"
             >
               <LogOutIcon className="w-5 h-5 stroke-current text-red-500" />
               {t("dropdown.logout")}

@@ -51,7 +51,7 @@ const Login = () => {
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
-  const theme = useAppSelector((state) => state.config.currentTheme);
+  const { isDark } = useAppSelector((state) => state.config);
   const {
     register,
     handleSubmit,
@@ -112,7 +112,7 @@ const Login = () => {
   };
   return (
     <div className="h-screen bg-bg-1 flex flex-col py-12 gap-12 place-items-center overflow-y-auto lg:bg-bg-2 lg:grid lg:place-items-center">
-      <div className="grid gap-6 w-full max-w-md px-8 lg:bg-bg-1 lg:px-14 lg:rounded-xl lg:py-14 lg:shadow-lg lg:shadow-shadow-1 2xl:py-20">
+      <div className="grid gap-6 w-full max-w-md px-8 lg:bg-bg-1 lg:px-14 lg:rounded-xl lg:py-14 lg:border-border-2 lg:border 2xl:py-20">
         <div className="grid gap-3">
           <h1 className="text-center text-text-1 text-2xl font-bold">
             {t("title")}
@@ -120,7 +120,7 @@ const Login = () => {
           <p className="text-center text-sm text-text-2">{t("description")}</p>
         </div>
         <Button
-          className="font-semibold w-full border-border-1 text-text-1 hover:bg-bg-2/30"
+          className="font-normal w-full"
           variant="outlined"
           onClick={googleLogin}
         >
@@ -176,7 +176,7 @@ const Login = () => {
           </Link>
           <Button
             variant="filled"
-            className="bg-primary font-semibold hover:bg-primary/90"
+            className="font-semibold"
             type="submit"
             disabled={loading}
           >
@@ -211,13 +211,9 @@ const Login = () => {
         <Button
           variant="icon"
           className="p-0 hover:bg-bg-2"
-          onClick={() =>
-            dispath(
-              setTheme({ currentTheme: theme === "dark" ? "light" : "dark" }),
-            )
-          }
+          onClick={() => dispath(setTheme({ isDark: !isDark }))}
         >
-          {theme === "dark" ? (
+          {isDark ? (
             <SunIcon className="w-6 h-6 text-text-1 stroke-current" />
           ) : (
             <MoonIcon className="w-6 h-6 text-text-1 stroke-current" />

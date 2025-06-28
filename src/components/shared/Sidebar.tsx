@@ -62,40 +62,36 @@ const links: SidebarOption[] = [
   },
 ];
 
-const Sidebar = () => {
+const MainSidebar = () => {
   const t = useTranslations("Sidebar");
-  const bgRef = useRef<null | HTMLDivElement>(null);
   const pathname = usePathname();
   const router = useRouter();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const { sidebarOpen } = useAppSelector((state) => state.config);
   const dispatch = useAppDispatch();
 
-  const closeSidebar = () => {
-    dispatch(setSidebarOpen({ sidebarOpen: false }));
-  };
+  const closeSidebar = () => dispatch(setSidebarOpen({ sidebarOpen: false }));
   const goToLink = (path: string) => router.push(path);
-
-  useEffect(() => {
-    bgRef.current?.classList.add("-z-20");
-  }, []);
 
   return (
     <>
       <div
         className={cn(
-          "pt-11 w-fit absolute top-0 left-0 realtive h-screen z-30 transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg: border-r-[1px] border-border-2",
+          "fixed inset-0 duration-200 bg-black/50 transition-opacity top-0 left-0 lg:hidden",
+          sidebarOpen
+            ? "opacity-50 pointer-events-auto"
+            : "opacity-0 pointer-events-none",
+        )}
+        onClick={closeSidebar}
+      />
+      <div
+        className={cn(
+          "pt-11 w-fit fixed top-0 left-0 h-screen transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg:border-r border-r-border-2",
           sidebarOpen ? "w-[272px]" : "w-0 lg:w-[68px]",
         )}
         style={{
           transition: "width 0.2s ease-in-out",
         }}
-        onTransitionEnd={() =>
-          !sidebarOpen && !isDesktop && bgRef.current?.classList.add("-z-20")
-        }
-        onTransitionStart={() =>
-          sidebarOpen && !isDesktop && bgRef.current?.classList.remove("-z-20")
-        }
         onMouseEnter={() =>
           isDesktop && dispatch(setSidebarOpen({ sidebarOpen: true }))
         }
@@ -131,41 +127,21 @@ const Sidebar = () => {
                   key={index}
                   onClick={() => goToLink(link.path)}
                   className={cn(
-                    "text-text-1 rounded-md flex gap-6 py-[10px] px-2 items-center cursor-pointer transition-colors",
-                    active && "bg-primary",
+                    "text-text-1 rounded-md flex gap-6 py-2 px-2 items-center cursor-pointer transition-colors",
+                    active && "bg-primary text-text-3 font-semibold",
                     isDesktop && !active && "text-text-2 hover:text-text-1",
                   )}
                 >
-                  <Icon
-                    className={cn(
-                      "stroke-current w-5 h-5",
-                      active && "text-text-3",
-                    )}
-                  />
-                  <span
-                    className={cn(
-                      "text-sm",
-                      active && "font-semibold text-text-3",
-                    )}
-                  >
-                    {t(link.label)}
-                  </span>
+                  <Icon className={cn("stroke-current w-5 h-5")} />
+                  <span className={cn("text-sm")}>{t(link.label)}</span>
                 </div>
               );
             })}
           </ul>
         </div>
       </div>
-      <div
-        className={cn(
-          "w-full h-full duration-200 bg-bg-3 absolute transition-all top-0 left-0 lg:hidden",
-          sidebarOpen ? "opacity-100" : "opacity-0",
-        )}
-        ref={bgRef}
-        onClick={closeSidebar}
-      />
     </>
   );
 };
 
-export default Sidebar;
+export default MainSidebar;

@@ -50,6 +50,7 @@ const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
     placeholder: "step1.form.confirmPassword.placeholder",
   },
 ];
+
 const RegisterPage = () => {
   const t = useTranslations("Register");
   const [loading, setLoading] = useState(false);
@@ -121,7 +122,7 @@ const RegisterPage = () => {
         </p>
       </div>
       <Button
-        className="font-semibold w-full border-border-1 text-text-1 hover:bg-bg-2/30"
+        className="font-semibold w-full"
         variant="outlined"
         onClick={registerGoogle}
       >
@@ -129,12 +130,7 @@ const RegisterPage = () => {
         {t("step1.social.google")}
       </Button>
       <Or text={t("step1.or")} />
-      <form
-        className="grid gap-6"
-        onSubmit={handleSubmit(registerUser, () => {
-          console.log({ errors });
-        })}
-      >
+      <form className="grid gap-6" onSubmit={handleSubmit(registerUser)}>
         {controls.map((control) => {
           const { placeholder, name, label, type } = control;
           const error = errors[name] ? t(errors[name].message!) : "";
@@ -176,7 +172,7 @@ const RegisterPage = () => {
         })}
         <Button
           variant="filled"
-          className="bg-primary font-semibold hover:bg-primary/90"
+          className="font-semibold"
           type="submit"
           disabled={loading}
         >

@@ -2,7 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface ConfigState {
-  currentTheme?: "light" | "dark";
+  isDark?: boolean;
   sidebarOpen?: boolean;
   loader?: boolean;
 }
@@ -10,7 +10,7 @@ export interface ConfigState {
 export const THEME_KEY = "theme_app";
 
 const initialState: ConfigState = {
-  currentTheme: undefined,
+  isDark: false,
   sidebarOpen: false,
   loader: false,
 };
@@ -20,12 +20,12 @@ const themeSlice = createSlice({
   initialState,
   reducers: {
     setTheme: (state, action: PayloadAction<ConfigState>) => {
-      const { currentTheme } = action.payload;
-      if (!currentTheme) return;
-      localStorage.setItem(THEME_KEY, currentTheme);
-      document.documentElement.classList.remove("light", "dark");
-      document.documentElement.classList.add(currentTheme);
-      state.currentTheme = currentTheme;
+      const { isDark } = action.payload;
+      if (isDark === undefined) return;
+      localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+      document.documentElement.classList.remove("dark");
+      if (isDark) document.documentElement.classList.add("dark");
+      return { ...state, isDark };
     },
 
     setSidebarOpen: (state, action: PayloadAction<ConfigState>) => {
@@ -39,6 +39,6 @@ const themeSlice = createSlice({
   },
 });
 
-export const { setTheme, setSidebarOpen } = themeSlice.actions;
+export const { setTheme, setSidebarOpen, setLoading } = themeSlice.actions;
 
 export default themeSlice.reducer;

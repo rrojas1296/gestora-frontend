@@ -7,4 +7,5 @@ export type FormControlType<T> = {
   type: ComponentProps<"input">["type"];
   placeholder: string;
   icon?: React.FC<IconProps>;
+  className?: string;
 };

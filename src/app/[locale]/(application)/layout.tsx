@@ -1,5 +1,5 @@
 import Header from "@/components/shared/Header";
-import Sidebar from "@/components/shared/Sidebar";
+import MainSidebar from "@/components/shared/Sidebar";
 import PrivatePage from "@/guards/PrivatePage";
 import { getUserById } from "@/utils/api/users/getUserById";
 import { createSupabaseServer } from "@/utils/supabase/server";
@@ -24,13 +24,13 @@ const AppLayout = async ({ children }: Props) => {
     <PrivatePage>
       <div className="h-screen bg-bg-2">
         <div className="px-6 lg:pl-[92px] w-full h-screen overflow-y-auto">
-          <div className="max-w-[1512px] flex w-full flex-col justify-self-center relative z-0">
+          <div className="max-w-[1512px] flex w-full flex-col justify-self-center">
             <Header />
             <div className="text-text-1 pb-6">{children}</div>
           </div>
         </div>
       </div>
-      <Sidebar />
+      <MainSidebar />
     </PrivatePage>
   );
 };

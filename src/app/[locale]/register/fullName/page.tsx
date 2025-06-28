@@ -57,7 +57,6 @@ const FullName = () => {
   });
 
   const submitMethod = async (data: RegisterSchemaStepTwoType) => {
-    console.log("here");
     const { lastName, firstName } = trimObject<RegisterSchemaStepTwoType>(data);
     try {
       setLoading(true);
@@ -67,7 +66,6 @@ const FullName = () => {
           lastName: data.lastName,
         }),
       );
-      console.log({ userSupabase });
       if (userSupabase) {
         const {
           email,

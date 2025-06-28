@@ -82,7 +82,7 @@ const DashboardTopProducts: React.FC<Props> = () => {
                 className="rounded-full w-12 h-12 object-cover"
               />
               <div className="grid gap-2">
-                <h2 className="font-bold text-sm text-text-1">{name}</h2>
+                <h2 className="font-medium text-sm text-text-1">{name}</h2>
                 <p className="text-xs text-text-2">{category}</p>
               </div>
             </div>

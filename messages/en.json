@@ -197,10 +197,85 @@
       "description": "Total revenue generated in the last 12 months"
     },
     "topProducts": {
-      "title": "Tend Products",
+      "title": "Top Products",
       "description": "The most sold products in the last 30 days",
       "data": {
         "units": "units"
+      }
+    }
+  },
+  "Inventory": {
+    "search": "Search product",
+    "filter": "Filter",
+    "add": "Add Product",
+    "export": "Export data",
+
+    "form": {
+      "title": "Add New Product",
+      "status": {
+        "label": "Status",
+        "placeholder": "Select status",
+        "errors": {
+          "required": "The status is required"
+        }
+      },
+      "quantity": {
+        "label": "Quantity",
+        "placeholder": "Enter quantity",
+        "errors": {
+          "required": "The quantity is required"
+        }
+      },
+      "salesPrice": {
+        "label": "Sales Price",
+        "placeholder": "Enter sales price",
+        "errors": {
+          "required": "The sales price is required"
+        }
+      },
+
+      "costPrice": {
+        "label": "Cost Price",
+        "placeholder": "Enter cost price",
+        "errors": {
+          "required": "The cost price is required"
+        }
+      },
+      "name": {
+        "label": "Product Name",
+        "placeholder": "Enter product name",
+        "errors": {
+          "required": "The name is required"
+        }
+      },
+      "button": {
+        "add": "Add product",
+        "cancel": "Cancel"
+      }
+    },
+
+    "table": {
+      "menu": {
+        "delete": "Delete Item",
+        "edit": "Edit Item",
+        "view": "View Item"
+      },
+      "columns": {
+        "name": {
+          "header": "Name"
+        },
+        "sales": {
+          "header": "Sales"
+        },
+        "price": {
+          "header": "Price"
+        },
+        "currency": {
+          "header": "Currency"
+        },
+        "status": {
+          "header": "Status"
+        }
       }
     }
   }

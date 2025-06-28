@@ -8,6 +8,7 @@ interface Props extends ComponentProps<"input"> {
   label?: string;
   register: UseFormRegister<any>;
   error?: string;
+  className?: string;
 }
 
 const FormControl = ({
@@ -18,9 +19,10 @@ const FormControl = ({
   name = "",
   register,
   error,
+  className,
 }: Props) => {
   return (
-    <div className="grid gap-2">
+    <div className={cn("grid gap-2 w-full", className)}>
       {label && (
         <label
           htmlFor={name}
@@ -34,11 +36,11 @@ const FormControl = ({
       )}
       <Input
         containerClassName={cn(
-          "border-border-1 w-full",
+          "border-border-1 w-full max-w-none",
           error && "border-red-500",
         )}
         inputClassName={cn(
-          "text-text-1 placeholder:text-text-2",
+          "text-text-1 placeholder:text-text-2 w-full",
           error && "placeholder:text-red-500",
         )}
         Icon={Icon}

@@ -6,9 +6,10 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import StoreProvider from "@/providers/StoreProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
 import { Toaster } from "sonner";
-import { Raleway } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { cn } from "@/utils/cn";
-const font = Raleway({
+import LoaderProvider from "@/providers/LoaderProvider";
+const font = Montserrat({
   subsets: ["latin"],
 });
 
@@ -31,10 +32,12 @@ export default async function LocaleLayout({
         <TranslationProvider>
           <ReactQueryProvider>
             <StoreProvider>
-              <ThemeProvider>
-                {children}
-                <Toaster position="bottom-center" />
-              </ThemeProvider>
+              <LoaderProvider>
+                <ThemeProvider>
+                  {children}
+                  <Toaster position="bottom-center" />
+                </ThemeProvider>
+              </LoaderProvider>
             </StoreProvider>
           </ReactQueryProvider>
         </TranslationProvider>

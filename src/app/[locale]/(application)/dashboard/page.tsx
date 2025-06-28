@@ -38,18 +38,18 @@ const data = [
 const Dashboard = () => {
   const t = useTranslations("Dashboard");
   return (
-    <div className="grid gap-6">
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid gap-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {data.map((item, index) => {
           const { title, description, mount } = item;
           return (
             <CardApp key={index} className="grid gap-2">
               <div className="flex justify-between items-center">
-                <p className="text-xl font-medium">{t(title)}</p>
+                <p className="text-lg">{t(title)}</p>
                 <item.icon className="w-6 h-6 text-text-1 stroke-current" />
               </div>
-              <p className="text-5xl font-extrabold">{mount}</p>
-              <p className="text-sm w-9/12">{t(description)}</p>
+              <p className="text-4xl font-bold">{mount}</p>
+              <p className="text-sm">{t(description)}</p>
             </CardApp>
           );
         })}
@@ -65,7 +65,7 @@ const Dashboard = () => {
           <DashboardChart />
         </div>
       </CardApp>
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
         <CardApp className="col-start-1 col-end-2">
           <div className="grid gap-1 mb-6">
             <h1 className="text-xl text-text-1 font-medium">

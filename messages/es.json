@@ -171,7 +171,8 @@
       "purchases": "Compras",
       "reports": "Reportes",
       "users": "Usuarios",
-      "settings": "Configuración"
+      "settings": "Configuración",
+      "profile": "Perfil"
     }
   },
   "Dashboard": {
@@ -200,6 +201,36 @@
       "description": "Los productos más vendidos en el último mes",
       "data": {
         "units": "unidades"
+      }
+    }
+  },
+  "Inventory": {
+    "search": "Buscar producto",
+    "filter": "Filter",
+    "add": "Agregar Producto",
+    "export": "Exportar",
+    "table": {
+      "menu": {
+        "edit": "Editar Producto",
+        "delete": "Eliminar Producto",
+        "view": "Ver Producto"
+      },
+      "columns": {
+        "name": {
+          "header": "Nombre"
+        },
+        "sales": {
+          "header": "Ventas"
+        },
+        "price": {
+          "header": "Precio"
+        },
+        "currency": {
+          "header": "Moneda"
+        },
+        "status": {
+          "header": "Estado"
+        }
       }
     }
   }

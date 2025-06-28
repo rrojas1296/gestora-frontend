@@ -1,77 +1,37 @@
 :root {
-  /* Light Theme */
+  --bg-1: #ffffff;
+  --bg-2: #f4f5f6;
+  --bg-3: rgba(0, 0, 0, 0.5);
 
-  --light-bg-1: #ffffff;
-  --light-bg-2: #f4f5f6;
-  --light-bg-3: rgba(0, 0, 0, 0.5);
+  --accent: #dadfeb;
+  --primary: #094ee3;
 
-  --light-primary: #094ee3;
+  --text-1: #000000;
+  --text-2: #6a7681;
+  --text-3: #ffffff;
 
-  --light-text-1: #000000;
-  --light-text-2: #6a7681;
-  --light-text-3: #ffffff;
+  --border-1: #acb2bd;
+  --border-2: #e8e8e8;
+  --shadow-1: #edeff4;
 
-  --light-border-1: #acb2bd;
-  --light-border-2: #e8e8e8;
-
-  --light-shadow-1: #edeff4;
-
-  --light-success: #1baf21;
-
-  /* Dark Theme */
-
-  --dark-bg-1: #16181d;
-  --dark-bg-2: #0b0c0f;
-  --dark-bg-3: rgba(0, 0, 0, 0.5);
-
-  --dark-primary: #094ee3;
-
-  --dark-text-1: #ffffff;
-  --dark-text-2: #858fa3;
-  --dark-text-3: #ffffff;
-
-  --dark-border-1: #4a4f57;
-  --dark-border-2: #2a2d32;
-
-  --dark-shadow-1: #101216;
-
-  --dark-success: #126d16;
+  --success: #1baf21;
 }
 
-html.dark {
-  --bg-1: var(--dark-bg-1);
-  --bg-2: var(--dark-bg-2);
-  --bg-3: var(--dark-bg-3);
+.dark {
+  --bg-1: #14161c;
+  --bg-2: #0f1014;
+  --bg-3: rgba(0, 0, 0, 0.5);
 
-  --primary: var(--dark-primary);
+  --accent: #23262e;
+  --primary: #094ee3;
 
-  --text-1: var(--dark-text-1);
-  --text-2: var(--dark-text-2);
-  --text-3: var(--dark-text-3);
+  --text-1: #ffffff;
+  --text-2: #858fa3;
+  --text-3: #ffffff;
 
-  --border-1: var(--dark-border-1);
-  --border-2: var(--dark-border-2);
+  --border-1: #4a4f57;
+  --border-2: #2a2d32;
+  --shadow-1: #101216;
 
-  --shadow-1: var(--dark-shadow-1);
-
-  --success: var(--dark-success);
-}
-
-html.light {
-  --bg-1: var(--light-bg-1);
-  --bg-2: var(--light-bg-2);
-  --bg-3: var(--light-bg-3);
-
-  --primary: var(--light-primary);
-
-  --text-1: var(--light-text-1);
-  --text-2: var(--light-text-2);
-  --text-3: var(--light-text-3);
-
-  --border-1: var(--light-border-1);
-  --border-2: var(--light-border-2);
-
-  --shadow-1: var(--light-shadow-1);
-
-  --success: var(--light-success);
+  --success: #126d16;
 }
