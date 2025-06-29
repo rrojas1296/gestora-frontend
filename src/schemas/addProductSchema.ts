@@ -1,3 +1,4 @@
+import { statusOptions } from "@/types/api/inventory";
 import { z } from "zod";
 
 export const addProductSchema = z.object({
@@ -13,8 +14,8 @@ export const addProductSchema = z.object({
   quantity: z.string().min(1, {
     message: "form.quantity.errors.required",
   }),
-  status: z.string().min(1, {
-    message: "form.status.errors.required",
+  status: z.enum(statusOptions, {
+    errorMap: () => ({ message: "form.status.errors.required" }),
   }),
 });
 

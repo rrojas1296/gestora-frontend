@@ -119,6 +119,14 @@ const MainSidebar = () => {
             </Button>
           </div>
           <ul className="mt-14">
+            <p
+              className={cn(
+                "text-text-2 text-sm mb-4",
+                !sidebarOpen && "opacity-0",
+              )}
+            >
+              {t("sections.main")}
+            </p>
             {links.map((link, index) => {
               const Icon = link.icon;
               const active = pathname === link.path;

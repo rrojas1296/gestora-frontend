@@ -8,4 +8,8 @@ export type FormControlType<T> = {
   placeholder: string;
   icon?: React.FC<IconProps>;
   className?: string;
+  options?: {
+    value: string;
+    label: string;
+  }[];
 };

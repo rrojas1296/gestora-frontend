@@ -1,4 +1,11 @@
-export type Status = "active" | "inactive" | "out_of_stock" | "discontinued";
+export const statusOptions = [
+  "active",
+  "inactive",
+  "out_of_stock",
+  "discontinued",
+] as const;
+
+export type Status = (typeof statusOptions)[number];
 
 export interface IProduct {
   id: string;

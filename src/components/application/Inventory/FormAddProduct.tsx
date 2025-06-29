@@ -1,3 +1,4 @@
+import DropContainer from "@/components/shared/DropContainer";
 import FormControl from "@/components/shared/FormControl";
 import {
   addProductSchema,
@@ -46,8 +47,26 @@ const controls: FormControlType<AddProductSchemaFields>[] = [
   },
   {
     name: "status",
+    options: [
+      {
+        label: "form.status.options.active.label",
+        value: "active",
+      },
+      {
+        label: "form.status.options.inactive.label",
+        value: "inactive",
+      },
+      {
+        label: "form.status.options.discontinued.label",
+        value: "discontinued",
+      },
+      {
+        label: "form.status.options.out_of_stock.label",
+        value: "out_of_stock",
+      },
+    ],
     label: "form.status.label",
-    type: "text",
+    type: "select",
     placeholder: "form.status.placeholder",
     className: "col-start-1 col-end-3",
   },
@@ -59,6 +78,7 @@ const FormAddProduct = ({ onClose }: Props) => {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(addProductSchema),
@@ -72,15 +92,18 @@ const FormAddProduct = ({ onClose }: Props) => {
     console.log({ data });
   };
   return (
-    <>
-      <h1 className="font-bold text-xl">{t("form.title")}</h1>
+    <div className="flex flex-col items-center">
+      <h1 className="font-bold text-xl text-left lg:w-full">
+        {t("form.title")}
+      </h1>
       <form
-        className="grid gap-5 grid-cols-2 mt-5"
+        className="grid gap-5 grid-cols-2 mt-5 max-w-md "
         onSubmit={handleSubmit(addProductHandler, errorHandler)}
       >
-        {controls.map((control, index) => {
-          const { label, name, type, placeholder, className } = control;
+        {controls.map((field, index) => {
+          const { label, name, type, placeholder, className, options } = field;
           const error = errors[name] ? t(errors[name].message!) : "";
+          const opts = options?.map((opt) => ({ ...opt, label: t(opt.label) }));
           return (
             <FormControl
               key={index}
@@ -89,11 +112,14 @@ const FormAddProduct = ({ onClose }: Props) => {
               name={name}
               error={error}
               type={type}
+              options={opts}
               register={register}
               className={className}
+              control={control}
             />
           );
         })}
+        <DropContainer className="col-span-2" />
         <Button variant="filled" type="submit" className="w-full">
           {t("form.button.add")}
         </Button>
@@ -106,7 +132,6 @@ const FormAddProduct = ({ onClose }: Props) => {
               costPrice: "",
               salesPrice: "",
               name: "",
-              status: "",
               quantity: "",
             });
             onClose();
@@ -115,7 +140,7 @@ const FormAddProduct = ({ onClose }: Props) => {
           {t("form.button.cancel")}
         </Button>
       </form>
-    </>
+    </div>
   );
 };
 

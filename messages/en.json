@@ -137,6 +137,9 @@
     }
   },
   "Sidebar": {
+    "sections": {
+      "main": "Main"
+    },
     "brand": {
       "text": "Gestora",
       "subtitle": "App management"
@@ -212,11 +215,29 @@
 
     "form": {
       "title": "Add New Product",
+      "imageDrop": {
+        "text": "Drop your images here",
+        "button": "Click to browse"
+      },
       "status": {
         "label": "Status",
         "placeholder": "Select status",
         "errors": {
           "required": "The status is required"
+        },
+        "options": {
+          "active": {
+            "label": "Active"
+          },
+          "inactive": {
+            "label": "Inactive"
+          },
+          "out_of_stock": {
+            "label": "Out of stock"
+          },
+          "discontinued": {
+            "label": "Discontinued"
+          }
         }
       },
       "quantity": {
