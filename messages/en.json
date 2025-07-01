@@ -269,6 +269,19 @@
           "required": "The name is required"
         }
       },
+      "images": {
+        "errors": {
+          "required": "Upload at least one image",
+          "maxImages": "You can upload a maximum of 5 images"
+        }
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter a product description",
+        "errors": {
+          "required": "The description is required"
+        }
+      },
       "button": {
         "add": "Add product",
         "cancel": "Cancel"

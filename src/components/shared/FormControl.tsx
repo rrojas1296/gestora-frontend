@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { Input } from "housy-lib";
+import { Input, Textarea } from "housy-lib";
 import type { ComponentProps, JSX } from "react";
 import { Control, Controller, type UseFormRegister } from "react-hook-form";
 import {
@@ -45,7 +45,7 @@ const FormControl = ({
           {label}
         </label>
       )}
-      {type !== "select" ? (
+      {["text", "password", "number"].includes(type as string) ? (
         <Input
           containerClassName={cn(
             "border-border-1 w-full max-w-none",
@@ -61,7 +61,7 @@ const FormControl = ({
           id={name}
           {...register(name)}
         />
-      ) : (
+      ) : type === "select" ? (
         <Controller
           name={name}
           control={control}
@@ -97,7 +97,17 @@ const FormControl = ({
             );
           }}
         />
-      )}
+      ) : type === "textarea" ? (
+        <Textarea
+          placeholder={placeholder}
+          id={name}
+          className={cn(
+            "w-full h-32",
+            error && "border-red-500 placeholder:text-red-500",
+          )}
+          {...register(name)}
+        />
+      ) : null}
       {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
   );
