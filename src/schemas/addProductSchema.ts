@@ -12,9 +12,7 @@ export const addProductSchema = z.object({
   cost_price: z.string().min(1, {
     message: "form.costPrice.errors.required",
   }),
-  description: z.string().min(1, {
-    message: "form.description.errors.required",
-  }),
+  description: z.string(),
   quantity: z.string().min(1, {
     message: "form.quantity.errors.required",
   }),
@@ -26,7 +24,7 @@ export const addProductSchema = z.object({
     .min(1, {
       message: "form.images.errors.required",
     })
-    .max(5, {
+    .max(3, {
       message: "form.images.errors.maxImages",
     }),
 });

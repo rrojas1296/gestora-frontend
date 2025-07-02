@@ -3,9 +3,8 @@ import React, { ComponentProps, DragEvent, useRef, useState } from "react";
 import ImageUp from "../Icons/ImageUp";
 import { useTranslations } from "next-intl";
 import { Button } from "housy-lib";
-import Image from "next/image";
-import XIcon from "../Icons/XIcon";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import PreviewImage from "./PreviewImage";
 
 type Props = ComponentProps<"div"> & {
   images: File[];
@@ -26,9 +25,10 @@ const DropZone = ({ className, images, setValue, trigger, error }: Props) => {
       file.type.startsWith("image/"),
     );
 
+    setDragging(false);
+    if (newImages.length === 0) return;
     setValue("images", [...images, ...newImages]);
     trigger("images");
-    setDragging(false);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -86,40 +86,18 @@ const DropZone = ({ className, images, setValue, trigger, error }: Props) => {
           ref={inputRef}
         />
       </div>
-      {images?.length > 0 && (
-        <div className="flex gap-4 flex-wrap">
-          {images.map((img, index) => {
-            return (
-              <div
-                key={index}
-                className="rounded-md overflow-hidden w-14 h-14 relative group"
-              >
-                <Image
-                  className="w-full h-full object-cover"
-                  src={URL.createObjectURL(img)}
-                  alt={img.name}
-                  width={50}
-                  height={50}
-                />
-                <Button
-                  variant="icon"
-                  type="button"
-                  className="bg-bg-2/50 rounded-md h-8 w-8 absolute top-0 right-0 left-0 hidden group-hover:flex bottom-0 m-auto"
-                  onClick={() => {
-                    setValue(
-                      "images",
-                      images.filter((_, i) => i !== index),
-                    );
-                    trigger("images");
-                  }}
-                >
-                  <XIcon className="w-5 h-5 stroke-current" />
-                </Button>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <PreviewImage
+        images={images}
+        onDelete={(index) => {
+          setValue(
+            "images",
+            images.filter((_, i) => i !== index),
+            {
+              shouldValidate: true,
+            },
+          );
+        }}
+      />
       {error && <span className="text-red-500 text-sm">{error}</span>}
     </div>
   );

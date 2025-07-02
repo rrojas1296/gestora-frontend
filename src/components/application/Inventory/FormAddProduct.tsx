@@ -1,5 +1,4 @@
 import LoaderIcon from "@/components/Icons/LoaderIcon";
-import DropZone from "@/components/shared/DropContainer";
 import FormControl from "@/components/shared/FormControl";
 import {
   addProductFormFieldsControls,
@@ -13,12 +12,18 @@ import { Button, Toast } from "housy-lib";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import DropZone from "@/components/shared/DropZone";
+import {
+  CreateProductImage,
+  createProductImage,
+} from "@/utils/api/productImages/createProductImage";
 
 interface Props {
   onClose: () => void;
+  refetch: () => void;
 }
 
-const FormAddProduct = ({ onClose }: Props) => {
+const FormAddProduct = ({ onClose, refetch }: Props) => {
   const t = useTranslations("Inventory");
   const [loading, setLoading] = useState(false);
   const {
@@ -50,19 +55,21 @@ const FormAddProduct = ({ onClose }: Props) => {
         sales_price: Number(data.sales_price),
         quantity: Number(data.quantity),
       };
-      console.log({ body });
       const { id } = await createProduct(body);
-      const urls = [];
 
       for (const image of images) {
-        const url = await uploadImage(image);
-        urls.push(url);
+        const secure_url = await uploadImage(image);
+        const body: CreateProductImage = {
+          product_id: id,
+          url: secure_url,
+        };
+        await createProductImage(body);
+        refetch();
       }
       toast.dismiss(r);
       toast.custom(() => (
         <Toast text="Product created successfully" type="success" />
       ));
-      console.log({ id });
     } catch (err) {
       console.log({ err });
     } finally {

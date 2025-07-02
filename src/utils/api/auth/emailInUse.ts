@@ -1,4 +1,4 @@
-import { apiInstance } from "../instance";
+import apiInstance from "../instance";
 
 type Response = {
   email: string;

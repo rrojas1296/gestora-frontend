@@ -1,9 +1,8 @@
 import CheckBox from "@/components/shared/CheckBox";
-import { IProduct, Status } from "@/types/api/inventory";
+import { IProduct } from "@/types/api/inventory";
 import { ColumnDef, PaginationState } from "@tanstack/react-table";
 import Image from "next/image";
 import { capitalize } from "../capitalize";
-import { v4 as uuidv4 } from "uuid";
 import {
   Button,
   DropdownMenu,
@@ -42,7 +41,8 @@ export const generateInvetoryColumns = (
       header: t("table.columns.name.header"),
       accessorKey: "name",
       cell: (info) => {
-        const { name, image_url } = info.row.original;
+        const { name, images } = info.row.original;
+        const image_url = images[0]?.url;
         return (
           <div className="flex items-center gap-4 w-fit">
             <Image
@@ -60,17 +60,17 @@ export const generateInvetoryColumns = (
     {
       header: t("table.columns.sales.header"),
       cell: (info) => info.getValue(),
-      accessorKey: "sales",
+      accessorKey: "sales_price",
     },
     {
       header: t("table.columns.price.header"),
       cell: (info) => info.getValue(),
-      accessorKey: "price",
+      accessorKey: "cost_price",
     },
     {
       header: t("table.columns.currency.header"),
       accessorKey: "currency",
-      cell: (info) => info.getValue(),
+      cell: "USD",
     },
     {
       header: t("table.columns.status.header"),
@@ -134,64 +134,3 @@ export const sliceArrayForPagination = (
   const end = start + totalButtons;
   return array.slice(start, end);
 };
-
-const categories = ["Electronics", "Home", "Toys", "Books", "Fashion"];
-const productNames = [
-  'Tv 55" Samsung OLED',
-  "PlayStation 5",
-  'MacBook Pro 14"',
-  "iPhone 15 Pro",
-  "Kindle Paperwhite",
-  "Dyson V15 Vacuum",
-  "GoPro Hero 12",
-  "Xiaomi Smartwatch",
-  "Echo Dot 5",
-  "Nintendo Switch OLED",
-  "PlayStation 4",
-  "MacBook Air 13",
-  "iPhone 14 Pro",
-  "Kindle Oasis",
-  "Huawei Mate 40 Pro",
-  "GoPro Hero 10",
-  "Xiaomi Redmi Note 11",
-  "Echo Dot 4",
-  "Nintendo Switch",
-  "PlayStation 3",
-  "MacBook Pro 16",
-  "iPhone 13 Pro",
-  "Kindle Paperwhite 2",
-  "Huawei Mate 30 Pro",
-];
-
-const statuses: Status[] = [
-  "active",
-  "inactive",
-  "out_of_stock",
-  "discontinued",
-];
-const imageUrl =
-  "https://images.unsplash.com/photo-1553456558-aff63285bdd1?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-export const generateProduct = () => {
-  const name = productNames[Math.floor(Math.random() * productNames.length)];
-  const status = statuses[Math.floor(Math.random() * statuses.length)];
-  const price = Math.floor(Math.random() * 3000 + 100);
-  const salesPrice = price + Math.floor(Math.random() * 1000);
-  return {
-    id: uuidv4(),
-    name,
-    price,
-    salesPrice,
-    currency: "USD",
-    category: categories[Math.floor(Math.random() * categories.length)],
-    image_url: imageUrl,
-    sales: Math.floor(Math.random() * 1000),
-    status,
-    created_at: new Date(),
-  } as IProduct;
-};
-
-function generateProducts(count = 20) {
-  return Array.from({ length: count }, generateProduct);
-}
-
-export const inventoryData = generateProducts(100);

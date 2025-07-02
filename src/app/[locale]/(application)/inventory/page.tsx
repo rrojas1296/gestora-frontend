@@ -7,56 +7,65 @@ import PlusIcon from "@/components/Icons/PlusIcon";
 import SearchIcon from "@/components/Icons/SearchIcon";
 import CardApp from "@/components/shared/CardApp";
 import Pagination from "@/components/shared/Pagination";
+import useProducts from "@/hooks/useProducts";
 import {
   addProductInitialState,
   addProductSchema,
 } from "@/schemas/addProductSchema";
-import {
-  generateInvetoryColumns,
-  inventoryData,
-} from "@/utils/application/inventory";
+import { getProductsTable } from "@/utils/api/products/getProductsTable";
+import { generateInvetoryColumns } from "@/utils/application/inventory";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import {
   ColumnFiltersState,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
 import { Button, Input, Sidebar } from "housy-lib";
 import { useTranslations } from "next-intl";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 const Inventory = () => {
   const t = useTranslations("Inventory");
-  const pageSize = 10;
-  const totalPages = Math.ceil(inventoryData.length / pageSize);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [rowSelected, setRowSelected] = useState<Record<number, boolean>>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: pageSize,
+    pageSize: 10,
   });
+  console.log({ pagination });
+  const [search, setSearch] = useState("");
 
+  const { data, refetch } = useQuery({
+    queryKey: ["productsTable", pagination, search],
+    queryFn: () =>
+      getProductsTable(pagination.pageIndex + 1, pagination.pageSize, search),
+    placeholderData: keepPreviousData,
+  });
+  const totalPages = data ? Math.ceil(data.total / pagination.pageSize) : 0;
   const columns = useMemo(() => generateInvetoryColumns(t), [t]);
   const table = useReactTable({
-    data: inventoryData,
+    data: data?.products || [],
     columns,
     state: {
       rowSelection: rowSelected,
       columnFilters,
       pagination,
     },
+    manualPagination: true,
+    rowCount: data?.total || 0,
+    pageCount: totalPages,
+    getRowId: (row) => row.id,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelected,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
   const methods = useForm({
     resolver: zodResolver(addProductSchema),
@@ -66,11 +75,16 @@ const Inventory = () => {
   const handleInputChange = (value: string) => {
     const hg = table.getHeaderGroups()[0].headers.find((h) => h.id === "name");
     hg?.column.setFilterValue(value);
+    setSearch(value);
+    setPagination({
+      pageSize: 10,
+      pageIndex: 0,
+    });
   };
 
   const setPage = (page: number) => {
     setPagination({
-      pageSize: pageSize,
+      pageSize: 10,
       pageIndex: page,
     });
   };
@@ -135,7 +149,10 @@ const Inventory = () => {
           position="right"
           className="w-screen bg-bg-1 lg:w-md px-8 border-l py-8 overflow-y-auto"
         >
-          <FormAddProduct onClose={() => setOpenSidebar(false)} />
+          <FormAddProduct
+            refetch={refetch}
+            onClose={() => setOpenSidebar(false)}
+          />
         </Sidebar>
       </FormProvider>
     </>

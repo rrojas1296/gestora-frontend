@@ -7,15 +7,21 @@ export const statusOptions = [
 
 export type Status = (typeof statusOptions)[number];
 
+export interface ProductImage {
+  url: string;
+  id: string;
+}
+
 export interface IProduct {
   id: string;
+  currency: string;
   name: string;
   price: number;
-  salesPrice: number;
-  currency: string;
+  sales_price: number;
+  cost_price: number;
   category: string;
-  image_url: string;
-  sales: number;
   status: Status;
   created_at: Date;
+  updated_at: Date;
+  images: ProductImage[];
 }

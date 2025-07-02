@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/types/api/response";
-import { apiInstance } from "../instance";
 import { UserInfo } from "@/types/api/users";
+import apiInstance from "../instance";
 
 export const getUserById = async (userId?: string) => {
   if (!userId) return null;

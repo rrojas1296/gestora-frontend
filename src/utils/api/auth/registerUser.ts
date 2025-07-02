@@ -1,4 +1,4 @@
-import { apiInstance } from "../instance";
+import apiInstance from "../instance";
 
 export type AuthProvider = "google" | "email";
 

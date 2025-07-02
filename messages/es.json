@@ -9,29 +9,29 @@
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "register": {
       "question": "¿No tienes una cuenta?",
-      "link": "Regístrate"
+      "link": "Registrarse"
     },
     "form": {
       "errors": {
-        "too_many_requests": "Demasiadas solicitudes. Intenta nuevamente en un momento.",
+        "too_many_requests": "Demasiadas solicitudes. Por favor, intenta más tarde.",
         "form_identifier_not_found": "La cuenta no fue encontrada",
         "form_password_incorrect": "La contraseña es incorrecta",
         "session_exists": "Ya tienes una sesión activa",
-        "invalid_credentials": "Correo electrónico o contraseña incorrectos.",
-        "server_error": "Error del servidor, intenta más tarde."
+        "invalid_credentials": "Correo o contraseña incorrectos.",
+        "server_error": "Error del servidor, por favor intenta más tarde."
       },
       "email": {
-        "name": "correo",
+        "name": "email",
         "placeholder": "correo@ejemplo.com",
         "label": "Correo electrónico",
         "errors": {
-          "required": "Ingresa tu correo electrónico",
-          "invalid": "Correo electrónico inválido"
+          "required": "Ingresa tu correo",
+          "invalid": "Correo inválido"
         }
       },
       "password": {
-        "name": "contraseña",
-        "placeholder": "Ingresa tu contraseña aquí",
+        "name": "password",
+        "placeholder": "Ingresa la contraseña aquí",
         "label": "Contraseña",
         "errors": {
           "required": "Ingresa tu contraseña"
@@ -51,14 +51,14 @@
         "title": "Crear una cuenta",
         "description": "Únete a Gestora y comienza a gestionar tu negocio",
         "errors": {
-          "server_error": "Error del servidor, intenta más tarde."
+          "server_error": "Error del servidor, por favor intenta más tarde."
         },
         "email": {
           "label": "Correo electrónico",
           "placeholder": "correo@ejemplo.com",
           "errors": {
-            "invalid": "Correo electrónico inválido",
-            "required": "Ingresa tu correo electrónico",
+            "invalid": "Correo inválido",
+            "required": "Ingresa tu correo",
             "inUse": "El correo ya está en uso"
           }
         },
@@ -71,10 +71,10 @@
           }
         },
         "confirmPassword": {
-          "placeholder": "Confirma tu contraseña aquí",
+          "placeholder": "Confirma la contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "La confirmación de la contraseña es obligatoria",
+            "required": "La confirmación es obligatoria",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -123,10 +123,10 @@
           }
         },
         "confirmPassword": {
-          "placeholder": "Confirma tu contraseña aquí",
+          "placeholder": "Confirma la contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "La confirmación de la contraseña es obligatoria",
+            "required": "La confirmación es obligatoria",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -137,6 +137,9 @@
     }
   },
   "Sidebar": {
+    "sections": {
+      "main": "Principal"
+    },
     "brand": {
       "text": "Gestora",
       "subtitle": "Gestión empresarial"
@@ -163,7 +166,7 @@
       "logout": "Cerrar sesión"
     },
     "errors": {
-      "server_error": "Error del servidor, intenta más tarde."
+      "server_error": "Error del servidor, por favor intenta más tarde."
     },
     "sections": {
       "inventory": "Inventario",
@@ -177,8 +180,8 @@
   },
   "Dashboard": {
     "earnings": {
-      "title": "Ganancias",
-      "description": "Ganancias totales de tu negocio."
+      "title": "Ingresos Totales",
+      "description": "Ingresos totales de tu negocio."
     },
     "sales": {
       "title": "Ventas",
@@ -193,12 +196,12 @@
       "description": "Usuarios registrados en el sistema"
     },
     "chart": {
-      "title": "Ingresos totales por mes",
-      "description": "Total de los ingressos generados en los últimos 12 meses"
+      "title": "Ingresos mensuales",
+      "description": "Ingresos generados en los últimos 12 meses"
     },
     "topProducts": {
-      "title": "Productos más vendidos",
-      "description": "Los productos más vendidos en el último mes",
+      "title": "Productos Top",
+      "description": "Productos más vendidos en los últimos 30 días",
       "data": {
         "units": "unidades"
       }
@@ -206,14 +209,87 @@
   },
   "Inventory": {
     "search": "Buscar producto",
-    "filter": "Filter",
-    "add": "Agregar Producto",
-    "export": "Exportar",
+    "filter": "Filtrar",
+    "add": "Agregar producto",
+    "export": "Exportar datos",
+    "form": {
+      "title": "Agregar nuevo producto",
+      "imageDrop": {
+        "text": "Suelta tus imágenes aquí",
+        "button": "Haz clic para explorar"
+      },
+      "status": {
+        "label": "Estado",
+        "placeholder": "Selecciona estado",
+        "errors": {
+          "required": "El estado es obligatorio"
+        },
+        "options": {
+          "active": {
+            "label": "Activo"
+          },
+          "inactive": {
+            "label": "Inactivo"
+          },
+          "out_of_stock": {
+            "label": "Agotado"
+          },
+          "discontinued": {
+            "label": "Descontinuado"
+          }
+        }
+      },
+      "quantity": {
+        "label": "Cantidad",
+        "placeholder": "Ingresa la cantidad",
+        "errors": {
+          "required": "La cantidad es obligatoria"
+        }
+      },
+      "salesPrice": {
+        "label": "Precio de venta",
+        "placeholder": "Ingresa el precio de venta",
+        "errors": {
+          "required": "El precio de venta es obligatorio"
+        }
+      },
+      "costPrice": {
+        "label": "Precio de costo",
+        "placeholder": "Ingresa el precio de costo",
+        "errors": {
+          "required": "El precio de costo es obligatorio"
+        }
+      },
+      "name": {
+        "label": "Nombre del producto",
+        "placeholder": "Ingresa el nombre del producto",
+        "errors": {
+          "required": "El nombre es obligatorio"
+        }
+      },
+      "images": {
+        "errors": {
+          "required": "Sube al menos una imagen",
+          "maxImages": "Puedes subir un máximo de 3 imágenes"
+        }
+      },
+      "description": {
+        "label": "Descripción",
+        "placeholder": "Ingresa una descripción del producto",
+        "errors": {
+          "required": "La descripción es obligatoria"
+        }
+      },
+      "button": {
+        "add": "Agregar",
+        "cancel": "Cancelar"
+      }
+    },
     "table": {
       "menu": {
-        "edit": "Editar Producto",
-        "delete": "Eliminar Producto",
-        "view": "Ver Producto"
+        "delete": "Eliminar ítem",
+        "edit": "Editar ítem",
+        "view": "Ver ítem"
       },
       "columns": {
         "name": {

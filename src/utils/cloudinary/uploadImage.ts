@@ -30,5 +30,5 @@ export const uploadImage = async (image: File) => {
     },
   );
   const { secure_url } = await responseCloudinary.json();
-  return secure_url;
+  return secure_url as string;
 };

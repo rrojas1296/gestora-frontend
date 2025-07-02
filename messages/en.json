@@ -272,7 +272,7 @@
       "images": {
         "errors": {
           "required": "Upload at least one image",
-          "maxImages": "You can upload a maximum of 5 images"
+          "maxImages": "You can upload a maximum of 3 images"
         }
       },
       "description": {
@@ -283,7 +283,7 @@
         }
       },
       "button": {
-        "add": "Add product",
+        "add": "Add",
         "cancel": "Cancel"
       }
     },

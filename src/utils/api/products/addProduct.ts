@@ -1,6 +1,6 @@
 import { Status } from "@/types/api/inventory";
-import { apiInstance } from "../instance";
 import { ApiResponse } from "@/types/api/response";
+import apiInstance from "../instance";
 
 type AddProductResponse = {
   id: string;
@@ -16,7 +16,7 @@ type AddProductResponse = {
 
 export type ProductBody = {
   name: string;
-  description: string;
+  description?: string;
   sales_price: number;
   cost_price: number;
   quantity: number;

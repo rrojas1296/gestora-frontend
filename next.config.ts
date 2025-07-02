@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("https://lh3.googleusercontent.com/**"),
       new URL("https://i.pinimg.com/**"),
+      new URL("https://res.cloudinary.com/**"),
       {
         protocol: "https",
         hostname: "images.unsplash.com",
