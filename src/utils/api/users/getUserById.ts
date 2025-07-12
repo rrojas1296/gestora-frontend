@@ -1,11 +1,9 @@
 import { ApiResponse } from "@/types/api/response";
-import { UserInfo } from "@/types/api/users";
+import { UserDB } from "@/types/api/users";
 import apiInstance from "../instance";
 
-export const getUserById = async (userId?: string) => {
-  if (!userId) return null;
-  const { data } = await apiInstance.get<ApiResponse<UserInfo>>(
-    "/users/getUserById/" + userId,
-  );
-  return data.data || null;
+export const getAuthUser = async () => {
+  const { data } =
+    await apiInstance.get<ApiResponse<UserDB>>("/users/getAuthUser");
+  return data.data;
 };

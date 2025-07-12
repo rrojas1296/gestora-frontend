@@ -1,6 +1,14 @@
-import { statusOptions } from "@/types/api/inventory";
 import { FormControlType } from "@/types/controls";
 import { z } from "zod";
+
+export const dbStatusOptions = [
+  "active",
+  "inactive",
+  "discontinued",
+  "draft",
+  "archived",
+  "out_of_stock",
+] as const;
 
 export const addProductSchema = z.object({
   name: z.string().min(1, {
@@ -16,7 +24,10 @@ export const addProductSchema = z.object({
   quantity: z.string().min(1, {
     message: "form.quantity.errors.required",
   }),
-  status: z.enum(statusOptions, {
+  category: z.string().min(1, {
+    message: "form.category.errors.required",
+  }),
+  status: z.enum(dbStatusOptions, {
     errorMap: () => ({ message: "form.status.errors.required" }),
   }),
   images: z
@@ -85,14 +96,26 @@ export const addProductFormFieldsControls: FormControlType<AddProductSchemaField
           value: "discontinued",
         },
         {
-          label: "form.status.options.out_of_stock.label",
-          value: "out_of_stock",
+          label: "form.status.options.draft.label",
+          value: "draft",
+        },
+        {
+          label: "form.status.options.archived.label",
+          value: "archived",
         },
       ],
       label: "form.status.label",
       type: "select",
       placeholder: "form.status.placeholder",
       className: "col-start-1 col-end-3",
+    },
+    {
+      name: "category",
+      type: "select",
+      label: "form.category.label",
+      placeholder: "form.category.placeholder",
+      className: "col-span-2",
+      options: [],
     },
   ];
 export const addProductInitialState: AddProductSchemaType = {
@@ -103,4 +126,5 @@ export const addProductInitialState: AddProductSchemaType = {
   quantity: "",
   status: "active",
   images: [],
+  category: "",
 };

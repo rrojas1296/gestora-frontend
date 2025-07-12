@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation";
 
-const LocalePage = () => {
-  return redirect("/login");
-};
+const Page = () => redirect("/login");
 
-export default LocalePage;
+export default Page;

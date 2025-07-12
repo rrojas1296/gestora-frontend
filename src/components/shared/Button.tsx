@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Button as ButtonBase } from "housy-lib";
+import { Button as ButtonBase } from "gestora-lib";
 
 interface Props {
   children?: ReactNode;

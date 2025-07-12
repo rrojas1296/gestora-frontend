@@ -9,9 +9,7 @@ type Props = {
 const PublicPage = async ({ children }: Props) => {
   const client = await createSupabaseServer();
   const { data } = await client.auth.getSession();
-  if (data?.session) {
-    redirect("/dashboard");
-  }
+  if (data?.session) return redirect("/dashboard");
   return children;
 };
 

@@ -2,7 +2,7 @@ import { cn } from "@/utils/cn";
 import React, { ComponentProps, DragEvent, useRef, useState } from "react";
 import ImageUp from "../Icons/ImageUp";
 import { useTranslations } from "next-intl";
-import { Button } from "housy-lib";
+import { Button } from "gestora-lib";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import PreviewImage from "./PreviewImage";
 
@@ -22,7 +22,7 @@ const DropZone = ({ className, images, setValue, trigger, error }: Props) => {
     e.preventDefault();
     e.stopPropagation();
     const newImages = Array.from(e.dataTransfer.files).filter((file) =>
-      file.type.startsWith("image/"),
+      file.type.startsWith("image/")
     );
 
     setDragging(false);
@@ -39,7 +39,7 @@ const DropZone = ({ className, images, setValue, trigger, error }: Props) => {
 
   const handleFiles = (files: FileList) => {
     const newImages = Array.from(files).filter((file) =>
-      file.type.startsWith("image/"),
+      file.type.startsWith("image/")
     );
     setValue("images", [...images, ...newImages]);
     trigger("images");
@@ -51,7 +51,7 @@ const DropZone = ({ className, images, setValue, trigger, error }: Props) => {
         className={cn(
           "border-dashed border border-border-2 rounded-md w-full h-44 gap-4 flex flex-col items-center justify-center dragover:bg-red-500",
           dragging && "bg-bg-2",
-          error && "border-red-500",
+          error && "border-red-500"
         )}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -60,7 +60,7 @@ const DropZone = ({ className, images, setValue, trigger, error }: Props) => {
         <div
           className={cn(
             "flex flex-col items-center gap-4",
-            dragging && "pointer-events-none",
+            dragging && "pointer-events-none"
           )}
         >
           <ImageUp className="w-8 h-8 stroke-current text-text-1" />
@@ -94,7 +94,7 @@ const DropZone = ({ className, images, setValue, trigger, error }: Props) => {
             images.filter((_, i) => i !== index),
             {
               shouldValidate: true,
-            },
+            }
           );
         }}
       />

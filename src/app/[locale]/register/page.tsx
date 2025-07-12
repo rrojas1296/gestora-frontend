@@ -17,17 +17,17 @@ import { toast } from "sonner";
 import { FormControlType } from "@/types/controls";
 import { cn } from "@/utils/cn";
 import { logginGoogle } from "@/utils/supabase/auth";
-import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Toast } from "housy-lib";
+import { Button, Toast } from "gestora-lib";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { emailInUse } from "@/utils/api/auth/emailInUse";
-import useSupabaseUser from "@/hooks/useSupabaseUser";
+import useSupabaseSession from "@/hooks/useSupabaseUser";
 import { trimObject } from "@/utils/trimObject";
+import { clientSupabase } from "@/utils/supabase";
 
 const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
   {
@@ -51,11 +51,10 @@ const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
   },
 ];
 
-const RegisterPage = () => {
+const Page = () => {
   const t = useTranslations("Register");
   const [loading, setLoading] = useState(false);
-  const { user: supabaseUser, loading: loadingUserSupabase } =
-    useSupabaseUser();
+  const { session, loading: loadingSession } = useSupabaseSession();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const {
@@ -78,39 +77,31 @@ const RegisterPage = () => {
           message: "step1.form.email.errors.inUse",
         });
       }
-      const {
-        data: { session },
-      } = await createClient().auth.signUp({
-        password,
+      await clientSupabase.auth.signUp({
         email,
+        password,
       });
-      if (session) {
-        router.push("/register/fullName");
-      }
-    } catch (err) {
+
+      router.push("/register/fullName");
+    } catch {
+      setLoading(false);
       toast.custom(
         () => {
           return (
-            <Toast
-              text={t(`step1.form.errors.server_error`)}
-              type="error"
-              className="bg-bg-1 text-text-1 border-border-2 max-w-[350px] justify-self-center"
-            />
+            <Toast text={t(`step1.form.errors.server_error`)} type="error" />
           );
         },
         {
           position: "bottom-center",
         },
       );
-      console.log({ err });
-    } finally {
-      setLoading(false);
     }
   };
 
-  if (loadingUserSupabase) return <Loader />;
+  useEffect(() => () => setLoading(false), []);
+  if (loadingSession) return <Loader />;
 
-  if (supabaseUser) return redirect("/dashboard");
+  if (session) return redirect("/dashboard");
   return (
     <>
       <div className="grid gap-3">
@@ -190,4 +181,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default Page;

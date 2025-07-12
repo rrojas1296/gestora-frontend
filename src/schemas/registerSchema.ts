@@ -28,10 +28,10 @@ export const registerStepOneSchema = z
   });
 
 export const registerStepTwoSchema = z.object({
-  firstName: z.string().min(1, {
+  first_name: z.string().min(1, {
     message: "step2.form.firstName.errors.required",
   }),
-  lastName: z.string().min(1, {
+  last_name: z.string().min(1, {
     message: "step2.form.lastName.errors.required",
   }),
 });

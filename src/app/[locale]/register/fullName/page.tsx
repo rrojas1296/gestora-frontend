@@ -6,109 +6,85 @@ import {
   type RegisterSchemaFieldsStepTwo,
   type RegisterSchemaStepTwoType,
 } from "@/schemas/registerSchema";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { setRegisterData } from "@/store/slices/register.slice";
 import type { FormControlType } from "@/types/controls";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "housy-lib";
+import { Button } from "gestora-lib";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Image from "next/image";
 import FormControl from "@/components/shared/FormControl";
-import {
-  AuthProvider,
-  registerUser,
-  RegisterUserData,
-} from "@/utils/api/auth/registerUser";
 import { useTranslations } from "next-intl";
-import useSupabaseUser from "@/hooks/useSupabaseUser";
+import useSupabaseSession from "@/hooks/useSupabaseUser";
 import { trimObject } from "@/utils/trimObject";
+import Loader from "@/components/shared/Loader";
+import useAuthUser from "@/hooks/useAuthUser";
 
 const controls: FormControlType<RegisterSchemaFieldsStepTwo>[] = [
   {
-    name: "firstName",
+    name: "first_name",
     type: "text",
     placeholder: "step2.form.firstName.placeholder",
     label: "step2.form.firstName.label",
   },
   {
-    name: "lastName",
+    name: "last_name",
     type: "text",
     placeholder: "step2.form.lastName.placeholder",
     label: "step2.form.lastName.label",
   },
 ];
 
-const FullName = () => {
+const Page = () => {
   const t = useTranslations("Register");
-  const { user: userSupabase } = useSupabaseUser();
+  const { session, loading: loadingSession } = useSupabaseSession();
+  const { userDB, loading: loadingUserDB } = useAuthUser();
+  const loadingData = loadingSession || loadingUserDB;
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { lastName, firstName } = useAppSelector((state) => state.register);
   const router = useRouter();
   const {
     formState: { errors },
     register,
     handleSubmit,
-    setValue,
   } = useForm({
     resolver: zodResolver(registerStepTwoSchema),
   });
 
   const submitMethod = async (data: RegisterSchemaStepTwoType) => {
-    const { lastName, firstName } = trimObject<RegisterSchemaStepTwoType>(data);
-    try {
-      setLoading(true);
-      dispatch(
-        setRegisterData({
-          firstName: data.firstName,
-          lastName: data.lastName,
-        }),
-      );
-      if (userSupabase) {
-        const {
-          email,
-          app_metadata: { provider },
-          user_metadata: { avatar_url },
-        } = userSupabase;
-        if (!email || !provider) return;
-
-        const newUser: RegisterUserData = {
-          email: email,
-          first_name: firstName,
-          last_name: lastName,
-          id: userSupabase.id,
-          provider: provider as AuthProvider,
-          photo_url: avatar_url,
-        };
-        await registerUser(newUser);
-        router.push("/dashboard");
-      }
-    } catch (err) {
-      console.log({ err });
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    const { last_name, first_name } =
+      trimObject<RegisterSchemaStepTwoType>(data);
+    setLoading(true);
+    dispatch(
+      setRegisterData({
+        first_name,
+        last_name,
+      })
+    );
+    router.push("/register/company");
   };
-  useEffect(() => {
-    setValue("lastName", lastName || "");
-    setValue("firstName", firstName || "");
-  }, [firstName, lastName, setValue]);
+
+  useEffect(() => () => setLoading(false), []);
+  if (loadingData) return <Loader />;
+  if (!session) return redirect("/login");
+  if (userDB) return redirect("/dashboard");
 
   return (
     <>
       <div className="grid gap-3">
-        {userSupabase?.app_metadata?.provider === "google" && (
+        {session?.user?.app_metadata?.provider === "google" && (
           <div className="bg-bg-2 w-fit px-6 py-3 text-text-1 rounded-full flex gap-4 items-center justify-self-center">
             <Image
-              src={userSupabase?.user_metadata.avatar_url || IMG_USER_DEFAULT}
+              src={session?.user?.user_metadata.avatar_url || IMG_USER_DEFAULT}
               alt="User profile image"
               className="w-6 h-6 rounded-full"
               width={100}
               height={100}
             />
-            <p className="text-sm"> {userSupabase?.email}</p>
+            <p className="text-sm"> {session?.user?.email}</p>
           </div>
         )}
         <h1 className="text-center text-text-1 text-2xl font-bold">
@@ -148,4 +124,4 @@ const FullName = () => {
   );
 };
 
-export default FullName;
+export default Page;

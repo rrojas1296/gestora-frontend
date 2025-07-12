@@ -4,23 +4,17 @@ import apiInstance from "../instance";
 
 type AddProductResponse = {
   id: string;
-  name: string;
-  description: string;
-  sales_price: number;
-  cost_price: number;
-  quantity: number;
-  status: Status;
-  created_at: Date;
-  updated_at: Date;
 };
 
 export type ProductBody = {
   name: string;
-  description?: string;
+  category_id: string;
   sales_price: number;
   cost_price: number;
   quantity: number;
   status: Status;
+  company_id: string;
+  description?: string;
 };
 
 export const createProduct = async (data: ProductBody) => {

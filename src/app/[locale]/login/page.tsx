@@ -1,7 +1,7 @@
 "use client";
-import { Button, Toast } from "housy-lib";
+import { Button, Toast } from "gestora-lib";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   loginSchema,
@@ -59,13 +59,13 @@ const Login = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoadingForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (data: LoginSchemaType) => {
     try {
       const { email, password } = data;
-      setLoading(true);
+      setLoadingForm(true);
       const { error } = await supabaseClient.auth.signInWithPassword({
         password,
         email,
@@ -102,14 +102,13 @@ const Login = () => {
           position: "bottom-center",
         },
       );
-    } finally {
-      setLoading(false);
     }
   };
 
   const googleLogin = async () => {
     await logginGoogle();
   };
+  useEffect(() => () => setLoadingForm(false), []);
   return (
     <div className="h-screen bg-bg-1 flex flex-col py-12 gap-12 place-items-center overflow-y-auto lg:bg-bg-2 lg:grid lg:place-items-center">
       <div className="grid gap-6 w-full max-w-md px-8 lg:bg-bg-1 lg:px-14 lg:rounded-xl lg:py-14 lg:border-border-2 lg:border 2xl:py-20">

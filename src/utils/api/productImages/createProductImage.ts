@@ -11,6 +11,8 @@ interface AddProductImageResponse {
 
 export interface CreateProductImage {
   product_id: string;
+  is_deleted: boolean;
+  is_primary: boolean;
   url: string;
 }
 

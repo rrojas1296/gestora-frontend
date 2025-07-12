@@ -8,7 +8,7 @@ import {
 import { createProduct, ProductBody } from "@/utils/api/products/addProduct";
 import { toast } from "sonner";
 import { uploadImage } from "@/utils/cloudinary/uploadImage";
-import { Button, Toast } from "housy-lib";
+import { Button, Toast } from "gestora-lib";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -17,6 +17,9 @@ import {
   CreateProductImage,
   createProductImage,
 } from "@/utils/api/productImages/createProductImage";
+import useCategories from "@/hooks/useCategories";
+import { useAppSelector } from "@/store/hooks";
+import { sleep } from "@/utils/sleep";
 
 interface Props {
   onClose: () => void;
@@ -26,6 +29,8 @@ interface Props {
 const FormAddProduct = ({ onClose, refetch }: Props) => {
   const t = useTranslations("Inventory");
   const [loading, setLoading] = useState(false);
+  const companyId = useAppSelector((state) => state.company.id);
+  const { categories } = useCategories(companyId);
   const {
     formState: { errors },
     handleSubmit,
@@ -45,12 +50,15 @@ const FormAddProduct = ({ onClose, refetch }: Props) => {
   const addProductHandler = async (data: AddProductSchemaType) => {
     try {
       setLoading(true);
-      const { images, ...other } = data;
-      const r = toast.custom(() => (
-        <Toast text="Creating product" type="loading" />
-      ));
+      const { images, category: category_id, ...other } = data;
+      const r = toast.custom(
+        () => <Toast text="Creating product" type="loading" />,
+        { duration: 1000 * 100 },
+      );
       const body: ProductBody = {
         ...other,
+        category_id,
+        company_id: companyId!,
         cost_price: Number(data.cost_price),
         sales_price: Number(data.sales_price),
         quantity: Number(data.quantity),
@@ -62,14 +70,16 @@ const FormAddProduct = ({ onClose, refetch }: Props) => {
         const body: CreateProductImage = {
           product_id: id,
           url: secure_url,
+          is_primary: images.indexOf(image) === 0,
+          is_deleted: false,
         };
         await createProductImage(body);
-        refetch();
       }
       toast.dismiss(r);
       toast.custom(() => (
         <Toast text="Product created successfully" type="success" />
       ));
+      refetch();
     } catch (err) {
       console.log({ err });
     } finally {
@@ -89,7 +99,10 @@ const FormAddProduct = ({ onClose, refetch }: Props) => {
         {addProductFormFieldsControls.map((field, index) => {
           const { label, name, type, placeholder, className, options } = field;
           const error = errors[name] ? t(errors[name].message!) : "";
-          const opts = options?.map((opt) => ({ ...opt, label: t(opt.label) }));
+          const opts =
+            name !== "category"
+              ? options?.map((opt) => ({ ...opt, label: t(opt.label) }))
+              : categories?.map((cat) => ({ label: cat.name, value: cat.id }));
           return (
             <FormControl
               key={index}

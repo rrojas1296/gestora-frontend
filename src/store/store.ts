@@ -3,6 +3,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import ConfigSlice from "./slices/config.slice";
 import RegisterSlice from "./slices/register.slice";
 import ProductSlice from "./slices/product.slice";
+import CompanySlice from "./slices/company.slice";
+import UserSlice from "./slices/user.slice";
+import CategorieSlice from "./slices/categories.slice";
 // ...
 
 export const store = configureStore({
@@ -13,7 +16,10 @@ export const store = configureStore({
   reducer: {
     config: ConfigSlice,
     register: RegisterSlice,
+    company: CompanySlice,
     product: ProductSlice,
+    user: UserSlice,
+    categories: CategorieSlice,
   },
 });
 

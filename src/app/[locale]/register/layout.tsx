@@ -5,7 +5,7 @@ import WorldIcon from "@/components/Icons/WorldIcon";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setTheme } from "@/store/slices/config.slice";
-import { Button } from "housy-lib";
+import { Button } from "gestora-lib";
 import { useLocale } from "next-intl";
 import { ReactNode } from "react";
 

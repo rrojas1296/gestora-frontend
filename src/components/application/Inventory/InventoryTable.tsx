@@ -1,17 +1,17 @@
 "use client";
-import { IProduct } from "@/types/api/inventory";
+import { ProductDB } from "@/types/api/inventory";
 import { cn } from "@/utils/cn";
 import { flexRender, Table } from "@tanstack/react-table";
 import React from "react";
 
 interface Props {
-  table: Table<IProduct>;
+  table: Table<ProductDB>;
 }
 
 const InventoryTable = ({ table }: Props) => {
   return (
     <div className="overflow-x-auto grid gap-6">
-      <table className="w-[900px] md:w-full">
+      <table className="w-[1300px] md:w-full">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

@@ -1,6 +1,6 @@
 import { environments } from "@/config/environments";
 import axios from "axios";
-import { createClient } from "../supabase/client";
+import { clientSupabase } from "../supabase";
 const apiInstance = axios.create({
   baseURL: environments.API_URL,
 });
@@ -8,7 +8,7 @@ const apiInstance = axios.create({
 apiInstance.interceptors.request.use(async (config) => {
   const {
     data: { session },
-  } = await createClient().auth.getSession();
+  } = await clientSupabase.auth.getSession();
   if (session?.access_token) {
     config.headers.authorization = `Bearer ${session.access_token}`;
   }

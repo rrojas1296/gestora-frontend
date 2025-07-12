@@ -1,4 +1,4 @@
-import { Button } from "housy-lib";
+import { Button } from "gestora-lib";
 import React from "react";
 import ArrowLeft from "../Icons/CloseIcon";
 import ArrowRight from "../Icons/ArrowRight";
@@ -16,7 +16,7 @@ interface Props {
 const Pagination = ({ setPage, totalPages, pagination, className }: Props) => {
   const newArray = sliceArrayForPagination(
     [...Array(totalPages).keys()],
-    pagination,
+    pagination
   );
   return (
     <div className={cn("flex gap-2 justify-center", className)}>
@@ -24,7 +24,7 @@ const Pagination = ({ setPage, totalPages, pagination, className }: Props) => {
         variant="icon"
         className={cn(
           "p-0 flex place-items-center bg-bg-2 hover:bg-bg-1/90 rounded-md h-8 w-8",
-          totalPages === 1 && "hidden",
+          totalPages <= 1 && "hidden"
         )}
         onClick={() =>
           setPage(pagination.pageIndex === 0 ? 0 : pagination.pageIndex - 1)
@@ -41,7 +41,7 @@ const Pagination = ({ setPage, totalPages, pagination, className }: Props) => {
             className={cn(
               "p-0 flex text-sm place-items-center text-text-1 bg-bg-2 hover:bg-bg-2/50 rounded-md h-8 w-8",
               pagination.pageIndex === page &&
-                "bg-primary text-text-3 hover:bg-primary/90",
+                "bg-primary text-text-3 hover:bg-primary/90"
             )}
           >
             {page + 1}
@@ -52,13 +52,13 @@ const Pagination = ({ setPage, totalPages, pagination, className }: Props) => {
         variant="icon"
         className={cn(
           "p-0 flex place-items-center bg-bg-2 hover:bg-bg-1/90 rounded-md h-8 w-8",
-          totalPages === 1 && "hidden",
+          totalPages <= 1 && "hidden"
         )}
         onClick={() =>
           setPage(
-            pagination.pageIndex === totalPages - 1
+            pagination.pageIndex === totalPages - 1 || totalPages === 0
               ? totalPages - 1
-              : pagination.pageIndex + 1,
+              : pagination.pageIndex + 1
           )
         }
       >

@@ -1,4 +1,5 @@
-import { Status, statusOptions } from "@/types/api/inventory";
+import { dbStatusOptions } from "@/schemas/addProductSchema";
+import { Status } from "@/types/api/inventory";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ProductState {
@@ -17,7 +18,7 @@ const initialState: ProductState = {
   newProduct: {
     cost_price: "",
     description: "",
-    status: statusOptions[0],
+    status: dbStatusOptions[0],
     images: [],
     name: "",
     quantity: "",

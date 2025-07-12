@@ -1,4 +1,4 @@
-import { Button } from "housy-lib";
+import { Button } from "gestora-lib";
 import Image from "next/image";
 import React from "react";
 import XIcon from "../Icons/XIcon";

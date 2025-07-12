@@ -1,7 +1,7 @@
 {
   "Login": {
     "title": "Bienvenido a Gestora",
-    "description": "Bienvenido a Gestora, comienza a gestionar tu negocio",
+    "description": "Bienvenido a Gestora, empieza a gestionar tu negocio",
     "buttons": {
       "google": "Iniciar sesión con Google"
     },
@@ -9,7 +9,7 @@
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "register": {
       "question": "¿No tienes una cuenta?",
-      "link": "Registrarse"
+      "link": "Regístrate"
     },
     "form": {
       "errors": {
@@ -21,16 +21,16 @@
         "server_error": "Error del servidor, por favor intenta más tarde."
       },
       "email": {
-        "name": "email",
+        "name": "correo",
         "placeholder": "correo@ejemplo.com",
         "label": "Correo electrónico",
         "errors": {
-          "required": "Ingresa tu correo",
+          "required": "Ingresa tu correo electrónico",
           "invalid": "Correo inválido"
         }
       },
       "password": {
-        "name": "password",
+        "name": "contraseña",
         "placeholder": "Ingresa la contraseña aquí",
         "label": "Contraseña",
         "errors": {
@@ -48,8 +48,8 @@
         "google": "Registrarse con Google"
       },
       "form": {
-        "title": "Crear una cuenta",
-        "description": "Únete a Gestora y comienza a gestionar tu negocio",
+        "title": "Crea una cuenta",
+        "description": "Únete ahora a Gestora y empieza a gestionar tu negocio",
         "errors": {
           "server_error": "Error del servidor, por favor intenta más tarde."
         },
@@ -58,8 +58,8 @@
           "placeholder": "correo@ejemplo.com",
           "errors": {
             "invalid": "Correo inválido",
-            "required": "Ingresa tu correo",
-            "inUse": "El correo ya está en uso"
+            "required": "Ingresa tu correo electrónico",
+            "inUse": "Correo ya en uso"
           }
         },
         "password": {
@@ -67,14 +67,14 @@
           "label": "Contraseña",
           "errors": {
             "required": "La contraseña es obligatoria",
-            "minLength": "La contraseña debe tener más de 6 caracteres."
+            "minLength": "La contraseña debe tener más de 6 caracteres"
           }
         },
         "confirmPassword": {
-          "placeholder": "Confirma la contraseña aquí",
+          "placeholder": "Confirma tu contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "La confirmación es obligatoria",
+            "required": "La confirmación de contraseña es obligatoria",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -83,7 +83,7 @@
         },
         "question": {
           "text": "¿Ya tienes una cuenta?",
-          "link": "Iniciar sesión"
+          "link": "Inicia sesión"
         }
       },
       "or": "O continúa con"
@@ -96,14 +96,14 @@
           "text": "Finalizar registro"
         },
         "firstName": {
-          "placeholder": "Ingresa tu nombre aquí",
+          "placeholder": "Ingresa tu nombre",
           "label": "Nombre",
           "errors": {
             "required": "El nombre es obligatorio"
           }
         },
         "lastName": {
-          "placeholder": "Ingresa tu apellido aquí",
+          "placeholder": "Ingresa tu apellido",
           "label": "Apellido",
           "errors": {
             "required": "El apellido es obligatorio"
@@ -123,7 +123,7 @@
           }
         },
         "confirmPassword": {
-          "placeholder": "Confirma la contraseña aquí",
+          "placeholder": "Confirma tu contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
             "required": "La confirmación es obligatoria",
@@ -133,6 +133,51 @@
         "button": {
           "text": "Registrarse"
         }
+      }
+    },
+    "company": {
+      "title": "Ingresa la información de tu empresa",
+      "description": "Ingresa la información de tu empresa para poder gestionar tus datos",
+      "form": {
+        "name": {
+          "label": "Nombre de la empresa",
+          "placeholder": "Ingresa el nombre de tu empresa",
+          "errors": {
+            "required": "Este campo es obligatorio"
+          }
+        },
+        "sector": {
+          "label": "Sector de la empresa",
+          "placeholder": "Selecciona el sector de tu empresa",
+          "options": {
+            "retail": "Comercio minorista",
+            "e_commerce": "Comercio electrónico",
+            "restaurants_food": "Restaurantes y servicios de comida",
+            "wholesale_distribution": "Distribución y venta mayorista",
+            "health_wellness": "Salud y bienestar",
+            "pharmaceuticals": "Farmacéutico",
+            "manufacturing": "Manufactura",
+            "automotive": "Automotriz",
+            "electronics": "Electrónica",
+            "home_furniture": "Hogar y muebles",
+            "fashion_apparel": "Moda y ropa",
+            "beauty_personal_care": "Belleza y cuidado personal",
+            "agriculture_farming": "Agricultura y ganadería",
+            "construction_materials": "Construcción y materiales",
+            "other": "Otro"
+          },
+          "errors": {
+            "required": "Debes seleccionar un sector"
+          }
+        },
+        "otherSector": {
+          "label": "Otro sector",
+          "placeholder": "Ingresa el nombre del otro sector",
+          "errors": {
+            "required": "Ingresa el nombre del otro sector"
+          }
+        },
+        "button": "Guardar"
       }
     }
   },
@@ -148,6 +193,7 @@
       "dashboard": "Panel",
       "inventory": "Inventario",
       "sales": "Ventas",
+      "category": "Categorías",
       "purchases": "Compras",
       "reports": "Reportes",
       "profile": "Perfil",
@@ -172,6 +218,7 @@
       "inventory": "Inventario",
       "sales": "Ventas",
       "purchases": "Compras",
+      "categories": "Categorías",
       "reports": "Reportes",
       "users": "Usuarios",
       "settings": "Configuración",
@@ -200,8 +247,8 @@
       "description": "Ingresos generados en los últimos 12 meses"
     },
     "topProducts": {
-      "title": "Productos Top",
-      "description": "Productos más vendidos en los últimos 30 días",
+      "title": "Productos destacados",
+      "description": "Los productos más vendidos en los últimos 30 días",
       "data": {
         "units": "unidades"
       }
@@ -212,15 +259,16 @@
     "filter": "Filtrar",
     "add": "Agregar producto",
     "export": "Exportar datos",
+
     "form": {
       "title": "Agregar nuevo producto",
       "imageDrop": {
         "text": "Suelta tus imágenes aquí",
-        "button": "Haz clic para explorar"
+        "button": "Haz clic para buscar"
       },
       "status": {
         "label": "Estado",
-        "placeholder": "Selecciona estado",
+        "placeholder": "Selecciona un estado",
         "errors": {
           "required": "El estado es obligatorio"
         },
@@ -253,6 +301,7 @@
           "required": "El precio de venta es obligatorio"
         }
       },
+
       "costPrice": {
         "label": "Precio de costo",
         "placeholder": "Ingresa el precio de costo",
@@ -285,18 +334,28 @@
         "cancel": "Cancelar"
       }
     },
+
     "table": {
       "menu": {
-        "delete": "Eliminar ítem",
-        "edit": "Editar ítem",
-        "view": "Ver ítem"
+        "delete": "Eliminar producto",
+        "edit": "Editar producto",
+        "view": "Ver producto"
       },
       "columns": {
         "name": {
           "header": "Nombre"
         },
-        "sales": {
-          "header": "Ventas"
+        "sales_price": {
+          "header": "Precio de venta"
+        },
+        "cost_price": {
+          "header": "Precio de costo"
+        },
+        "quantity": {
+          "header": "Cantidad"
+        },
+        "created_at": {
+          "header": "Fecha de creación"
         },
         "price": {
           "header": "Precio"

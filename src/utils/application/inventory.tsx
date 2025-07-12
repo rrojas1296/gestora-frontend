@@ -1,5 +1,5 @@
 import CheckBox from "@/components/shared/CheckBox";
-import { IProduct } from "@/types/api/inventory";
+import { ProductDB } from "@/types/api/inventory";
 import { ColumnDef, PaginationState } from "@tanstack/react-table";
 import Image from "next/image";
 import { capitalize } from "../capitalize";
@@ -9,18 +9,32 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "housy-lib";
+} from "gestora-lib";
 import DotsIcon from "@/components/Icons/DotsIcon";
 import Badge from "@/components/shared/Badge";
 import TrashIcon from "@/components/Icons/TrashIcon";
 import OpenEyeIcon from "@/components/Icons/OpenEyeIcon";
 import EditIcon from "@/components/Icons/EditIcon";
+import moment from "moment";
+import { UseFormReset } from "react-hook-form";
+import { AddProductSchemaType } from "@/schemas/addProductSchema";
+import { IMG_PRODUCT_DEFAULT } from "@/config/constants";
 
 type TranslatorFunction = (key: string) => string;
 
-export const generateInvetoryColumns = (
-  t: TranslatorFunction,
-): ColumnDef<IProduct>[] => {
+export const generateInvetoryColumns = ({
+  t,
+  setOpenDialog,
+  setIdProduct,
+  reset,
+  setOpenSidebar,
+}: {
+  t: TranslatorFunction;
+  setOpenSidebar: (val: boolean) => void;
+  setOpenDialog: (val: boolean) => void;
+  setIdProduct: (val: string) => void;
+  reset: UseFormReset<AddProductSchemaType>;
+}): ColumnDef<ProductDB>[] => {
   return [
     {
       id: "select",
@@ -42,7 +56,8 @@ export const generateInvetoryColumns = (
       accessorKey: "name",
       cell: (info) => {
         const { name, images } = info.row.original;
-        const image_url = images[0]?.url;
+        const image_url =
+          images.find((i) => i.is_primary)?.url || IMG_PRODUCT_DEFAULT;
         return (
           <div className="flex items-center gap-4 w-fit">
             <Image
@@ -50,7 +65,7 @@ export const generateInvetoryColumns = (
               alt={name}
               width={50}
               height={50}
-              className="rounded-full object-cover w-10 h-10"
+              className="rounded-md object-cover w-10 h-10"
             />
             <span className="text-sm">{name}</span>
           </div>
@@ -58,19 +73,24 @@ export const generateInvetoryColumns = (
       },
     },
     {
-      header: t("table.columns.sales.header"),
+      header: t("table.columns.sales_price.header"),
       cell: (info) => info.getValue(),
       accessorKey: "sales_price",
     },
     {
-      header: t("table.columns.price.header"),
+      header: t("table.columns.cost_price.header"),
       cell: (info) => info.getValue(),
       accessorKey: "cost_price",
     },
     {
+      header: t("table.columns.quantity.header"),
+      cell: (info) => info.getValue(),
+      accessorKey: "quantity",
+    },
+    {
       header: t("table.columns.currency.header"),
       accessorKey: "currency",
-      cell: "USD",
+      cell: (info) => info.getValue(),
     },
     {
       header: t("table.columns.status.header"),
@@ -83,10 +103,18 @@ export const generateInvetoryColumns = (
       },
     },
     {
+      header: t("table.columns.created_at.header"),
+      accessorKey: "created_at",
+      cell: (info) => {
+        return moment(info.getValue() as string).fromNow();
+      },
+    },
+    {
       id: "actions",
       header: "",
       cell: (info) => {
-        const { id } = info.row.original;
+        const { id, ...other } = info.row.original;
+        console.log({ id });
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -97,8 +125,21 @@ export const generateInvetoryColumns = (
                 <DotsIcon className="w-5 h-5 text-text-1 stroke-current" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-36">
-              <DropdownMenuItem onClick={() => console.log(id)}>
+            <DropdownMenuContent className="w-40">
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpenSidebar(true);
+                  reset({
+                    cost_price: other.cost_price,
+                    sales_price: String(other.sales_price),
+                    description: String(other.description),
+                    name: other.name,
+                    quantity: String(other.quantity),
+                    status: other.status,
+                    images: [],
+                  });
+                }}
+              >
                 <EditIcon className="w-5 h-5 text-text-1 stroke-current" />
                 {t("table.menu.edit")}
               </DropdownMenuItem>
@@ -106,7 +147,13 @@ export const generateInvetoryColumns = (
                 <OpenEyeIcon className="w-5 h-5 text-text-1 stroke-current" />
                 {t("table.menu.view")}
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-red-500 focus:text-red-500">
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpenDialog(true);
+                  setIdProduct(id);
+                }}
+                className="text-red-500 focus:text-red-500"
+              >
                 <TrashIcon className="w-5 h-5 text-red-500 stroke-current" />
                 {t("table.menu.delete")}
               </DropdownMenuItem>

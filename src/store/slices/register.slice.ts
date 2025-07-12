@@ -2,18 +2,22 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface RegisterState {
   email?: string;
-  firstName?: string;
-  lastName?: string;
+  first_name?: string;
+  last_name?: string;
   password?: string;
   confirmPassword?: string;
+  company_name?: string;
+  company_sector?: string;
 }
 
 const initialState: RegisterState = {
   email: "",
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
   password: "",
   confirmPassword: "",
+  company_name: "",
+  company_sector: "",
 };
 
 const registerSlice = createSlice({

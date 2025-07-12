@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { Input, Textarea } from "housy-lib";
+import { Input, Textarea } from "gestora-lib";
 import type { ComponentProps, JSX } from "react";
 import { Control, Controller, type UseFormRegister } from "react-hook-form";
 import {
@@ -8,11 +8,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "housy-lib";
+} from "gestora-lib";
 
 interface Props extends ComponentProps<"input"> {
   Icon?: JSX.Element;
-  label?: string;
+  label: string;
   register: UseFormRegister<any>;
   error?: string;
   className?: string;
@@ -39,21 +39,21 @@ const FormControl = ({
           htmlFor={name}
           className={cn(
             "text-text-1 text-sm font-medium",
-            error && "text-red-500",
+            error && "text-red-500"
           )}
         >
           {label}
         </label>
       )}
-      {["text", "password", "number"].includes(type as string) ? (
+      {["text", "password", "number", "email"].includes(type as string) ? (
         <Input
           containerClassName={cn(
             "border-border-1 w-full max-w-none",
-            error && "border-red-500",
+            error && "border-red-500"
           )}
           inputClassName={cn(
             "text-text-1 placeholder:text-text-2 w-full",
-            error && "placeholder:text-red-500",
+            error && "placeholder:text-red-500"
           )}
           Icon={Icon}
           type={type}
@@ -76,12 +76,12 @@ const FormControl = ({
               <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
                   className={cn(
-                    "w-full col-span-2 border-border-1 data-[size=default]:h-10",
+                    "w-full col-span-2 border-border-1 data-[size=default]:h-10 text-text-1",
                     error &&
-                      "border-red-500  *:data-[slot=select-value]:text-red-500 ",
+                      "border-red-500 *:data-[slot=select-value]:text-red-500"
                   )}
                 >
-                  <SelectValue placeholder="Select a status" className="h-10" />
+                  <SelectValue placeholder="Select a status" />
                 </SelectTrigger>
                 <SelectContent>
                   {options?.map((option) => {
@@ -103,7 +103,7 @@ const FormControl = ({
           id={name}
           className={cn(
             "w-full h-32",
-            error && "border-red-500 placeholder:text-red-500",
+            error && "border-red-500 placeholder:text-red-500"
           )}
           {...register(name)}
         />

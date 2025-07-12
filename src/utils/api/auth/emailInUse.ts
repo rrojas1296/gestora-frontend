@@ -1,13 +1,13 @@
+import { ApiResponse } from "@/types/api/response";
 import apiInstance from "../instance";
 
 type Response = {
-  email: string;
-  id: string;
+  inUse: boolean;
 };
 
 export const emailInUse = async (email: string) => {
-  const { data } = await apiInstance.get<Response>(
-    `/users/getUserByEmail/${email}`,
+  const { data } = await apiInstance.get<ApiResponse<Response>>(
+    `/register/emailInUse/${email}`,
   );
-  return data ? true : false;
+  return data.data.inUse;
 };
