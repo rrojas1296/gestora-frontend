@@ -329,6 +329,8 @@
         }
       },
       "images": {
+        "placeholder": "Drop your images here",
+        "buttonText": "Upload images",
         "errors": {
           "required": "Upload at least one image",
           "maxImages": "You can upload a maximum of 3 images"
@@ -386,6 +388,37 @@
       "button": {
         "cancel": "Cancel",
         "delete": "Delete"
+      }
+    }
+  },
+  "Category": {
+    "form": {
+      "title": "Add New Category",
+      "name": {
+        "placeholder": "Enter a category name",
+        "label": "Category name",
+        "errors": {
+          "required": "The category name is required"
+        }
+      },
+      "description": {
+        "placeholder": "Enter a category description",
+        "label": "Category description",
+        "errors": {
+          "required": "The category description is required"
+        }
+      },
+      "image": {
+        "button": "Upload image",
+        "placeholder": "Drop your image here",
+        "errors": {
+          "required": "Select an image.",
+          "max": "You can upload just one image."
+        }
+      },
+      "button": {
+        "add": "Add",
+        "cancel": "Cancel"
       }
     }
   }

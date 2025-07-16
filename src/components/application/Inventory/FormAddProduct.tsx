@@ -19,7 +19,6 @@ import {
 } from "@/utils/api/productImages/createProductImage";
 import useCategories from "@/hooks/useCategories";
 import { useAppSelector } from "@/store/hooks";
-import { sleep } from "@/utils/sleep";
 
 interface Props {
   onClose: () => void;
@@ -121,6 +120,8 @@ const FormAddProduct = ({ onClose, refetch }: Props) => {
         <DropZone
           className="col-span-2"
           images={images}
+          placeholder={t("form.images.placeholder")}
+          buttonText={t("form.images.buttonText")}
           trigger={trigger}
           setValue={setValue}
           error={errors["images"]?.message ? t(errors["images"].message) : ""}

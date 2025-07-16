@@ -19,7 +19,8 @@ import TrashIcon from "@/components/Icons/TrashIcon";
 import OpenEyeIcon from "@/components/Icons/OpenEyeIcon";
 import EditIcon from "@/components/Icons/EditIcon";
 import DotsIcon from "@/components/Icons/DotsIcon";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { cn } from "@/utils/cn";
 
 type Props = {
   setOpenSidebar: (val: boolean) => void;
@@ -35,6 +36,7 @@ const useInventoryColumns = ({
   reset,
 }: Props) => {
   const t = useTranslations("Inventory");
+  const locale = useLocale();
   const columns: ColumnDef<ProductDB>[] = [
     {
       id: "select",
@@ -125,7 +127,9 @@ const useInventoryColumns = ({
                 <DotsIcon className="w-5 h-5 text-text-1 stroke-current" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-40">
+            <DropdownMenuContent
+              className={cn(locale === "en" ? "w-40" : "w-48")}
+            >
               <DropdownMenuItem
                 onClick={() => {
                   setOpenSidebar(true);

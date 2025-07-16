@@ -11,7 +11,7 @@ interface Props {
 const InventoryTable = ({ table }: Props) => {
   return (
     <div className="overflow-x-auto grid gap-6">
-      <table className="w-[1300px] md:w-full">
+      <table className="w-[1300px] md:w-[1400px] xl:w-full">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

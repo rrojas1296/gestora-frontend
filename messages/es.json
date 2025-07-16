@@ -13,19 +13,19 @@
     },
     "form": {
       "errors": {
-        "too_many_requests": "Demasiadas solicitudes. Por favor, intenta más tarde.",
+        "too_many_requests": "Demasiadas solicitudes. Intenta nuevamente más tarde.",
         "form_identifier_not_found": "La cuenta no fue encontrada",
         "form_password_incorrect": "La contraseña es incorrecta",
         "session_exists": "Ya tienes una sesión activa",
         "invalid_credentials": "Correo o contraseña incorrectos.",
-        "server_error": "Error del servidor, por favor intenta más tarde."
+        "server_error": "Error del servidor, intenta más tarde."
       },
       "email": {
         "name": "correo",
         "placeholder": "correo@ejemplo.com",
         "label": "Correo electrónico",
         "errors": {
-          "required": "Ingresa tu correo electrónico",
+          "required": "Ingresa tu correo",
           "invalid": "Correo inválido"
         }
       },
@@ -45,21 +45,21 @@
   "Register": {
     "step1": {
       "social": {
-        "google": "Registrarse con Google"
+        "google": "Regístrate con Google"
       },
       "form": {
-        "title": "Crea una cuenta",
+        "title": "Crear una cuenta",
         "description": "Únete ahora a Gestora y empieza a gestionar tu negocio",
         "errors": {
-          "server_error": "Error del servidor, por favor intenta más tarde."
+          "server_error": "Error del servidor, intenta más tarde."
         },
         "email": {
           "label": "Correo electrónico",
           "placeholder": "correo@ejemplo.com",
           "errors": {
             "invalid": "Correo inválido",
-            "required": "Ingresa tu correo electrónico",
-            "inUse": "Correo ya en uso"
+            "required": "Ingresa tu correo",
+            "inUse": "El correo ya está en uso"
           }
         },
         "password": {
@@ -67,14 +67,14 @@
           "label": "Contraseña",
           "errors": {
             "required": "La contraseña es obligatoria",
-            "minLength": "La contraseña debe tener más de 6 caracteres"
+            "minLength": "La contraseña debe tener más de 6 caracteres."
           }
         },
         "confirmPassword": {
           "placeholder": "Confirma tu contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "La confirmación de contraseña es obligatoria",
+            "required": "Confirmar la contraseña es obligatorio",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -91,9 +91,9 @@
     "step2": {
       "form": {
         "title": "Ingresa tu nombre",
-        "description": "Ingresa tu nombre completo para poder gestionar tus datos",
+        "description": "Ingresa tu nombre completo para que podamos gestionar tus datos",
         "button": {
-          "text": "Finalizar registro"
+          "text": "Continuar"
         },
         "firstName": {
           "placeholder": "Ingresa tu nombre",
@@ -126,7 +126,7 @@
           "placeholder": "Confirma tu contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "La confirmación es obligatoria",
+            "required": "Confirmar contraseña es obligatorio",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -137,7 +137,7 @@
     },
     "company": {
       "title": "Ingresa la información de tu empresa",
-      "description": "Ingresa la información de tu empresa para poder gestionar tus datos",
+      "description": "Ingresa la información de tu empresa para que podamos gestionar tus datos",
       "form": {
         "name": {
           "label": "Nombre de la empresa",
@@ -148,14 +148,14 @@
         },
         "sector": {
           "label": "Sector de la empresa",
-          "placeholder": "Selecciona el sector de tu empresa",
+          "placeholder": "Ingresa el sector de tu empresa",
           "options": {
-            "retail": "Comercio minorista",
-            "e_commerce": "Comercio electrónico",
+            "retail": "Venta minorista",
+            "e_commerce": "E-commerce",
             "restaurants_food": "Restaurantes y servicios de comida",
-            "wholesale_distribution": "Distribución y venta mayorista",
+            "wholesale_distribution": "Distribución mayorista",
             "health_wellness": "Salud y bienestar",
-            "pharmaceuticals": "Farmacéutico",
+            "pharmaceuticals": "Farmacéutica",
             "manufacturing": "Manufactura",
             "automotive": "Automotriz",
             "electronics": "Electrónica",
@@ -167,14 +167,14 @@
             "other": "Otro"
           },
           "errors": {
-            "required": "Debes seleccionar un sector"
+            "required": "Debes elegir un sector"
           }
         },
         "otherSector": {
           "label": "Otro sector",
-          "placeholder": "Ingresa el nombre del otro sector",
+          "placeholder": "Ingresa tu sector",
           "errors": {
-            "required": "Ingresa el nombre del otro sector"
+            "required": "Ingresa tu sector"
           }
         },
         "button": "Guardar"
@@ -193,7 +193,8 @@
       "dashboard": "Panel",
       "inventory": "Inventario",
       "sales": "Ventas",
-      "category": "Categorías",
+      "categories": "Categorías",
+      "companies": "Empresas",
       "purchases": "Compras",
       "reports": "Reportes",
       "profile": "Perfil",
@@ -212,13 +213,14 @@
       "logout": "Cerrar sesión"
     },
     "errors": {
-      "server_error": "Error del servidor, por favor intenta más tarde."
+      "server_error": "Error del servidor, intenta más tarde."
     },
     "sections": {
       "inventory": "Inventario",
       "sales": "Ventas",
       "purchases": "Compras",
       "categories": "Categorías",
+      "companies": "Empresas",
       "reports": "Reportes",
       "users": "Usuarios",
       "settings": "Configuración",
@@ -227,7 +229,7 @@
   },
   "Dashboard": {
     "earnings": {
-      "title": "Ingresos Totales",
+      "title": "Ingresos totales",
       "description": "Ingresos totales de tu negocio."
     },
     "sales": {
@@ -236,19 +238,19 @@
     },
     "reports": {
       "title": "Reportes",
-      "description": "Reportes generados en el mes"
+      "description": "Total de reportes generados en el mes"
     },
     "users": {
       "title": "Usuarios",
-      "description": "Usuarios registrados en el sistema"
+      "description": "Total de usuarios registrados en el sistema"
     },
     "chart": {
-      "title": "Ingresos mensuales",
+      "title": "Ingresos totales por mes",
       "description": "Ingresos generados en los últimos 12 meses"
     },
     "topProducts": {
-      "title": "Productos destacados",
-      "description": "Los productos más vendidos en los últimos 30 días",
+      "title": "Productos más vendidos",
+      "description": "Productos más vendidos en los últimos 30 días",
       "data": {
         "units": "unidades"
       }
@@ -259,7 +261,6 @@
     "filter": "Filtrar",
     "add": "Agregar producto",
     "export": "Exportar datos",
-
     "form": {
       "title": "Agregar nuevo producto",
       "imageDrop": {
@@ -268,7 +269,7 @@
       },
       "status": {
         "label": "Estado",
-        "placeholder": "Selecciona un estado",
+        "placeholder": "Seleccionar estado",
         "errors": {
           "required": "El estado es obligatorio"
         },
@@ -279,11 +280,14 @@
           "inactive": {
             "label": "Inactivo"
           },
-          "out_of_stock": {
-            "label": "Agotado"
-          },
           "discontinued": {
             "label": "Descontinuado"
+          },
+          "draft": {
+            "label": "Borrador"
+          },
+          "archived": {
+            "label": "Archivado"
           }
         }
       },
@@ -294,6 +298,13 @@
           "required": "La cantidad es obligatoria"
         }
       },
+      "category": {
+        "label": "Categoría",
+        "placeholder": "Selecciona una categoría",
+        "errors": {
+          "required": "Selecciona una categoría"
+        }
+      },
       "salesPrice": {
         "label": "Precio de venta",
         "placeholder": "Ingresa el precio de venta",
@@ -301,7 +312,6 @@
           "required": "El precio de venta es obligatorio"
         }
       },
-
       "costPrice": {
         "label": "Precio de costo",
         "placeholder": "Ingresa el precio de costo",
@@ -334,7 +344,6 @@
         "cancel": "Cancelar"
       }
     },
-
     "table": {
       "menu": {
         "delete": "Eliminar producto",
@@ -355,7 +364,7 @@
           "header": "Cantidad"
         },
         "created_at": {
-          "header": "Fecha de creación"
+          "header": "Creado el"
         },
         "price": {
           "header": "Precio"
@@ -366,6 +375,14 @@
         "status": {
           "header": "Estado"
         }
+      }
+    },
+    "deleteDialog": {
+      "title": "¿Estás seguro de eliminar este producto?",
+      "description": "Esta acción no se puede deshacer",
+      "button": {
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
       }
     }
   }
