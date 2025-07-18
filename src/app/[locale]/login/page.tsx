@@ -24,12 +24,12 @@ import Or from "@/components/shared/Or";
 import FormControl from "@/components/shared/FormControl";
 import { logginGoogle } from "@/utils/supabase/auth";
 import { supabaseClient } from "@/utils/supabase/client";
-import { FormControlType } from "@/types/controls";
+import { Control } from "@/types/controls";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 
-const fields: FormControlType<LoginSchemaFields>[] = [
+const fields: Control<LoginSchemaFields>[] = [
   {
     name: "email",
     label: "form.email.label",

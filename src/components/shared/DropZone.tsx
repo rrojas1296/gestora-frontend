@@ -12,18 +12,22 @@ type Props = ComponentProps<"div"> & {
   placeholder: string;
   buttonText: string;
   name: string;
+  limit?: number;
   error?: string;
+  zoneClassName?: string;
 };
 
 const DropZone = ({
   className,
-  images,
+  images = [],
   setValue,
   trigger,
   error,
   placeholder,
   buttonText,
+  zoneClassName,
   name,
+  limit = 5,
 }: Props) => {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -57,58 +61,63 @@ const DropZone = ({
 
   return (
     <div className={cn("flex flex-col gap-4", className)}>
-      <div
-        className={cn(
-          "border-dashed border border-border-2 rounded-md w-full h-44 gap-4 flex flex-col items-center justify-center dragover:bg-red-500",
-          dragging && "bg-bg-2",
-          error && "border-red-500",
-        )}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={() => setDragging(false)}
-      >
+      {images.length < limit && (
         <div
           className={cn(
-            "flex flex-col items-center gap-4",
-            dragging && "pointer-events-none",
+            "border-dashed border border-border-2 rounded-md w-full h-44 gap-4 flex flex-col items-center justify-center",
+            zoneClassName,
+            dragging && "bg-bg-2",
+            error && "border-danger",
           )}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={() => setDragging(false)}
         >
-          <ImageUp className="w-8 h-8 stroke-current text-text-1" />
-          <span className="text-sm">{placeholder}</span>
-          <Button
-            type="button"
-            onClick={() => inputRef.current?.click()}
-            variant="outlined"
+          <div
+            className={cn(
+              "flex flex-col items-center gap-4",
+              dragging && "pointer-events-none",
+            )}
           >
-            {buttonText}
-          </Button>
+            <ImageUp className="w-8 h-8 stroke-current text-text-1" />
+            <span className="text-sm">{placeholder}</span>
+            <Button
+              type="button"
+              onClick={() => inputRef.current?.click()}
+              variant="outlined"
+            >
+              {buttonText}
+            </Button>
+          </div>
+          <input
+            type="file"
+            className="hidden"
+            accept="image/*"
+            onChange={(e) => {
+              if (e.target.files) {
+                handleFiles(e.target.files);
+              }
+              e.target.value = "";
+            }}
+            ref={inputRef}
+          />
         </div>
-        <input
-          type="file"
-          className="hidden"
-          accept="image/*"
-          onChange={(e) => {
-            if (e.target.files) {
-              handleFiles(e.target.files);
-            }
-            e.target.value = "";
+      )}
+      {images.length > 0 && (
+        <PreviewImage
+          images={images}
+          onDelete={(index) => {
+            setValue(
+              name,
+              images.filter((_, i) => i !== index),
+              {
+                shouldValidate: true,
+              },
+            );
           }}
-          ref={inputRef}
         />
-      </div>
-      <PreviewImage
-        images={images}
-        onDelete={(index) => {
-          setValue(
-            name,
-            images.filter((_, i) => i !== index),
-            {
-              shouldValidate: true,
-            },
-          );
-        }}
-      />
-      {error && <span className="text-red-500 text-sm">{error}</span>}
+      )}
+      {error && <span className="text-danger text-sm">{error}</span>}
     </div>
   );
 };

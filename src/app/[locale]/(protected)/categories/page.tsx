@@ -5,13 +5,27 @@ import CardApp from "@/components/shared/CardApp";
 import useCategories from "@/hooks/useCategories";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sidebar } from "gestora-lib";
-import Image from "next/image";
+import { Button, Dialog, Input, Toast } from "gestora-lib";
 import React, { useState } from "react";
 import { schema, initialValues } from "@/schemas/addCategorySchema";
 import { FormProvider, useForm } from "react-hook-form";
+import SearchIcon from "@/components/Icons/SearchIcon";
+import PlusIcon from "@/components/Icons/PlusIcon";
+import CategoryCard from "@/components/application/Categories/CategoryCard";
+import { useTranslations } from "next-intl";
+import LoaderIcon from "@/components/Icons/LoaderIcon";
+import { CategoryDB } from "@/utils/api/categories/getCategoriesPerCompany";
+import { deleteCategory } from "@/utils/api/categories/deleteCategory";
+import { toast } from "sonner";
+import { sleep } from "@/utils/sleep";
 
 const Category = () => {
+  const t = useTranslations("Category");
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState<CategoryDB | null>(
+    null,
+  );
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const methods = useForm({
     resolver: zodResolver(schema),
@@ -19,55 +33,112 @@ const Category = () => {
   });
   const company = useAppSelector((state) => state.company);
   const companyId = company.id;
-  const { categories } = useCategories(companyId);
+  const { categories, refetch } = useCategories(companyId);
+  const handleDelete = async () => {
+    try {
+      setLoadingDelete(true);
+      if (!categoryToDelete) return;
+      const r = toast.custom(
+        () => <Toast text="Deleting category" type="loading" />,
+        {
+          duration: 1000 * 100,
+        },
+      );
+      await deleteCategory(categoryToDelete.id);
+      await sleep(2000);
+      toast.dismiss(r);
+      toast.custom(() => <Toast text="Category deleted" type="success" />);
+      setOpenDeleteDialog(false);
+      refetch();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingDelete(false);
+    }
+  };
   return (
     <>
       <FormProvider {...methods}>
         {categories && categories.length ? (
           <>
-            <CardApp>
-              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {categories.map((category) => {
-                  const { id, name, image_url, description } = category;
-                  return (
-                    <div
-                      key={id}
-                      className="text-text-1 overflow-hidden rounded-xl h-48 relative cursor-pointer group"
-                    >
-                      <Image
-                        className="w-full h-full object-cover"
-                        src={image_url}
-                        alt={name}
-                        width={300}
-                        height={300}
-                      />
-
-                      <div className="bg-linear-to-b opacity-0 transition-opacity from-black/20 flex flex-col gap-2 group-hover:opacity-100 justify-end p-4 to-black/60 absolute top-0 left-0 w-full h-full">
-                        <p className="text-text-3 font-semibold text-lg">
-                          {name}
-                        </p>
-                        <p className="text-text-3 text-sm">{description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
+            <CardApp className="grid gap-4">
+              <div className="flex flex-col gap-4 lg:flex-row lg:justify-between">
+                <Input
+                  placeholder="Search category"
+                  containerClassName="w-full lg:w-96 max-w-none"
+                  Icon={
+                    <SearchIcon className="w-6 h-6 stroke-current text-text-2" />
+                  }
+                />
+                <Button onClick={() => setSidebarOpen(true)}>
+                  <PlusIcon className="w-4 h-4 stroke-current text-text-3" />
+                  Create category
+                </Button>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                {categories.map((category) => (
+                  <CategoryCard
+                    key={category.id}
+                    openDialog={() => {
+                      setCategoryToDelete(category);
+                      setOpenDeleteDialog(true);
+                    }}
+                    category={category}
+                  />
+                ))}
               </div>
             </CardApp>
           </>
         ) : (
           <NoCategories openSidebar={setSidebarOpen} />
         )}
-        <Sidebar
-          className="w-screen bg-bg-1 lg:w-md px-8 border-l py-8 overflow-y-auto"
-          position="right"
+        <Dialog
+          dialogClassName="px-10 py-12 rounded-2xl bg-bg-1 h-screen lg:h-fit w-screen lg:w-md"
           open={sidebarOpen}
           setOpen={(open) => {
             setSidebarOpen(open);
             methods.reset(initialValues);
           }}
         >
-          <AddCategoryForm />
-        </Sidebar>
+          <AddCategoryForm
+            setOpen={(open) => {
+              setSidebarOpen(open);
+              methods.reset(initialValues);
+            }}
+            refetch={refetch}
+          />
+        </Dialog>
+        <Dialog
+          open={openDeleteDialog}
+          setOpen={setOpenDeleteDialog}
+          dialogClassName="flex flex-col gap-2 max-w-md w-11/12"
+        >
+          <h1 className="text-lg text-text-1 font-semibold">
+            {t("deleteDialog.title")}
+            <span> &quot;{categoryToDelete?.name}&quot;</span> ?
+          </h1>
+          <h2 className="text-sm text-text-2">
+            {t("deleteDialog.description")}
+          </h2>
+          <div className="flex gap-4 self-end">
+            <Button
+              variant="ghost"
+              onClick={() => setOpenDeleteDialog(false)}
+              className="hover:bg-bg-1"
+            >
+              {t("deleteDialog.button.cancel")}
+            </Button>
+            <Button
+              className="bg-danger font-semibold hover:bg-danger"
+              onClick={handleDelete}
+            >
+              {loadingDelete && (
+                <LoaderIcon className="animate-spin w-5 h-5 text-text-3 stroke-current" />
+              )}
+              {t("deleteDialog.button.delete")}
+            </Button>
+          </div>
+        </Dialog>
       </FormProvider>
     </>
   );

@@ -104,7 +104,7 @@ const Header = () => {
             dispatch(
               setTheme({
                 isDark: !isDark,
-              })
+              }),
             )
           }
         >
@@ -135,9 +135,9 @@ const Header = () => {
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={signOutUser}
-              className="text-red-500 hover:text-red-500"
+              className="text-danger hover:text-danger"
             >
-              <LogOutIcon className="w-5 h-5 stroke-current text-red-500" />
+              <LogOutIcon className="w-5 h-5 stroke-current text-danger" />
               {t("dropdown.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>

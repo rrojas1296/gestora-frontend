@@ -261,12 +261,60 @@
     "filter": "Filter",
     "add": "Add Product",
     "export": "Export data",
-
     "form": {
-      "title": "Add New Product",
-      "imageDrop": {
-        "text": "Drop your images here",
-        "button": "Click to browse"
+      "head": {
+        "title": "Add New Product",
+        "description": "* indicates required fields"
+      },
+      "sections": {
+        "information": {
+          "title": "Product Information",
+          "description": "Esential information about the product"
+        },
+        "pricing": {
+          "title": "Pricing",
+          "description": "Pricing information about the product"
+        },
+        "inventory": {
+          "title": "Inventory Management",
+          "description": "Set product inventory information"
+        },
+        "details": {
+          "title": "Product Details",
+          "description": "Physical details about the product"
+        },
+        "images": {
+          "title": "Product Images",
+          "description": "Upload up to 3 images"
+        }
+      },
+      "name": {
+        "label": "Product Name *",
+        "placeholder": "Enter product name",
+        "errors": {
+          "required": "The name is required"
+        }
+      },
+      "description": {
+        "label": "Description *",
+        "placeholder": "Enter a product description",
+        "errors": {
+          "required": "The description is required"
+        }
+      },
+      "brand": {
+        "label": "Brand *",
+        "placeholder": "Enter the product brand",
+        "errors": {
+          "required": "The brand is required"
+        }
+      },
+      "category": {
+        "label": "Category *",
+        "placeholder": "Select a category",
+        "errors": {
+          "required": "Please select a category"
+        }
       },
       "status": {
         "label": "Status",
@@ -292,41 +340,95 @@
           }
         }
       },
-      "quantity": {
-        "label": "Quantity",
-        "placeholder": "Enter quantity",
+      "sku": {
+        "label": "SKU *",
+        "placeholder": "e.g PRD-001",
         "errors": {
-          "required": "The quantity is required"
+          "required": "Enter a SKU"
         }
       },
-      "category": {
-        "label": "Category",
-        "placeholder": "Select a category",
-        "errors": {
-          "required": "Please select a category"
-        }
-      },
-      "salesPrice": {
-        "label": "Sales Price",
-        "placeholder": "Enter sales price",
-        "errors": {
-          "required": "The sales price is required"
-        }
-      },
-
-      "costPrice": {
-        "label": "Cost Price",
+      "cost_price": {
+        "label": "Cost Price *",
         "placeholder": "Enter cost price",
         "errors": {
-          "required": "The cost price is required"
+          "required": "The cost price is required",
+          "invalid": "The cost price is invalid",
+          "negative": "The cost price cannot be negative"
         }
       },
-      "name": {
-        "label": "Product Name",
-        "placeholder": "Enter product name",
+      "sales_price": {
+        "label": "Sales Price *",
+        "placeholder": "Enter sales price",
         "errors": {
-          "required": "The name is required"
+          "required": "The sales price is required",
+          "invalid": "The sales price is invalid",
+          "negative": "The sales price cannot be negative"
         }
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "Select a currency",
+        "errors": {
+          "required": "The currency is required"
+        },
+        "options": {
+          "USD": {
+            "label": "USD"
+          },
+          "EUR": {
+            "label": "EUR"
+          },
+          "PEN": {
+            "label": "PEN"
+          }
+        }
+      },
+      "quantity": {
+        "label": "Quantity *",
+        "placeholder": "Enter quantity",
+        "errors": {
+          "required": "The quantity is required",
+          "invalid": "The quantity is invalid",
+          "negative": "The quantity cannot be negative"
+        }
+      },
+      "min_stock": {
+        "label": "Minimum Stock *",
+        "placeholder": "Enter minimum stock",
+        "errors": {
+          "required": "The minimum stock is required",
+          "min_stock_greater_than_quantity": "The minimum stock must be greater than the quantity",
+          "invalid": "The minimum stock is invalid",
+          "negative": "The minimum stock cannot be negative"
+        }
+      },
+      "weight": {
+        "label": "Weight (Kg)",
+        "placeholder": "Enter the product weight",
+        "errors": {
+          "invalid": "The weight is invalid",
+          "negative": "The weight cannot be negative"
+        }
+      },
+      "length": {
+        "label": "Length (cm)",
+        "placeholder": "Enter the product length"
+      },
+      "width": {
+        "label": "Width (cm)",
+        "placeholder": "Enter the product width"
+      },
+      "height": {
+        "label": "Height (cm)",
+        "placeholder": "Enter the product height"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Enter the product color"
+      },
+      "button": {
+        "submit": "Create Product",
+        "cancel": "Cancel"
       },
       "images": {
         "placeholder": "Drop your images here",
@@ -335,17 +437,6 @@
           "required": "Upload at least one image",
           "maxImages": "You can upload a maximum of 3 images"
         }
-      },
-      "description": {
-        "label": "Description",
-        "placeholder": "Enter a product description",
-        "errors": {
-          "required": "The description is required"
-        }
-      },
-      "button": {
-        "add": "Add",
-        "cancel": "Cancel"
       }
     },
 
@@ -392,6 +483,14 @@
     }
   },
   "Category": {
+    "deleteDialog": {
+      "title": "Are you sure you want to delete the category",
+      "description": "All products in this category will be deleted",
+      "button": {
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    },
     "form": {
       "title": "Add New Category",
       "name": {
@@ -417,7 +516,7 @@
         }
       },
       "button": {
-        "add": "Add",
+        "create": "Create",
         "cancel": "Cancel"
       }
     }

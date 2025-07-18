@@ -8,7 +8,7 @@ import {
 } from "@/schemas/registerSchema";
 import { useAppDispatch } from "@/store/hooks";
 import { setRegisterData } from "@/store/slices/register.slice";
-import type { FormControlType } from "@/types/controls";
+import { Control } from "@/types/controls";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "gestora-lib";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ import { trimObject } from "@/utils/trimObject";
 import Loader from "@/components/shared/Loader";
 import useAuthUser from "@/hooks/useAuthUser";
 
-const controls: FormControlType<RegisterSchemaFieldsStepTwo>[] = [
+const controls: Control<RegisterSchemaFieldsStepTwo>[] = [
   {
     name: "first_name",
     type: "text",
@@ -62,7 +62,7 @@ const Page = () => {
       setRegisterData({
         first_name,
         last_name,
-      })
+      }),
     );
     router.push("/register/company");
   };

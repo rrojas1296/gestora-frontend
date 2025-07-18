@@ -1,6 +1,6 @@
-import { dbStatusOptions } from "@/schemas/addProductSchema";
+import { statusOptions } from "@/schemas/addProductSchema";
 
-export type Status = (typeof dbStatusOptions)[number] | "out_of_stock";
+export type Status = (typeof statusOptions)[number];
 
 export interface ProductImage {
   url: string;

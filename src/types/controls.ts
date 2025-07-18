@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import type { IconProps } from "./icon";
 
-export type FormControlType<T> = {
+export type Control<T> = {
   name: T;
   label: string;
   type: ComponentProps<"input">["type"];

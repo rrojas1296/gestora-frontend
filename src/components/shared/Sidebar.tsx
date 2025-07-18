@@ -85,6 +85,7 @@ const links: SidebarOption[] = [
 const MainSidebar = () => {
   const t = useTranslations("Sidebar");
   const pathname = usePathname();
+  const section = "/" + pathname.split("/")[1];
   const router = useRouter();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const { sidebarOpen } = useAppSelector((state) => state.config);
@@ -112,14 +113,14 @@ const MainSidebar = () => {
           "fixed inset-0 duration-200 bg-black/50 transition-opacity top-0 left-0",
           sidebarOpen
             ? "opacity-50 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+            : "opacity-0 pointer-events-none",
         )}
         onClick={closeSidebar}
       />
       <div
         className={cn(
           "pt-11 w-fit fixed top-0 left-0 h-screen transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg:border-r border-r-border-2",
-          sidebarOpen ? "w-[272px]" : "w-0 lg:w-[68px]"
+          sidebarOpen ? "w-[272px]" : "w-0 lg:w-[68px]",
         )}
         style={{
           transition: "width 0.2s ease-in-out",
@@ -152,7 +153,7 @@ const MainSidebar = () => {
               <SelectTrigger
                 className={cn(
                   "w-full mt-8 text-text-1",
-                  !sidebarOpen && "opacity-0"
+                  !sidebarOpen && "opacity-0",
                 )}
               >
                 <SelectValue placeholder="Select a company" />
@@ -176,14 +177,14 @@ const MainSidebar = () => {
             <p
               className={cn(
                 "text-text-2 text-sm mb-4",
-                !sidebarOpen && "opacity-0"
+                !sidebarOpen && "opacity-0",
               )}
             >
               {t("sections.main")}
             </p>
             {links.map((link, index) => {
               const Icon = link.icon;
-              const active = pathname === link.path;
+              const active = section === link.path;
               return (
                 <div
                   key={index}
@@ -191,7 +192,7 @@ const MainSidebar = () => {
                   className={cn(
                     "text-text-1 rounded-md flex gap-6 py-2 px-2 items-center cursor-pointer transition-colors",
                     active && "bg-primary text-text-3 font-semibold",
-                    isDesktop && !active && "text-text-2 hover:text-text-1"
+                    isDesktop && !active && "text-text-2 hover:text-text-1",
                   )}
                 >
                   <Icon className={cn("stroke-current w-5 h-5")} />

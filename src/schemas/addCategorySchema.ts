@@ -1,13 +1,11 @@
-import { FormControlType } from "@/types/controls";
+import { Control } from "@/types/controls";
 import { z } from "zod";
 
 const schema = z.object({
   name: z.string().min(1, {
     message: "form.name.errors.required",
   }),
-  description: z.string().min(1, {
-    message: "form.description.errors.required",
-  }),
+  description: z.string(),
   image: z
     .array(z.instanceof(File))
     .min(1, {
@@ -21,7 +19,7 @@ const schema = z.object({
 export type SchemaType = z.infer<typeof schema>;
 export type SchemaFields = keyof SchemaType;
 
-const controls: FormControlType<SchemaFields>[] = [
+const controls: Control<SchemaFields>[] = [
   {
     name: "name",
     type: "text",

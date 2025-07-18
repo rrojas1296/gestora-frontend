@@ -11,7 +11,6 @@ type Props = {
 
 const UserProvider = ({ children }: Props) => {
   const { userDB, loading } = useAuthUser();
-  console.log({ userDB111: userDB });
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (userDB && !loading) {

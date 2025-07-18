@@ -1,5 +1,5 @@
 import { companySectors } from "@/config/constants";
-import { FormControlType } from "@/types/controls";
+import { Control } from "@/types/controls";
 import { z } from "zod";
 
 const schema = z
@@ -9,16 +9,17 @@ const schema = z
     }),
     image: z.instanceof(File).or(z.string()).optional(),
     sector: z.enum(companySectors, {
-      errorMap: () => ({ message: "company.form.sector.errors.required" }),
+      error: () => ({ message: "company.form.sector.errors.required" }),
     }),
     otherSector: z.string().optional(),
   })
-  .superRefine((data, ctx) => {
-    if (data.sector === "other" && !data.otherSector) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+  .check((ctx) => {
+    if (ctx.value.sector === "other" && !ctx.value.otherSector) {
+      ctx.issues.push({
+        code: "custom",
         message: "company.form.otherSector.errors.required",
         path: ["otherSector"],
+        input: ctx.value,
       });
     }
   });
@@ -26,7 +27,7 @@ const schema = z
 export type SchemaType = z.infer<typeof schema>;
 export type SchemaFields = keyof SchemaType;
 
-const controls: FormControlType<SchemaFields>[] = [
+const controls: Control<SchemaFields>[] = [
   {
     name: "name",
     type: "text",

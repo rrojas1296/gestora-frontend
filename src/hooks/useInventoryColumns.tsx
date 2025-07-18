@@ -1,13 +1,11 @@
 import Badge from "@/components/shared/Badge";
 import CheckBox from "@/components/shared/CheckBox";
 import { IMG_PRODUCT_DEFAULT } from "@/config/constants";
-import { AddProductSchemaType } from "@/schemas/addProductSchema";
 import { ProductDB } from "@/types/api/inventory";
 import { capitalize } from "@/utils/capitalize";
 import { ColumnDef } from "@tanstack/react-table";
 import moment from "moment";
 import Image from "next/image";
-import { UseFormReset } from "react-hook-form";
 import {
   Button,
   DropdownMenu,
@@ -23,18 +21,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/utils/cn";
 
 type Props = {
-  setOpenSidebar: (val: boolean) => void;
   setOpenDialog: (val: boolean) => void;
   setIdProduct: (val: string) => void;
-  reset: UseFormReset<AddProductSchemaType>;
 };
 
-const useInventoryColumns = ({
-  setIdProduct,
-  setOpenDialog,
-  setOpenSidebar,
-  reset,
-}: Props) => {
+const useInventoryColumns = ({ setIdProduct, setOpenDialog }: Props) => {
   const t = useTranslations("Inventory");
   const locale = useLocale();
   const columns: ColumnDef<ProductDB>[] = [
@@ -115,8 +106,7 @@ const useInventoryColumns = ({
       id: "actions",
       header: "",
       cell: (info) => {
-        const { id, ...other } = info.row.original;
-        console.log({ id });
+        const { id } = info.row.original;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -130,20 +120,7 @@ const useInventoryColumns = ({
             <DropdownMenuContent
               className={cn(locale === "en" ? "w-40" : "w-48")}
             >
-              <DropdownMenuItem
-                onClick={() => {
-                  setOpenSidebar(true);
-                  reset({
-                    cost_price: other.cost_price,
-                    sales_price: String(other.sales_price),
-                    description: String(other.description),
-                    name: other.name,
-                    quantity: String(other.quantity),
-                    status: other.status,
-                    images: [],
-                  });
-                }}
-              >
+              <DropdownMenuItem>
                 <EditIcon className="w-5 h-5 text-text-1 stroke-current" />
                 {t("table.menu.edit")}
               </DropdownMenuItem>
@@ -156,9 +133,9 @@ const useInventoryColumns = ({
                   setOpenDialog(true);
                   setIdProduct(id);
                 }}
-                className="text-red-500 focus:text-red-500"
+                className="text-danger focus:text-danger"
               >
-                <TrashIcon className="w-5 h-5 text-red-500 stroke-current" />
+                <TrashIcon className="w-5 h-5 text-danger stroke-current" />
                 {t("table.menu.delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>

@@ -4,11 +4,7 @@ import { Button } from "gestora-lib";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-interface Props {
-  openSidebar: () => void;
-}
-
-const EmptyTable = ({ openSidebar }: Props) => {
+const EmptyTable = () => {
   const companyId = useAppSelector((state) => state.company.id);
   const { categories } = useCategories(companyId);
   const router = useRouter();
@@ -22,7 +18,7 @@ const EmptyTable = ({ openSidebar }: Props) => {
       </p>
       {categories && categories.length > 0 ? (
         <Button
-          onClick={openSidebar}
+          onClick={() => router.push("/inventory/form")}
           className="font-semibold"
           variant="filled"
         >

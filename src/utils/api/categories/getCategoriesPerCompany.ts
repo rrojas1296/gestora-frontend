@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/types/api/response";
 import apiInstance from "../instance";
 
-type CategoryDB = {
+export type CategoryDB = {
   company_id: string;
   created_at: Date;
   description: string;

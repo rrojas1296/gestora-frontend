@@ -12,7 +12,7 @@ interface Props {
 const Badge = ({ type, children }: Props) => {
   const classes: Record<BadgeType, string> = {
     active: "bg-green-700",
-    out_of_stock: "bg-red-700",
+    out_of_stock: "bg-danger",
     discontinued: "bg-yellow-700",
     inactive: "bg-gray-700",
     draft: "bg-gray-700",

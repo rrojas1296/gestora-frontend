@@ -17,7 +17,7 @@ import OpenEyeIcon from "@/components/Icons/OpenEyeIcon";
 import EditIcon from "@/components/Icons/EditIcon";
 import moment from "moment";
 import { UseFormReset } from "react-hook-form";
-import { AddProductSchemaType } from "@/schemas/addProductSchema";
+import { SchemaType } from "@/schemas/addProductSchema";
 import { IMG_PRODUCT_DEFAULT } from "@/config/constants";
 
 type TranslatorFunction = (key: string) => string;
@@ -33,7 +33,7 @@ export const generateInvetoryColumns = ({
   setOpenSidebar: (val: boolean) => void;
   setOpenDialog: (val: boolean) => void;
   setIdProduct: (val: string) => void;
-  reset: UseFormReset<AddProductSchemaType>;
+  reset: UseFormReset<SchemaType>;
 }): ColumnDef<ProductDB>[] => {
   return [
     {
@@ -114,7 +114,6 @@ export const generateInvetoryColumns = ({
       header: "",
       cell: (info) => {
         const { id, ...other } = info.row.original;
-        console.log({ id });
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -152,9 +151,9 @@ export const generateInvetoryColumns = ({
                   setOpenDialog(true);
                   setIdProduct(id);
                 }}
-                className="text-red-500 focus:text-red-500"
+                className="text-danger focus:text-danger"
               >
-                <TrashIcon className="w-5 h-5 text-red-500 stroke-current" />
+                <TrashIcon className="w-5 h-5 text-danger stroke-current" />
                 {t("table.menu.delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>

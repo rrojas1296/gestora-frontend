@@ -14,7 +14,7 @@ import {
   type RegisterSchemaStepOneType,
 } from "@/schemas/registerSchema";
 import { toast } from "sonner";
-import { FormControlType } from "@/types/controls";
+import { Control } from "@/types/controls";
 import { cn } from "@/utils/cn";
 import { logginGoogle } from "@/utils/supabase/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +29,7 @@ import useSupabaseSession from "@/hooks/useSupabaseUser";
 import { trimObject } from "@/utils/trimObject";
 import { clientSupabase } from "@/utils/supabase";
 
-const controls: FormControlType<RegisterSchemaFieldsStepOne>[] = [
+const controls: Control<RegisterSchemaFieldsStepOne>[] = [
   {
     name: "email",
     type: "email",
@@ -142,7 +142,7 @@ const Page = () => {
                     className={cn(
                       "w-6 h-6 text-text-2 stroke-current ",
                       isPasswordControl && "cursor-pointer",
-                      error && "text-red-500",
+                      error && "text-danger",
                     )}
                     onClick={() =>
                       name === "password" && setShowPassword(!showPassword)

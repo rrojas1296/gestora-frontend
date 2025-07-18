@@ -12,8 +12,8 @@ const AppLayout = ({ children }: Props) => {
   return (
     <UserProvider>
       <PrivatePage>
-        <div className="h-screen bg-bg-2">
-          <div className="px-6 lg:pl-[92px] w-full h-screen overflow-y-auto">
+        <div className="bg-bg-2 h-screen overflow-y-auto custom-scroll">
+          <div className="px-6 lg:pl-[92px] h-full w-full">
             <div className="max-w-[1512px] flex w-full flex-col justify-self-center">
               <Header />
               <div className="text-text-1 pb-6">{children}</div>

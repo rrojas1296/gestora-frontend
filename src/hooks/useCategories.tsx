@@ -6,6 +6,7 @@ const useCategories = (companyId?: string) => {
     data: categories,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["categories", companyId],
     queryFn: () => {
@@ -13,7 +14,7 @@ const useCategories = (companyId?: string) => {
     },
     enabled: !!companyId,
   });
-  return { categories, isLoading, error };
+  return { categories, isLoading, error, refetch };
 };
 
 export default useCategories;

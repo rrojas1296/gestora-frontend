@@ -27,7 +27,10 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} className={cn(font.className, "bg-bg-1 custom-scroll")}>
+    <html
+      lang={locale}
+      className={cn(font.className, "bg-bg-1 custom-scroll overflow-y-hidden")}
+    >
       <body>
         <TranslationProvider>
           <ReactQueryProvider>

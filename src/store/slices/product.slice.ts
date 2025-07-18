@@ -1,4 +1,3 @@
-import { dbStatusOptions } from "@/schemas/addProductSchema";
 import { Status } from "@/types/api/inventory";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -18,7 +17,7 @@ const initialState: ProductState = {
   newProduct: {
     cost_price: "",
     description: "",
-    status: dbStatusOptions[0],
+    status: "active",
     images: [],
     name: "",
     quantity: "",

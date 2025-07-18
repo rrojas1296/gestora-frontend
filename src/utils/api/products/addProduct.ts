@@ -15,6 +15,8 @@ export type ProductBody = {
   status: Status;
   company_id: string;
   description?: string;
+  min_stock: number;
+  sku: string;
 };
 
 export const createProduct = async (data: ProductBody) => {
