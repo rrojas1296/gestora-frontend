@@ -61,8 +61,8 @@ const AddCategoryForm = ({ refetch, setOpen }: Props) => {
   };
 
   return (
-    <form className="grid gap-4" onSubmit={handleSubmit(handleSubmitForm)}>
-      <h1 className="font-bold text-xl text-left lg:w-full">
+    <form className="grid gap-2" onSubmit={handleSubmit(handleSubmitForm)}>
+      <h1 className="font-bold text-xl mb-2 text-left lg:w-full">
         {t("form.title")}
       </h1>
       {controls.map((c, index) => {
@@ -82,9 +82,13 @@ const AddCategoryForm = ({ refetch, setOpen }: Props) => {
           />
         );
       })}
+      <h2 className="text-text-1 font-medium text-sm">
+        {t("form.image.title")}
+      </h2>
       <DropZone
         images={image}
         name="image"
+        limit={1}
         trigger={trigger}
         buttonText={t("form.image.button")}
         placeholder={t("form.image.placeholder")}

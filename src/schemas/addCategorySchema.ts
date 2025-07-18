@@ -28,7 +28,7 @@ const controls: Control<SchemaFields>[] = [
   },
   {
     name: "description",
-    type: "text",
+    type: "textarea",
     label: "form.description.label",
     placeholder: "form.description.placeholder",
   },

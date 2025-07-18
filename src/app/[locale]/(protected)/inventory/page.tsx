@@ -192,13 +192,13 @@ const Inventory = () => {
           <Button
             variant="ghost"
             onClick={() => setOpenDialog(false)}
-            className="hover:bg-bg-1"
+            className="hover:bg-bg-1 h-8"
           >
             {t("deleteDialog.button.cancel")}
           </Button>
           <Button
             onClick={handleDeleteProduct}
-            className="bg-danger font-semibold hover:bg-danger"
+            className="bg-danger font-semibold hover:bg-danger h-8"
           >
             {loadingDelete && (
               <LoaderIcon className="animate-spin w-5 h-5 text-text-3 stroke-current" />

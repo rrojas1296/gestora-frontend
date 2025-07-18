@@ -64,7 +64,7 @@ const DropZone = ({
       {images.length < limit && (
         <div
           className={cn(
-            "border-dashed border border-border-2 rounded-md w-full h-44 gap-4 flex flex-col items-center justify-center",
+            "border-dashed border border-border-1 rounded-md w-full h-44 gap-4 flex flex-col items-center justify-center",
             zoneClassName,
             dragging && "bg-bg-2",
             error && "border-danger",

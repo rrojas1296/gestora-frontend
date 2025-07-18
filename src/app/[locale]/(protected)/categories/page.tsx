@@ -93,7 +93,7 @@ const Category = () => {
           <NoCategories openSidebar={setSidebarOpen} />
         )}
         <Dialog
-          dialogClassName="px-10 py-12 rounded-2xl bg-bg-1 h-screen lg:h-fit w-screen lg:w-md"
+          dialogClassName="px-10 py-12 rounded-2xl bg-bg-1 h-screen lg:h-fit w-screen lg:w-md max-h-[650px] overflow-y-auto"
           open={sidebarOpen}
           setOpen={(open) => {
             setSidebarOpen(open);
@@ -111,7 +111,7 @@ const Category = () => {
         <Dialog
           open={openDeleteDialog}
           setOpen={setOpenDeleteDialog}
-          dialogClassName="flex flex-col gap-2 max-w-md w-11/12"
+          dialogClassName="flex flex-col gap-2 max-w-md w-11/12 "
         >
           <h1 className="text-lg text-text-1 font-semibold">
             {t("deleteDialog.title")}
@@ -124,12 +124,12 @@ const Category = () => {
             <Button
               variant="ghost"
               onClick={() => setOpenDeleteDialog(false)}
-              className="hover:bg-bg-1"
+              className="hover:bg-bg-1 h-8"
             >
               {t("deleteDialog.button.cancel")}
             </Button>
             <Button
-              className="bg-danger font-semibold hover:bg-danger"
+              className="bg-danger font-semibold hover:bg-danger h-8"
               onClick={handleDelete}
             >
               {loadingDelete && (

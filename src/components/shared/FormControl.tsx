@@ -63,7 +63,9 @@ const FormControl = ({
           type={type}
           placeholder={placeholder}
           id={name}
-          {...register(name)}
+          {...register(name, {
+            valueAsNumber: type === "number",
+          })}
         />
       ) : type === "select" ? (
         <Controller

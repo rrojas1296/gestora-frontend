@@ -32,39 +32,28 @@ const schema = z
       error: () => ({ message: "form.status.errors.required" }),
     }),
     sku: z.string().min(1, {
-      message: "form.sku.errors.required",
+      error: "form.sku.errors.required",
     }),
-    cost_price: z.string().min(1, {
+    cost_price: z.number({
       error: "form.cost_price.errors.required",
     }),
-    sales_price: z
-      .string({
-        error: "form.sales_price.errors.required",
-      })
-      .min(1, {
-        error: "form.sales_price.errors.required",
-      }),
+    sales_price: z.number({
+      error: "form.sales_price.errors.required",
+    }),
+
     currency: z.enum(currencyOptions, {
       error: () => ({ message: "form.currency.errors.required" }),
     }),
-    quantity: z
-      .string({
-        error: "form.quantity.errors.required",
-      })
-      .min(1, {
-        error: "form.quantity.errors.required",
-      }),
-    min_stock: z
-      .string({
-        error: "form.min_stock.errors.required",
-      })
-      .min(1, {
-        error: "form.min_stock.errors.required",
-      }),
-    weight: z.string().optional(),
-    length: z.string().optional(),
-    width: z.string().optional(),
-    height: z.string().optional(),
+    quantity: z.number({
+      error: "form.quantity.errors.required",
+    }),
+    min_stock: z.number({
+      error: "form.min_stock.errors.required",
+    }),
+    weight: z.nan().or(z.number()).optional(),
+    length: z.nan().or(z.number()).optional(),
+    width: z.nan().or(z.number()).optional(),
+    height: z.nan().or(z.number()).optional(),
     color: z.string().optional(),
     images: z
       .array(z.instanceof(File))
@@ -256,11 +245,11 @@ const defaultValues: SchemaType = {
   category: "",
   status: "active",
   sku: "",
-  cost_price: "",
-  sales_price: "",
+  cost_price: NaN,
+  sales_price: NaN,
   currency: "PEN",
-  quantity: "",
-  min_stock: "",
+  quantity: NaN,
+  min_stock: NaN,
   images: [],
 };
 

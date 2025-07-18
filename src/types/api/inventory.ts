@@ -16,9 +16,9 @@ export type Currency = (typeof currencies)[number];
 export interface ProductDB {
   id: string;
   name: string;
-  description: number;
+  description: string;
   sales_price: number;
-  cost_price: string;
+  cost_price: number;
   company_id: string;
   quantity: number;
   status: Status;

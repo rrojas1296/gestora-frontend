@@ -130,10 +130,10 @@ export const generateInvetoryColumns = ({
                   setOpenSidebar(true);
                   reset({
                     cost_price: other.cost_price,
-                    sales_price: String(other.sales_price),
-                    description: String(other.description),
+                    sales_price: other.sales_price,
+                    description: other.description,
                     name: other.name,
-                    quantity: String(other.quantity),
+                    quantity: other.quantity,
                     status: other.status,
                     images: [],
                   });

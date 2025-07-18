@@ -1,13 +1,13 @@
 "use client";
 import LoaderIcon from "@/components/Icons/LoaderIcon";
 import FormControl from "@/components/shared/FormControl";
-import { createProduct, ProductBody } from "@/utils/api/products/addProduct";
+import { createProduct } from "@/utils/api/products/addProduct";
 import { toast } from "sonner";
 import { uploadImage } from "@/utils/cloudinary/uploadImage";
 import { Button, Toast } from "gestora-lib";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import DropZone from "@/components/shared/DropZone";
 import {
   CreateProductImage,
@@ -23,12 +23,14 @@ import {
   defaultValues,
   SchemaType,
 } from "@/schemas/addProductSchema";
-import { convertToNumber } from "@/utils/lib/convertToNumber";
+import ArrowLeft from "@/components/Icons/CloseIcon";
+import { useRouter } from "@/i18n/navigation";
 
 const FormAddProduct = () => {
   const t = useTranslations("Inventory");
   const [loading, setLoading] = useState(false);
   const companyId = useAppSelector((state) => state.company.id);
+  const router = useRouter();
   const { categories } = useCategories(companyId);
   const {
     formState: { errors },
@@ -38,6 +40,7 @@ const FormAddProduct = () => {
     trigger,
     setValue,
     watch,
+    reset,
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues,
@@ -50,29 +53,18 @@ const FormAddProduct = () => {
     console.log({ errors });
   };
 
-  const addProductHandler = async (data: SchemaType) => {
+  const addProductHandler: SubmitHandler<SchemaType> = async (data) => {
+    const r = toast.custom(
+      () => <Toast text={t("form.responses.loading")} type="loading" />,
+      { duration: 1000 * 100 },
+    );
+    setLoading(true);
     try {
-      const t = {
-        name: "Diego",
-        age: 20,
-        is_active: true,
-        DNI: "70550605",
-      };
-      console.log({ data: convertToNumber(t) });
-      setLoading(true);
       const { images, category: category_id, ...other } = data;
-      const r = toast.custom(
-        () => <Toast text="Creating product" type="loading" />,
-        { duration: 1000 * 100 },
-      );
-      const body: ProductBody = {
+      const body = {
         ...other,
         category_id,
-        company_id: companyId!,
-        min_stock: Number(data.min_stock),
-        cost_price: Number(data.cost_price),
-        sales_price: Number(data.sales_price),
-        quantity: Number(data.quantity),
+        company_id: companyId,
       };
       const { id } = await createProduct(body);
 
@@ -86,13 +78,17 @@ const FormAddProduct = () => {
         };
         await createProductImage(body);
       }
-      toast.dismiss(r);
       toast.custom(() => (
-        <Toast text="Product created successfully" type="success" />
+        <Toast text={t("form.responses.success")} type="success" />
       ));
+      reset();
     } catch (err) {
       console.log({ err });
+      toast.custom(() => (
+        <Toast text={t("form.responses.server_error")} type="error" />
+      ));
     } finally {
+      toast.dismiss(r);
       setLoading(false);
     }
   };
@@ -103,9 +99,18 @@ const FormAddProduct = () => {
         onSubmit={handleSubmit(addProductHandler, errorHandler)}
       >
         <div className="flex justify-between col-span-12">
-          <h1 className="font-semibold text-2xl text-left lg:w-full">
-            {t("form.head.title")}
-          </h1>
+          <div className="flex items-center gap-4">
+            <Button
+              variant="icon"
+              type="button"
+              onClick={() => router.push("/inventory")}
+            >
+              <ArrowLeft className="w-6 h-6 text-text-1 stroke-current" />
+            </Button>
+            <h1 className="font-semibold text-2xl text-left lg:w-full">
+              {t("form.head.title")}
+            </h1>
+          </div>
           <p className="text-sm text-text-2 shrink-0">
             {t("form.head.description")}
           </p>
@@ -122,7 +127,10 @@ const FormAddProduct = () => {
           {controls.information.map((field, index) => {
             const { label, name, type, placeholder, className, options } =
               field;
-            const error = errors[name] ? t(errors[name].message!) : "";
+            const error =
+              errors[name] && errors[name].message
+                ? t(errors[name].message)
+                : undefined;
             const opts =
               name !== "category"
                 ? options?.map((opt) => ({ ...opt, label: t(opt.label) }))
@@ -136,11 +144,11 @@ const FormAddProduct = () => {
                 placeholder={t(placeholder)}
                 label={t(label)}
                 name={name}
-                error={error}
                 type={type}
                 options={opts}
-                register={register}
                 className={className}
+                error={error}
+                register={register}
                 control={control}
               />
             );
@@ -156,7 +164,10 @@ const FormAddProduct = () => {
           {controls.pricing.map((field, index) => {
             const { label, name, type, placeholder, className, options } =
               field;
-            const error = errors[name] ? t(errors[name].message!) : "";
+            const error =
+              errors[name] && errors[name].message
+                ? t(errors[name].message)
+                : "";
             const opts = options?.map((opt) => ({
               ...opt,
               label: t(opt.label),
@@ -185,16 +196,11 @@ const FormAddProduct = () => {
             </p>
           </div>
           {controls.inventory.map((field, index) => {
-            const { label, name, type, placeholder, className, options } =
-              field;
-            const error = errors[name] ? t(errors[name].message!) : "";
-            const opts =
-              name !== "category"
-                ? options?.map((opt) => ({ ...opt, label: t(opt.label) }))
-                : categories?.map((cat) => ({
-                    label: cat.name,
-                    value: cat.id,
-                  }));
+            const { label, name, type, placeholder, className } = field;
+            const error =
+              errors[name] && errors[name].message
+                ? t(errors[name].message)
+                : "";
             return (
               <FormControl
                 key={index}
@@ -203,7 +209,6 @@ const FormAddProduct = () => {
                 name={name}
                 error={error}
                 type={type}
-                options={opts}
                 register={register}
                 className={className}
                 control={control}
@@ -221,14 +226,14 @@ const FormAddProduct = () => {
           {controls.details.map((field, index) => {
             const { label, name, type, placeholder, className, options } =
               field;
-            const error = errors[name] ? t(errors[name].message!) : "";
-            const opts =
-              name !== "category"
-                ? options?.map((opt) => ({ ...opt, label: t(opt.label) }))
-                : categories?.map((cat) => ({
-                    label: cat.name,
-                    value: cat.id,
-                  }));
+            const error =
+              errors[name] && errors[name].message
+                ? t(errors[name].message)
+                : "";
+            const opts = options?.map((opt) => ({
+              ...opt,
+              label: t(opt.label),
+            }));
             return (
               <FormControl
                 key={index}
@@ -270,7 +275,7 @@ const FormAddProduct = () => {
           disabled={loading}
           variant="filled"
           type="submit"
-          className="col-span-8 w-40 justify-self-end"
+          className="col-span-8 w-fit min-w-40 justify-self-end"
         >
           {loading && (
             <LoaderIcon className="animate-spin text-text-3 w-5 h-5 stroke-current" />

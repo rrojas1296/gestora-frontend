@@ -262,6 +262,11 @@
     "add": "Add Product",
     "export": "Export data",
     "form": {
+      "responses": {
+        "server_error": "Server error, please try again later.",
+        "success": "Product was added successfully",
+        "loading": "Creating product..."
+      },
       "head": {
         "title": "Add New Product",
         "description": "* indicates required fields"
@@ -495,21 +500,22 @@
       "title": "Add New Category",
       "name": {
         "placeholder": "Enter a category name",
-        "label": "Category name",
+        "label": "Name *",
         "errors": {
           "required": "The category name is required"
         }
       },
       "description": {
         "placeholder": "Enter a category description",
-        "label": "Category description",
+        "label": "Description",
         "errors": {
           "required": "The category description is required"
         }
       },
       "image": {
-        "button": "Upload image",
+        "button": "Upload image *",
         "placeholder": "Drop your image here",
+        "title": "Image *",
         "errors": {
           "required": "Select an image.",
           "max": "You can upload just one image."
