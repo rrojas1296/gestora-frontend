@@ -9,9 +9,11 @@ export interface ProductImage {
   is_deleted: boolean;
 }
 
-export const currencies = ["USD", "EUR", "PEN"];
-
-export type Currency = (typeof currencies)[number];
+enum Currency {
+  USD = "USD",
+  EUR = "EUR",
+  PEN = "PEN",
+}
 
 export interface ProductDB {
   id: string;
@@ -23,11 +25,19 @@ export interface ProductDB {
   quantity: number;
   status: Status;
   currency: Currency;
+  min_stock: number;
   category_id: string;
   created_by: string;
   is_deleted: boolean;
+  brand: string;
+  sku: string;
   category: string;
   created_at: Date;
   updated_at: Date;
+  weight?: number;
+  width?: number;
+  height?: number;
+  length?: number;
+  color?: string;
   images: ProductImage[];
 }

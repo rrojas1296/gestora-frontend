@@ -9,8 +9,8 @@ const useCategories = (companyId?: string) => {
     refetch,
   } = useQuery({
     queryKey: ["categories", companyId],
-    queryFn: () => {
-      if (companyId) return getCategoriesPerCompany(companyId);
+    queryFn: async () => {
+      if (companyId) return await getCategoriesPerCompany(companyId);
     },
     enabled: !!companyId,
   });

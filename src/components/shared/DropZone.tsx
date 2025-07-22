@@ -2,16 +2,13 @@ import { cn } from "@/utils/cn";
 import React, { ComponentProps, DragEvent, useRef, useState } from "react";
 import ImageUp from "../Icons/ImageUp";
 import { Button } from "gestora-lib";
-import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import PreviewImage from "./PreviewImage";
 
 type Props = ComponentProps<"div"> & {
-  images: File[];
-  trigger: UseFormTrigger<any>;
-  setValue: UseFormSetValue<any>;
   placeholder: string;
   buttonText: string;
-  name: string;
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+  images: File[];
   limit?: number;
   error?: string;
   zoneClassName?: string;
@@ -20,13 +17,11 @@ type Props = ComponentProps<"div"> & {
 const DropZone = ({
   className,
   images = [],
-  setValue,
-  trigger,
   error,
   placeholder,
   buttonText,
+  setImages,
   zoneClassName,
-  name,
   limit = 5,
 }: Props) => {
   const [dragging, setDragging] = useState(false);
@@ -35,14 +30,12 @@ const DropZone = ({
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    const newImages = Array.from(e.dataTransfer.files).filter((file) =>
+    const newFiles = Array.from(e.dataTransfer.files).filter((file) =>
       file.type.startsWith("image/"),
     );
-
     setDragging(false);
-    if (newImages.length === 0) return;
-    setValue(name, [...images, ...newImages]);
-    trigger(name);
+    if (newFiles.length === 0) return;
+    setImages((prev) => [...prev, ...newFiles]);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -52,11 +45,10 @@ const DropZone = ({
   };
 
   const handleFiles = (files: FileList) => {
-    const newImages = Array.from(files).filter((file) =>
+    const newFiles = Array.from(files).filter((file) =>
       file.type.startsWith("image/"),
     );
-    setValue(name, [...images, ...newImages]);
-    trigger(name);
+    setImages((prev) => [...prev, ...newFiles]);
   };
 
   return (
@@ -103,21 +95,6 @@ const DropZone = ({
           />
         </div>
       )}
-      {images.length > 0 && (
-        <PreviewImage
-          images={images}
-          onDelete={(index) => {
-            setValue(
-              name,
-              images.filter((_, i) => i !== index),
-              {
-                shouldValidate: true,
-              },
-            );
-          }}
-        />
-      )}
-      {error && <span className="text-danger text-sm">{error}</span>}
     </div>
   );
 };

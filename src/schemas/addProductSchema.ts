@@ -21,7 +21,7 @@ const schema = z
     brand: z.string().min(1, {
       message: "form.brand.errors.required",
     }),
-    category: z
+    category_id: z
       .string({
         error: "form.category.errors.required",
       })
@@ -55,14 +55,18 @@ const schema = z
     width: z.nan().or(z.number()).optional(),
     height: z.nan().or(z.number()).optional(),
     color: z.string().optional(),
-    images: z
-      .array(z.instanceof(File))
+    main_image: z
+      .array(z.string())
       .min(1, {
-        message: "form.images.errors.required",
+        message: "form.sections.images.main_image.errors.min",
       })
+      .optional(),
+    secondary_images: z
+      .array(z.string())
       .max(3, {
-        message: "form.images.errors.maxImages",
-      }),
+        message: "form.sections.images.secondary_image.errors.max",
+      })
+      .optional(),
   })
   .check((ctx) => {
     if (Number(ctx.value.min_stock) > Number(ctx.value.quantity))
@@ -83,35 +87,35 @@ const information: Control<SchemaFields>[] = [
     label: "form.name.label",
     type: "text",
     placeholder: "form.name.placeholder",
-    className: "col-span-2",
+    className: "lg:col-span-2",
   },
   {
     name: "description",
     label: "form.description.label",
     type: "textarea",
     placeholder: "form.description.placeholder",
-    className: "col-span-2",
+    className: "lg:col-span-2",
   },
   {
     name: "brand",
     label: "form.brand.label",
     type: "text",
     placeholder: "form.brand.placeholder",
-    className: "col-span-1",
+    className: "lg:col-span-1",
   },
   {
-    name: "category",
+    name: "category_id",
     type: "select",
     label: "form.category.label",
     placeholder: "form.category.placeholder",
-    className: "col-span-1",
+    className: "lg:col-span-1",
   },
   {
     name: "status",
     type: "select",
     label: "form.status.label",
     placeholder: "form.status.placeholder",
-    className: "col-span-1",
+    className: "lg:col-span-1",
     options: [
       {
         label: "form.status.options.active.label",
@@ -149,21 +153,21 @@ const pricing: Control<SchemaFields>[] = [
     label: "form.cost_price.label",
     type: "number",
     placeholder: "form.cost_price.placeholder",
-    className: "col-start-1 col-end-2",
+    className: "lg:col-start-1 lg:col-end-2",
   },
   {
     name: "sales_price",
     label: "form.sales_price.label",
     type: "number",
     placeholder: "form.sales_price.placeholder",
-    className: "col-start-2 col-end-3",
+    className: "lg:col-start-2 lg:col-end-3",
   },
   {
     name: "currency",
     label: "form.currency.label",
     type: "select",
     placeholder: "form.currency.placeholder",
-    className: "col-span-2",
+    className: "lg:col-span-2",
     options: [
       {
         label: "form.currency.options.EUR.label",
@@ -187,14 +191,14 @@ const inventory: Control<SchemaFields>[] = [
     label: "form.quantity.label",
     type: "number",
     placeholder: "form.quantity.placeholder",
-    className: "col-span-1",
+    className: "lg:col-span-1",
   },
   {
     name: "min_stock",
     label: "form.min_stock.label",
     type: "number",
     placeholder: "form.min_stock.placeholder",
-    className: "col-span-1",
+    className: "lg:col-span-1",
   },
 ];
 
@@ -227,7 +231,7 @@ const details: Control<SchemaFields>[] = [
     name: "color",
     label: "form.color.label",
     placeholder: "form.color.placeholder",
-    className: "col-span-2",
+    className: "lg:col-span-2",
     type: "text",
   },
 ];
@@ -242,7 +246,7 @@ const defaultValues: SchemaType = {
   name: "",
   description: "",
   brand: "",
-  category: "",
+  category_id: "",
   status: "active",
   sku: "",
   cost_price: NaN,
@@ -250,7 +254,8 @@ const defaultValues: SchemaType = {
   currency: "PEN",
   quantity: NaN,
   min_stock: NaN,
-  images: [],
+  main_image: [],
+  secondary_images: [],
 };
 
 export { controls, schema, defaultValues };

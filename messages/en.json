@@ -290,7 +290,23 @@
         },
         "images": {
           "title": "Product Images",
-          "description": "Upload up to 3 images"
+          "description": "Upload up to 1 main image and 3 images for the product.",
+          "main_image": {
+            "title": "Main Image",
+            "placeholder": "Drop an image here",
+            "button": "Upload main image",
+            "errors": {
+              "min": "Upload the main image"
+            }
+          },
+          "secondary_images": {
+            "title": "Secondary Images",
+            "placeholder": "Drop your images here",
+            "button": "Upload images",
+            "errors": {
+              "max": "Upload max of 3 images"
+            }
+          }
         }
       },
       "name": {

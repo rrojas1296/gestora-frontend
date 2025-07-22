@@ -19,6 +19,7 @@ import EditIcon from "@/components/Icons/EditIcon";
 import DotsIcon from "@/components/Icons/DotsIcon";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/utils/cn";
+import { useRouter } from "@/i18n/navigation";
 
 type Props = {
   setOpenDialog: (val: boolean) => void;
@@ -28,6 +29,7 @@ type Props = {
 const useInventoryColumns = ({ setIdProduct, setOpenDialog }: Props) => {
   const t = useTranslations("Inventory");
   const locale = useLocale();
+  const router = useRouter();
   const columns: ColumnDef<ProductDB>[] = [
     {
       id: "select",
@@ -120,7 +122,7 @@ const useInventoryColumns = ({ setIdProduct, setOpenDialog }: Props) => {
             <DropdownMenuContent
               className={cn(locale === "en" ? "w-40" : "w-48")}
             >
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push(`/inventory/${id}`)}>
                 <EditIcon className="w-5 h-5 text-text-1 stroke-current" />
                 {t("table.menu.edit")}
               </DropdownMenuItem>

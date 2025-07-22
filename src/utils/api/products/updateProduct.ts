@@ -2,16 +2,12 @@ import { ApiResponse } from "@/types/api/response";
 import apiInstance from "../instance";
 import { SchemaType } from "@/schemas/addProductSchema";
 
-type AddProductResponse = {
-  id: string;
-};
-
 export type ProductBody = Omit<SchemaType, "images"> & {
   company_id?: string;
 };
-export const createProduct = async (data: ProductBody) => {
-  const response = await apiInstance.post<ApiResponse<AddProductResponse>>(
-    "/products/createProduct",
+export const updateProduct = async (data: ProductBody, id: string) => {
+  const response = await apiInstance.put<ApiResponse<string>>(
+    "/products/updateProduct/" + id,
     data,
   );
   return response.data.data;

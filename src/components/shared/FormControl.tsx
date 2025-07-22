@@ -1,14 +1,7 @@
 import { cn } from "@/utils/cn";
 import { Input, Textarea } from "gestora-lib";
 import type { ComponentProps, HTMLInputTypeAttribute, JSX } from "react";
-import { Control, Controller, type UseFormRegister } from "react-hook-form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "gestora-lib";
+import { type UseFormRegister } from "react-hook-form";
 
 interface Props extends ComponentProps<"input"> {
   label: string;
@@ -16,8 +9,6 @@ interface Props extends ComponentProps<"input"> {
   Icon?: JSX.Element;
   error?: string;
   className?: string;
-  control?: Control<any>;
-  options?: { value: string; label: string }[];
 }
 
 const inputTypes: HTMLInputTypeAttribute[] = [
@@ -36,22 +27,18 @@ const FormControl = ({
   register,
   error,
   className,
-  control,
-  options,
 }: Props) => {
   return (
     <div className={cn("grid gap-2 w-full", className)}>
-      {label && (
-        <label
-          htmlFor={name}
-          className={cn(
-            "text-text-1 text-sm font-medium",
-            error && "text-danger",
-          )}
-        >
-          {label}
-        </label>
-      )}
+      <label
+        htmlFor={name}
+        className={cn(
+          "text-text-1 text-sm font-medium",
+          error && "text-danger",
+        )}
+      >
+        {label}
+      </label>
       {inputTypes.includes(type!) ? (
         <Input
           containerClassName={cn(
@@ -66,35 +53,6 @@ const FormControl = ({
           {...register(name, {
             valueAsNumber: type === "number",
           })}
-        />
-      ) : type === "select" ? (
-        <Controller
-          name={name}
-          control={control}
-          render={({ field }) => {
-            return (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger
-                  className={cn(
-                    "w-full col-span-2 border-border-1 data-[size=default]:h-10 text-text-1",
-                    error && "border-danger",
-                  )}
-                >
-                  <SelectValue placeholder="Select a status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {options?.map((option) => {
-                    const { label, value } = option;
-                    return (
-                      <SelectItem value={value} key={value}>
-                        {label}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
-            );
-          }}
         />
       ) : type === "textarea" ? (
         <Textarea
