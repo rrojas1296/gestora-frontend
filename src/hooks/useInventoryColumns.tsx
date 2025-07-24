@@ -58,11 +58,11 @@ const useInventoryColumns = ({ setIdProduct, setOpenDialog }: Props) => {
             <Image
               src={image_url}
               alt={name}
-              width={50}
-              height={50}
+              width={100}
+              height={100}
               className="rounded-md object-cover w-10 h-10"
             />
-            <span className="text-sm">{name}</span>
+            <span className="text-sm break-words w-60">{name}</span>
           </div>
         );
       },

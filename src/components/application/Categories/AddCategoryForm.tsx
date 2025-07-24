@@ -35,13 +35,14 @@ const AddCategoryForm = ({ refetch, setOpen }: Props) => {
         () => <Toast text="Creating category" type="loading" />,
         { duration: 1000 * 100 },
       );
-      const secure_url = await uploadImage(image[0]);
+      const { secure_url, public_id } = await uploadImage(image[0]);
       const body = {
         name: data.name,
         description: data.description,
         image_url: secure_url,
         is_active: true,
         company_id: companyId!,
+        public_id,
       };
       await createCategory(body);
       toast.dismiss(r);

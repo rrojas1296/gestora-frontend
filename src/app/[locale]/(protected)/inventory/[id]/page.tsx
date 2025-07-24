@@ -8,11 +8,7 @@ import { Button, Toast } from "gestora-lib";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import DropZone from "@/components/shared/DropZone";
-import {
-  CreateProductImage,
-  createProductImage,
-} from "@/utils/api/productImages/createProductImage";
+import { createProductImage } from "@/utils/api/productImages/createProductImage";
 import useCategories from "@/hooks/useCategories";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,27 +25,35 @@ import { useParams } from "next/navigation";
 import { ProductImage } from "@/types/api/inventory";
 import { updateProduct } from "@/utils/api/products/updateProduct";
 import z from "zod";
-import PreviewImage from "@/components/shared/PreviewImage";
 import Loader from "@/components/shared/Loader";
 import useProduct from "@/hooks/useProduct";
 import SelectForm from "@/components/shared/SelectForm";
 import { deleteProductImage } from "@/utils/api/productImages/deleteProductImage";
+import UpsertProductImages from "@/components/application/Inventory/UpsertProductImages";
+import { destroyCloudinaryImage } from "@/utils/cloudinary/destroyCloudinaryImage";
 
-interface ExistingImages {
+export interface ExistimgImages {
   primary: ProductImage[];
   secondary: ProductImage[];
+}
+
+export interface NewImages {
+  primary: File[];
+  secondary: File[];
 }
 
 const FormAddProduct = () => {
   const t = useTranslations("Inventory");
   const [loading, setLoading] = useState(false);
-  const [existingImages, setExistingImages] = useState<ExistingImages>({
+  const [existingImages, setExistingImages] = useState<ExistimgImages>({
     primary: [],
     secondary: [],
   });
-  const [mainImage, setMainImage] = useState<File[]>([]);
+  const [newImages, setNewImages] = useState<NewImages>({
+    primary: [],
+    secondary: [],
+  });
   const [imagesToDelete, setImagesToDelete] = useState<ProductImage[]>([]);
-  const [secondaryImages, setSecondaryImages] = useState<File[]>([]);
   const companyId = useAppSelector((state) => state.company.id);
   const params = useParams();
   const productId = z.uuidv4().safeParse(params.id).success
@@ -66,14 +70,11 @@ const FormAddProduct = () => {
     register,
     trigger,
     setValue,
-    watch,
     reset,
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues,
   });
-  const form = watch();
-  console.log({ form, errors, existingImages, imagesToDelete });
 
   const errorHandler = () => {
     console.log({ errors });
@@ -95,6 +96,7 @@ const FormAddProduct = () => {
     );
     for (const image of imagesToDelete) {
       await deleteProductImage(image.id);
+      if (image.public_id) await destroyCloudinaryImage(image.public_id);
     }
     setLoading(true);
     try {
@@ -112,27 +114,27 @@ const FormAddProduct = () => {
         newProductId = id;
       }
 
-      for (const image of mainImage) {
-        const secure_url = await uploadImage(image);
-        const body: CreateProductImage = {
+      for (const image of newImages.primary) {
+        const { public_id, secure_url } = await uploadImage(image);
+        await createProductImage({
           product_id: productId || newProductId || "",
           url: secure_url,
           name: image.name,
           is_primary: true,
           is_deleted: false,
-        };
-        await createProductImage(body);
+          public_id,
+        });
       }
-      for (const image of secondaryImages) {
-        const secure_url = await uploadImage(image);
-        const body: CreateProductImage = {
+      for (const image of newImages.secondary) {
+        const { secure_url, public_id } = await uploadImage(image);
+        await createProductImage({
           product_id: productId || newProductId || "",
           url: secure_url,
           name: image.name,
           is_primary: false,
           is_deleted: false,
-        };
-        await createProductImage(body);
+          public_id,
+        });
       }
       toast.custom(() => (
         <Toast
@@ -158,16 +160,19 @@ const FormAddProduct = () => {
   };
 
   useEffect(() => {
-    const mainImageUrl = mainImage.map((image) => URL.createObjectURL(image));
-    const secondaryImageUrl = secondaryImages.map((image) =>
+    // Updating form to validate correct number of images
+    const mainImageUrl = newImages.primary.map((image) =>
       URL.createObjectURL(image),
     );
-    const p1 = productId ? existingImages.primary.map((i) => i.url) : [];
-    const p2 = productId ? existingImages.secondary.map((i) => i.url) : [];
-    setValue("main_image", [...p1, ...mainImageUrl]);
-    setValue("secondary_images", [...p2, ...secondaryImageUrl]);
+    const secondaryImageUrl = newImages.secondary.map((image) =>
+      URL.createObjectURL(image),
+    );
+    const ep = productId ? existingImages.primary.map((i) => i.url) : [];
+    const es = productId ? existingImages.secondary.map((i) => i.url) : [];
+    setValue("main_image", [...ep, ...mainImageUrl]);
+    setValue("secondary_images", [...es, ...secondaryImageUrl]);
     if (isDirty) trigger("main_image");
-  }, [mainImage, secondaryImages]);
+  }, [newImages]);
 
   useEffect(() => {
     if (!companyId || !product || !categories) return;
@@ -199,8 +204,14 @@ const FormAddProduct = () => {
       secondary: product?.images.filter((i) => !i.is_primary),
     });
   }, [loadingData]);
+
   if (loadingData)
-    return <Loader className="h-[calc(100vh-148px)] static w-full" />;
+    return (
+      <CardApp className="h-[calc(100vh-148px)] static w-full">
+        <Loader className="static w-full h-full" />
+      </CardApp>
+    );
+
   return (
     <CardApp className="pb-12 overflow-hidden">
       <form
@@ -217,7 +228,7 @@ const FormAddProduct = () => {
             >
               <ArrowLeft className="w-6 h-6 text-text-1 stroke-current" />
             </Button>
-            <h1 className="font-semibold shrink-0 text-2xl text-left lg:w-full">
+            <h1 className="font-semibold shrink-0 text-2xl text-left w-full lg:w-full break-words">
               {t("form.head.title")}
             </h1>
           </div>
@@ -371,91 +382,15 @@ const FormAddProduct = () => {
             );
           })}
         </div>
-        <div className="lg:col-span-4 flex flex-col gap-4">
-          <div className="lg:col-span-2 grid gap-2">
-            <h1 className="text-xl font-normal text-text-1">
-              {t("form.sections.images.title")}
-            </h1>
-            <p className="text-text-2 text-sm">
-              {t("form.sections.images.description")}
-            </p>
-          </div>
-          <h3 className="text-text-1 text-sm">
-            {t("form.sections.images.main_image.title")}
-          </h3>
-          <DropZone
-            placeholder={t("form.sections.images.main_image.placeholder")}
-            buttonText={t("form.sections.images.main_image.button")}
-            setImages={setMainImage}
-            show={
-              productId
-                ? existingImages.primary.length + mainImage.length < 1
-                : mainImage.length < 1
-            }
-            className={mainImage.length >= 1 ? "hidden" : ""}
-          />
-          <PreviewImage
-            files={mainImage}
-            className={mainImage.length > 0 ? "" : "hidden"}
-            onDelete={(index) => {
-              setMainImage((prev) => prev.filter((_, i) => i !== index));
-            }}
-          />
-          <PreviewImage
-            images={existingImages.primary}
-            onDelete={(index) => {
-              setImagesToDelete((prev) => [
-                ...prev,
-                existingImages.primary[index],
-              ]);
-              setExistingImages((prev) => ({
-                ...prev,
-                primary: existingImages.primary.filter((_, i) => i !== index),
-              }));
-            }}
-          />
-          {errors["main_image"] && (
-            <span className="text-danger text-sm">
-              {t(errors["main_image"].message!)}
-            </span>
-          )}
-          <h3 className="text-text-1 text-sm">
-            {t("form.sections.images.secondary_images.title")}
-          </h3>
-          <DropZone
-            placeholder={t("form.sections.images.secondary_images.placeholder")}
-            buttonText={t("form.sections.images.secondary_images.button")}
-            setImages={setSecondaryImages}
-            show={
-              productId
-                ? existingImages.secondary.length + secondaryImages.length < 3
-                : secondaryImages.length < 3
-            }
-            className={secondaryImages.length >= 3 ? "hidden" : ""}
-          />
-          <PreviewImage
-            files={secondaryImages}
-            className={secondaryImages.length > 0 ? "" : "hidden"}
-            onDelete={(index) => {
-              setSecondaryImages((prev) => prev.filter((_, i) => i !== index));
-            }}
-          />
-          <PreviewImage
-            images={existingImages?.secondary}
-            onDelete={(index) => {
-              setImagesToDelete((prev) => [
-                ...prev,
-                existingImages.secondary[index],
-              ]);
-              setExistingImages((prev) => ({
-                ...prev,
-                secondary: existingImages.secondary.filter(
-                  (_, i) => i !== index,
-                ),
-              }));
-            }}
-          />
-        </div>
+        <UpsertProductImages
+          setExistingImages={setExistingImages}
+          setImagesToDelete={setImagesToDelete}
+          setNewImages={setNewImages}
+          productId={productId}
+          errors={errors}
+          newImages={newImages}
+          existingImages={existingImages}
+        />
         <Button
           disabled={loading}
           variant="filled"

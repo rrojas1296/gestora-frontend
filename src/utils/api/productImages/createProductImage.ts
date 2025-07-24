@@ -15,6 +15,7 @@ export interface CreateProductImage {
   is_primary: boolean;
   name: string;
   url: string;
+  public_id: string;
 }
 
 export const createProductImage = async (data: CreateProductImage) => {

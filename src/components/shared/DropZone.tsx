@@ -6,7 +6,7 @@ import { Button } from "gestora-lib";
 type Props = ComponentProps<"div"> & {
   placeholder: string;
   buttonText: string;
-  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+  setImages: (images: File[]) => void;
   show: boolean;
   error?: string;
   zoneClassName?: string;
@@ -31,7 +31,7 @@ const DropZone = ({
     );
     setDragging(false);
     if (newFiles.length === 0) return;
-    setImages((prev) => [...prev, ...newFiles]);
+    setImages(newFiles);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -44,7 +44,7 @@ const DropZone = ({
     const newFiles = Array.from(files).filter((file) =>
       file.type.startsWith("image/"),
     );
-    setImages((prev) => [...prev, ...newFiles]);
+    setImages(newFiles);
   };
 
   return show ? (

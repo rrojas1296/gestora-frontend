@@ -6,3 +6,4 @@ export const environments = {
   CLOUDINARY_API_KEY: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY || "",
   CLOUDINARY_API_SECRET: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET || "",
 };
+console.log({ environments });

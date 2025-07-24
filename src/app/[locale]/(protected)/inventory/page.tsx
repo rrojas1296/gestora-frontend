@@ -48,15 +48,17 @@ const Inventory = () => {
   });
   const [search, setSearch] = useState("");
 
-  const { data, refetch, isLoading } = useQuery({
-    queryKey: ["productsTable", pagination, search],
-    queryFn: () =>
-      getProductsTable(
-        pagination.pageIndex + 1,
-        pagination.pageSize,
-        search,
-        companyId,
-      ),
+  const { data, refetch, isPending } = useQuery({
+    queryKey: ["productsTable", companyId, search, pagination],
+    queryFn: () => {
+      if (companyId)
+        return getProductsTable(
+          pagination.pageIndex + 1,
+          pagination.pageSize,
+          search,
+          companyId,
+        );
+    },
     placeholderData: keepPreviousData,
     enabled: !!companyId,
   });
@@ -141,7 +143,7 @@ const Inventory = () => {
       pageIndex: page,
     });
   };
-  if (isLoading)
+  if (isPending)
     return <Loader className="h-[calc(100vh-148px)] static bg-bg-2 w-full" />;
   return (
     <>

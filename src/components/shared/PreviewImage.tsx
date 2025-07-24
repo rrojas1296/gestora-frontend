@@ -30,7 +30,9 @@ const PreviewImage = ({ files, images, onDelete, className }: Props) => {
                   height={50}
                   className="rounded-md object-cover w-14 h-14"
                 />
-                <p className="text-sm text-text-1">{image.name}</p>
+                <p className="text-sm text-text-1 break-words w-44 lg:w-30 xl:w-62 2xl:w-80">
+                  {image.name}
+                </p>
               </div>
               <Button
                 variant="icon"

@@ -7,6 +7,7 @@ export interface ProductImage {
   id: string;
   name: string;
   is_primary: boolean;
+  public_id: string;
   is_deleted: boolean;
 }
 

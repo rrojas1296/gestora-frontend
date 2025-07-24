@@ -7,6 +7,7 @@ interface CategoryBody {
   is_active: boolean;
   company_id: string;
   image_url: string;
+  public_id: string;
 }
 export const createCategory = async (data: CategoryBody) => {
   const r = await apiInstance.post<ApiResponse<string>>(
