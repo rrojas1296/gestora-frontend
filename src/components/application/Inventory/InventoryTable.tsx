@@ -16,10 +16,7 @@ const InventoryTable = ({ table }: Props) => {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  className="py-2 text-start pr-6 font-semibold"
-                >
+                <th key={header.id} className="py-2 text-start pr-6 text-sm">
                   {!header.isPlaceholder &&
                     flexRender(
                       header.column.columnDef.header,

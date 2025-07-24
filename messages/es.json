@@ -1,7 +1,7 @@
 {
   "Login": {
     "title": "Bienvenido a Gestora",
-    "description": "Bienvenido a Gestora, empieza a gestionar tu negocio",
+    "description": "Bienvenido a Gestora y comienza a gestionar tu negocio",
     "buttons": {
       "google": "Iniciar sesión con Google"
     },
@@ -13,24 +13,24 @@
     },
     "form": {
       "errors": {
-        "too_many_requests": "Demasiadas solicitudes. Intenta nuevamente más tarde.",
+        "too_many_requests": "Demasiadas solicitudes. Por favor inténtalo más tarde.",
         "form_identifier_not_found": "La cuenta no fue encontrada",
         "form_password_incorrect": "La contraseña es incorrecta",
         "session_exists": "Ya tienes una sesión activa",
-        "invalid_credentials": "Correo o contraseña incorrectos.",
-        "server_error": "Error del servidor, intenta más tarde."
+        "invalid_credentials": "El correo o la contraseña son incorrectos.",
+        "server_error": "Error del servidor, por favor inténtalo más tarde."
       },
       "email": {
-        "name": "correo",
+        "name": "email",
         "placeholder": "correo@ejemplo.com",
         "label": "Correo electrónico",
         "errors": {
-          "required": "Ingresa tu correo",
-          "invalid": "Correo inválido"
+          "required": "Ingresa tu correo electrónico",
+          "invalid": "Correo electrónico inválido"
         }
       },
       "password": {
-        "name": "contraseña",
+        "name": "password",
         "placeholder": "Ingresa la contraseña aquí",
         "label": "Contraseña",
         "errors": {
@@ -45,20 +45,20 @@
   "Register": {
     "step1": {
       "social": {
-        "google": "Regístrate con Google"
+        "google": "Registrarse con Google"
       },
       "form": {
         "title": "Crear una cuenta",
-        "description": "Únete ahora a Gestora y empieza a gestionar tu negocio",
+        "description": "Únete ahora a Gestora y comienza a gestionar tu negocio",
         "errors": {
-          "server_error": "Error del servidor, intenta más tarde."
+          "server_error": "Error del servidor, por favor inténtalo más tarde."
         },
         "email": {
           "label": "Correo electrónico",
           "placeholder": "correo@ejemplo.com",
           "errors": {
-            "invalid": "Correo inválido",
-            "required": "Ingresa tu correo",
+            "invalid": "Correo electrónico inválido",
+            "required": "Ingresa tu correo electrónico",
             "inUse": "El correo ya está en uso"
           }
         },
@@ -71,7 +71,7 @@
           }
         },
         "confirmPassword": {
-          "placeholder": "Confirma tu contraseña aquí",
+          "placeholder": "Confirma la contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
             "required": "Confirmar la contraseña es obligatorio",
@@ -83,7 +83,7 @@
         },
         "question": {
           "text": "¿Ya tienes una cuenta?",
-          "link": "Inicia sesión"
+          "link": "Iniciar sesión"
         }
       },
       "or": "O continúa con"
@@ -96,14 +96,14 @@
           "text": "Continuar"
         },
         "firstName": {
-          "placeholder": "Ingresa tu nombre",
+          "placeholder": "Ingresa tu nombre aquí",
           "label": "Nombre",
           "errors": {
             "required": "El nombre es obligatorio"
           }
         },
         "lastName": {
-          "placeholder": "Ingresa tu apellido",
+          "placeholder": "Ingresa tu apellido aquí",
           "label": "Apellido",
           "errors": {
             "required": "El apellido es obligatorio"
@@ -123,10 +123,10 @@
           }
         },
         "confirmPassword": {
-          "placeholder": "Confirma tu contraseña aquí",
+          "placeholder": "Confirma la contraseña aquí",
           "label": "Confirmar contraseña",
           "errors": {
-            "required": "Confirmar contraseña es obligatorio",
+            "required": "Confirmar la contraseña es obligatorio",
             "not_matching": "Las contraseñas no coinciden"
           }
         },
@@ -150,20 +150,20 @@
           "label": "Sector de la empresa",
           "placeholder": "Ingresa el sector de tu empresa",
           "options": {
-            "retail": "Venta minorista",
-            "e_commerce": "E-commerce",
-            "restaurants_food": "Restaurantes y servicios de comida",
-            "wholesale_distribution": "Distribución mayorista",
-            "health_wellness": "Salud y bienestar",
+            "retail": "Comercio Minorista",
+            "e_commerce": "Comercio Electrónico",
+            "restaurants_food": "Restaurantes y Alimentación",
+            "wholesale_distribution": "Venta al por Mayor y Distribución",
+            "health_wellness": "Salud y Bienestar",
             "pharmaceuticals": "Farmacéutica",
             "manufacturing": "Manufactura",
             "automotive": "Automotriz",
             "electronics": "Electrónica",
-            "home_furniture": "Hogar y muebles",
-            "fashion_apparel": "Moda y ropa",
-            "beauty_personal_care": "Belleza y cuidado personal",
-            "agriculture_farming": "Agricultura y ganadería",
-            "construction_materials": "Construcción y materiales",
+            "home_furniture": "Hogar y Muebles",
+            "fashion_apparel": "Moda y Vestimenta",
+            "beauty_personal_care": "Belleza y Cuidado Personal",
+            "agriculture_farming": "Agricultura y Producción",
+            "construction_materials": "Construcción y Materiales",
             "other": "Otro"
           },
           "errors": {
@@ -172,9 +172,9 @@
         },
         "otherSector": {
           "label": "Otro sector",
-          "placeholder": "Ingresa tu sector",
+          "placeholder": "Ingresa tu otro sector",
           "errors": {
-            "required": "Ingresa tu sector"
+            "required": "Ingresa tu otro sector"
           }
         },
         "button": "Guardar"
@@ -187,10 +187,10 @@
     },
     "brand": {
       "text": "Gestora",
-      "subtitle": "Gestión empresarial"
+      "subtitle": "App de gestión"
     },
     "links": {
-      "dashboard": "Panel",
+      "dashboard": "Tablero",
       "inventory": "Inventario",
       "sales": "Ventas",
       "categories": "Categorías",
@@ -213,7 +213,7 @@
       "logout": "Cerrar sesión"
     },
     "errors": {
-      "server_error": "Error del servidor, intenta más tarde."
+      "server_error": "Error del servidor, por favor inténtalo más tarde."
     },
     "sections": {
       "inventory": "Inventario",
@@ -229,8 +229,8 @@
   },
   "Dashboard": {
     "earnings": {
-      "title": "Ingresos totales",
-      "description": "Ingresos totales de tu negocio."
+      "title": "Ingresos Totales",
+      "description": "Ganancias totales de tu negocio."
     },
     "sales": {
       "title": "Ventas",
@@ -238,19 +238,19 @@
     },
     "reports": {
       "title": "Reportes",
-      "description": "Total de reportes generados en el mes"
+      "description": "Reportes generados en el mes"
     },
     "users": {
       "title": "Usuarios",
-      "description": "Total de usuarios registrados en el sistema"
+      "description": "Usuarios registrados en el sistema"
     },
     "chart": {
-      "title": "Ingresos totales por mes",
+      "title": "Ingresos por mes",
       "description": "Ingresos generados en los últimos 12 meses"
     },
     "topProducts": {
       "title": "Productos más vendidos",
-      "description": "Productos más vendidos en los últimos 30 días",
+      "description": "Los productos más vendidos en los últimos 30 días",
       "data": {
         "units": "unidades"
       }
@@ -262,14 +262,86 @@
     "add": "Agregar producto",
     "export": "Exportar datos",
     "form": {
-      "title": "Agregar nuevo producto",
-      "imageDrop": {
-        "text": "Suelta tus imágenes aquí",
-        "button": "Haz clic para buscar"
+      "responses": {
+        "server_error": "Error del servidor, por favor inténtalo más tarde.",
+        "successCreate": "Producto agregado con éxito",
+        "successUpdate": "Producto actualizado con éxito",
+        "creating": "Creando producto...",
+        "updating": "Actualizando producto..."
+      },
+      "head": {
+        "title": "Agregar nuevo producto",
+        "description": "* indica campos obligatorios"
+      },
+      "sections": {
+        "information": {
+          "title": "Información del producto",
+          "description": "Información esencial sobre el producto"
+        },
+        "pricing": {
+          "title": "Precios",
+          "description": "Información de precios del producto"
+        },
+        "inventory": {
+          "title": "Gestión de inventario",
+          "description": "Establece la información del inventario del producto"
+        },
+        "details": {
+          "title": "Detalles del producto",
+          "description": "Detalles físicos del producto"
+        },
+        "images": {
+          "title": "Imágenes del producto",
+          "description": "Sube hasta 1 imagen principal y 3 secundarias del producto.",
+          "main_image": {
+            "title": "Imagen principal",
+            "placeholder": "Suelta una imagen aquí",
+            "button": "Subir imagen principal",
+            "errors": {
+              "min": "Sube la imagen principal"
+            }
+          },
+          "secondary_images": {
+            "title": "Imágenes secundarias",
+            "placeholder": "Suelta tus imágenes aquí",
+            "button": "Subir imágenes",
+            "errors": {
+              "max": "Sube máximo 3 imágenes"
+            }
+          }
+        }
+      },
+      "name": {
+        "label": "Nombre del producto *",
+        "placeholder": "Ingresa el nombre del producto",
+        "errors": {
+          "required": "El nombre es obligatorio"
+        }
+      },
+      "description": {
+        "label": "Descripción",
+        "placeholder": "Ingresa una descripción del producto",
+        "errors": {
+          "required": "La descripción es obligatoria"
+        }
+      },
+      "brand": {
+        "label": "Marca *",
+        "placeholder": "Ingresa la marca del producto",
+        "errors": {
+          "required": "La marca es obligatoria"
+        }
+      },
+      "category": {
+        "label": "Categoría *",
+        "placeholder": "Selecciona una categoría",
+        "errors": {
+          "required": "Por favor selecciona una categoría"
+        }
       },
       "status": {
         "label": "Estado",
-        "placeholder": "Seleccionar estado",
+        "placeholder": "Selecciona estado",
         "errors": {
           "required": "El estado es obligatorio"
         },
@@ -291,64 +363,111 @@
           }
         }
       },
-      "quantity": {
-        "label": "Cantidad",
-        "placeholder": "Ingresa la cantidad",
+      "sku": {
+        "label": "SKU *",
+        "placeholder": "ej. PRD-001",
         "errors": {
-          "required": "La cantidad es obligatoria"
+          "required": "Ingresa un SKU"
         }
       },
-      "category": {
-        "label": "Categoría",
-        "placeholder": "Selecciona una categoría",
-        "errors": {
-          "required": "Selecciona una categoría"
-        }
-      },
-      "salesPrice": {
-        "label": "Precio de venta",
-        "placeholder": "Ingresa el precio de venta",
-        "errors": {
-          "required": "El precio de venta es obligatorio"
-        }
-      },
-      "costPrice": {
-        "label": "Precio de costo",
+      "cost_price": {
+        "label": "Precio de costo *",
         "placeholder": "Ingresa el precio de costo",
         "errors": {
-          "required": "El precio de costo es obligatorio"
+          "required": "El precio de costo es obligatorio",
+          "invalid": "El precio de costo es inválido",
+          "negative": "El precio de costo no puede ser negativo"
         }
       },
-      "name": {
-        "label": "Nombre del producto",
-        "placeholder": "Ingresa el nombre del producto",
+      "sales_price": {
+        "label": "Precio de venta *",
+        "placeholder": "Ingresa el precio de venta",
         "errors": {
-          "required": "El nombre es obligatorio"
+          "required": "El precio de venta es obligatorio",
+          "invalid": "El precio de venta es inválido",
+          "negative": "El precio de venta no puede ser negativo"
         }
       },
-      "images": {
+      "currency": {
+        "label": "Moneda",
+        "placeholder": "Selecciona una moneda",
         "errors": {
-          "required": "Sube al menos una imagen",
-          "maxImages": "Puedes subir un máximo de 3 imágenes"
+          "required": "La moneda es obligatoria"
+        },
+        "options": {
+          "USD": {
+            "label": "USD"
+          },
+          "EUR": {
+            "label": "EUR"
+          },
+          "PEN": {
+            "label": "PEN"
+          }
         }
       },
-      "description": {
-        "label": "Descripción",
-        "placeholder": "Ingresa una descripción del producto",
+      "quantity": {
+        "label": "Cantidad *",
+        "placeholder": "Ingresa la cantidad",
         "errors": {
-          "required": "La descripción es obligatoria"
+          "required": "La cantidad es obligatoria",
+          "invalid": "La cantidad es inválida",
+          "negative": "La cantidad no puede ser negativa"
         }
+      },
+      "min_stock": {
+        "label": "Stock mínimo *",
+        "placeholder": "Ingresa el stock mínimo",
+        "errors": {
+          "required": "El stock mínimo es obligatorio",
+          "min_stock_greater_than_quantity": "El stock mínimo debe ser menor que la cantidad",
+          "invalid": "El stock mínimo es inválido",
+          "negative": "El stock mínimo no puede ser negativo"
+        }
+      },
+      "weight": {
+        "label": "Peso (Kg)",
+        "placeholder": "Ingresa el peso del producto",
+        "errors": {
+          "invalid": "El peso es inválido",
+          "negative": "El peso no puede ser negativo"
+        }
+      },
+      "length": {
+        "label": "Longitud (cm)",
+        "placeholder": "Ingresa la longitud del producto"
+      },
+      "width": {
+        "label": "Ancho (cm)",
+        "placeholder": "Ingresa el ancho del producto"
+      },
+      "height": {
+        "label": "Altura (cm)",
+        "placeholder": "Ingresa la altura del producto"
+      },
+      "color": {
+        "label": "Color",
+        "placeholder": "Ingresa el color del producto"
       },
       "button": {
-        "add": "Agregar",
+        "submit": "Crear producto",
+        "update": "Actualizar producto",
         "cancel": "Cancelar"
+      },
+      "images": {
+        "placeholder": "Suelta tus imágenes aquí",
+        "buttonText": "Subir imágenes",
+        "errors": {
+          "required": "Sube al menos una imagen",
+          "maxImages": "Puedes subir máximo 3 imágenes"
+        }
       }
     },
     "table": {
       "menu": {
-        "delete": "Eliminar producto",
-        "edit": "Editar producto",
-        "view": "Ver producto"
+        "delete": "Eliminar elemento",
+        "edit": "Editar elemento",
+        "view": "Ver elemento"
       },
       "columns": {
         "name": {
@@ -364,7 +483,10 @@
           "header": "Cantidad"
         },
         "created_at": {
-          "header": "Creado el"
+          "header": "Creado en"
+        },
+        "updated_at": {
+          "header": "Actualizado en"
         },
         "price": {
           "header": "Precio"
@@ -378,11 +500,51 @@
       }
     },
     "deleteDialog": {
-      "title": "¿Estás seguro de eliminar este producto?",
+      "title": "¿Estás seguro de que deseas eliminar este producto?",
       "description": "Esta acción no se puede deshacer",
       "button": {
         "cancel": "Cancelar",
         "delete": "Eliminar"
+      }
+    }
+  },
+  "Category": {
+    "deleteDialog": {
+      "title": "¿Estás seguro de eliminar la categoría?",
+      "description": "Todos los productos en esta categoría serán eliminados",
+      "button": {
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      }
+    },
+    "form": {
+      "title": "Agregar nueva categoría",
+      "name": {
+        "placeholder": "Ingresa un nombre para la categoría",
+        "label": "Nombre *",
+        "errors": {
+          "required": "El nombre de la categoría es obligatorio"
+        }
+      },
+      "description": {
+        "placeholder": "Ingresa una descripción para la categoría",
+        "label": "Descripción",
+        "errors": {
+          "required": "La descripción de la categoría es obligatoria"
+        }
+      },
+      "image": {
+        "button": "Subir imagen *",
+        "placeholder": "Suelta tu imagen aquí",
+        "title": "Imagen *",
+        "errors": {
+          "required": "Selecciona una imagen.",
+          "max": "Solo puedes subir una imagen."
+        }
+      },
+      "button": {
+        "create": "Crear",
+        "cancel": "Cancelar"
       }
     }
   }

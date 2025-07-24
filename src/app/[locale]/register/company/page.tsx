@@ -2,6 +2,7 @@
 import LoaderIcon from "@/components/Icons/LoaderIcon";
 import FormControl from "@/components/shared/FormControl";
 import Loader from "@/components/shared/Loader";
+import SelectForm from "@/components/shared/SelectForm";
 import useAuthUser from "@/hooks/useAuthUser";
 import useSupabaseSession from "@/hooks/useSupabaseUser";
 import { controls, schema, SchemaType } from "@/schemas/register/company";
@@ -81,12 +82,23 @@ const Page = () => {
       {controls.map((c, index) => {
         const { label, name, type, placeholder, options } = c;
         const error = errors[name] ? t(errors[name].message!) : undefined;
-        const opts = options?.map((opt) => ({
-          value: opt.value,
-          label: t(`company.form.${name}.options.${opt.value}`),
-        }));
+        const opts =
+          options?.map((opt) => ({
+            value: opt.value,
+            label: t(`company.form.${name}.options.${opt.value}`),
+          })) || [];
         if (name === "otherSector" && sector !== "other") return;
-        return (
+        return type === "select" ? (
+          <SelectForm
+            key={index}
+            control={control}
+            name={name}
+            placeholder={t(placeholder)}
+            options={opts}
+            label={t(label)}
+            error={error}
+          />
+        ) : (
           <FormControl
             key={index}
             type={type}
@@ -94,8 +106,6 @@ const Page = () => {
             placeholder={t(placeholder)}
             name={name}
             error={error}
-            control={control}
-            options={opts}
             register={register}
           />
         );

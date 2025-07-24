@@ -14,7 +14,7 @@ const Badge = ({ type, children }: Props) => {
     active: "bg-success",
     out_of_stock: "bg-danger",
     discontinued: "bg-yellow-700",
-    inactive: "bg-gray-700",
+    inactive: "bg-danger",
     draft: "bg-gray-700",
     archived: "bg-gray-600",
   };

@@ -16,8 +16,6 @@ import TrashIcon from "@/components/Icons/TrashIcon";
 import OpenEyeIcon from "@/components/Icons/OpenEyeIcon";
 import EditIcon from "@/components/Icons/EditIcon";
 import moment from "moment";
-import { UseFormReset } from "react-hook-form";
-import { SchemaType } from "@/schemas/addProductSchema";
 import { IMG_PRODUCT_DEFAULT } from "@/config/constants";
 
 type TranslatorFunction = (key: string) => string;
@@ -26,14 +24,12 @@ export const generateInvetoryColumns = ({
   t,
   setOpenDialog,
   setIdProduct,
-  reset,
   setOpenSidebar,
 }: {
   t: TranslatorFunction;
   setOpenSidebar: (val: boolean) => void;
   setOpenDialog: (val: boolean) => void;
   setIdProduct: (val: string) => void;
-  reset: UseFormReset<SchemaType>;
 }): ColumnDef<ProductDB>[] => {
   return [
     {
@@ -113,7 +109,7 @@ export const generateInvetoryColumns = ({
       id: "actions",
       header: "",
       cell: (info) => {
-        const { id, ...other } = info.row.original;
+        const { id } = info.row.original;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -128,15 +124,6 @@ export const generateInvetoryColumns = ({
               <DropdownMenuItem
                 onClick={() => {
                   setOpenSidebar(true);
-                  reset({
-                    cost_price: other.cost_price,
-                    sales_price: other.sales_price,
-                    description: other.description,
-                    name: other.name,
-                    quantity: other.quantity,
-                    status: other.status,
-                    images: [],
-                  });
                 }}
               >
                 <EditIcon className="w-5 h-5 text-text-1 stroke-current" />

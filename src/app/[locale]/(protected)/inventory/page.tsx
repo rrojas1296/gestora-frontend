@@ -6,14 +6,17 @@ import FilterIcon from "@/components/Icons/FilterIcon";
 import LoaderIcon from "@/components/Icons/LoaderIcon";
 import PlusIcon from "@/components/Icons/PlusIcon";
 import SearchIcon from "@/components/Icons/SearchIcon";
+import TrashIcon from "@/components/Icons/TrashIcon";
 import CardApp from "@/components/shared/CardApp";
 import Loader from "@/components/shared/Loader";
 
 import Pagination from "@/components/shared/Pagination";
 import useInventoryColumns from "@/hooks/useInventoryColumns";
 import { useAppSelector } from "@/store/hooks";
+import { deleteMultipleProducts } from "@/utils/api/products/deleteMultipleProducts";
 import { deleteProduct } from "@/utils/api/products/deleteProduct";
 import { getProductsTable } from "@/utils/api/products/getProductsTable";
+import { cn } from "@/utils/cn";
 import { debounce } from "@/utils/debounce";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import {
@@ -37,6 +40,7 @@ const Inventory = () => {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const companyId = useAppSelector((state) => state.company.id);
   const [rowSelected, setRowSelected] = useState<Record<number, boolean>>({});
+  const itemsSelected = Object.keys(rowSelected);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -113,6 +117,22 @@ const Inventory = () => {
       setOpenDialog(false);
       refetch();
     }
+  };
+
+  const handleDeleteMultiple = async () => {
+    await deleteMultipleProducts(itemsSelected);
+    const r = toast.custom(
+      () => <Toast text="Deleting products" type="loading" />,
+      {
+        duration: 1000 * 100,
+      },
+    );
+    toast.dismiss(r);
+    toast.custom(() => (
+      <Toast text="Product were deleted successfully" type="success" />
+    ));
+    refetch();
+    setRowSelected({});
   };
 
   const setPage = (page: number) => {
@@ -207,6 +227,22 @@ const Inventory = () => {
           </Button>
         </div>
       </Dialog>
+      <div
+        className={cn(
+          "fixed z-20 flex items-center justify-between max-w-80 bottom-6 right-0 left-0 m-auto transition-all border-border-2 bg-bg-1 rounded-md border py-1 px-4 text-sm",
+          itemsSelected.length === 0 &&
+            "opacity-0 pointer-events-none translate-y-4",
+        )}
+      >
+        {itemsSelected.length} items are selected
+        <Button
+          variant="icon"
+          className="hover:bg-bg-2 h-9 w-9"
+          onClick={handleDeleteMultiple}
+        >
+          <TrashIcon className="w-4 h-4 stroke-current text-danger" />
+        </Button>
+      </div>
     </>
   );
 };

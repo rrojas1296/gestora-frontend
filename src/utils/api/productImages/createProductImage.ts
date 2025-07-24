@@ -13,6 +13,7 @@ export interface CreateProductImage {
   product_id: string;
   is_deleted: boolean;
   is_primary: boolean;
+  name: string;
   url: string;
 }
 

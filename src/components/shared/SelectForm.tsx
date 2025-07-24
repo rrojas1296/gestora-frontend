@@ -1,12 +1,8 @@
 import { cn } from "@/utils/cn";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "gestora-lib";
+import { NativeSelect as Select } from "gestora-lib";
+import { SelectOption } from "gestora-lib/dist/components/Select/Select";
 import React from "react";
+import { Controller } from "react-hook-form";
 
 interface Props {
   name: string;
@@ -14,9 +10,7 @@ interface Props {
   control: any;
   label: string;
   error?: string;
-  value: string;
-  onChange: (value: string) => void;
-  options?: { value: string; label: string }[];
+  options: SelectOption[];
 }
 
 const SelectForm = ({
@@ -24,8 +18,7 @@ const SelectForm = ({
   placeholder,
   label,
   error,
-  onChange,
-  value,
+  control,
   options,
 }: Props) => {
   return (
@@ -39,26 +32,22 @@ const SelectForm = ({
       >
         {label}
       </label>
-      <Select autoComplete="on" value={value} onValueChange={onChange}>
-        <SelectTrigger
-          className={cn(
-            "w-full col-span-2 border-border-1 data-[size=default]:h-10 text-text-1",
-            error && "border-danger",
-          )}
-        >
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          {options?.map((option) => {
-            const { label, value } = option;
-            return (
-              <SelectItem value={value} key={value}>
-                {label}
-              </SelectItem>
-            );
-          })}
-        </SelectContent>
-      </Select>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => {
+          const value = options.find((option) => option.value === field.value);
+          return (
+            <Select
+              className="w-full max-w-none"
+              placeholder={placeholder}
+              options={options}
+              onChange={(val) => field.onChange(val.value)}
+              value={value}
+            />
+          );
+        }}
+      />
       {error && <p className="text-danger text-sm">{error}</p>}
     </div>
   );

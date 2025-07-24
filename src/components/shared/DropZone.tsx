@@ -2,27 +2,23 @@ import { cn } from "@/utils/cn";
 import React, { ComponentProps, DragEvent, useRef, useState } from "react";
 import ImageUp from "../Icons/ImageUp";
 import { Button } from "gestora-lib";
-import PreviewImage from "./PreviewImage";
 
 type Props = ComponentProps<"div"> & {
   placeholder: string;
   buttonText: string;
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
-  images: File[];
-  limit?: number;
+  show: boolean;
   error?: string;
   zoneClassName?: string;
 };
 
 const DropZone = ({
-  className,
-  images = [],
   error,
   placeholder,
   buttonText,
   setImages,
   zoneClassName,
-  limit = 5,
+  show = true,
 }: Props) => {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -51,52 +47,48 @@ const DropZone = ({
     setImages((prev) => [...prev, ...newFiles]);
   };
 
-  return (
-    <div className={cn("flex flex-col gap-4", className)}>
-      {images.length < limit && (
-        <div
-          className={cn(
-            "border-dashed border border-border-1 rounded-md w-full h-44 gap-4 flex flex-col items-center justify-center",
-            zoneClassName,
-            dragging && "bg-bg-2",
-            error && "border-danger",
-          )}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={() => setDragging(false)}
-        >
-          <div
-            className={cn(
-              "flex flex-col items-center gap-4",
-              dragging && "pointer-events-none",
-            )}
-          >
-            <ImageUp className="w-8 h-8 stroke-current text-text-1" />
-            <span className="text-sm">{placeholder}</span>
-            <Button
-              type="button"
-              onClick={() => inputRef.current?.click()}
-              variant="outlined"
-            >
-              {buttonText}
-            </Button>
-          </div>
-          <input
-            type="file"
-            className="hidden"
-            accept="image/*"
-            onChange={(e) => {
-              if (e.target.files) {
-                handleFiles(e.target.files);
-              }
-              e.target.value = "";
-            }}
-            ref={inputRef}
-          />
-        </div>
+  return show ? (
+    <div
+      className={cn(
+        "border-dashed border border-border-1 rounded-md w-full h-44 gap-4 flex flex-col items-center justify-center",
+        zoneClassName,
+        dragging && "bg-bg-2",
+        error && "border-danger",
       )}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragLeave={() => setDragging(false)}
+    >
+      <div
+        className={cn(
+          "flex flex-col items-center gap-4",
+          dragging && "pointer-events-none",
+        )}
+      >
+        <ImageUp className="w-8 h-8 stroke-current text-text-1" />
+        <span className="text-sm">{placeholder}</span>
+        <Button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          variant="outlined"
+        >
+          {buttonText}
+        </Button>
+      </div>
+      <input
+        type="file"
+        className="hidden"
+        accept="image/*"
+        onChange={(e) => {
+          if (e.target.files) {
+            handleFiles(e.target.files);
+          }
+          e.target.value = "";
+        }}
+        ref={inputRef}
+      />
     </div>
-  );
+  ) : null;
 };
 
 export default DropZone;

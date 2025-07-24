@@ -33,21 +33,30 @@ import PreviewImage from "@/components/shared/PreviewImage";
 import Loader from "@/components/shared/Loader";
 import useProduct from "@/hooks/useProduct";
 import SelectForm from "@/components/shared/SelectForm";
+import { deleteProductImage } from "@/utils/api/productImages/deleteProductImage";
+
+interface ExistingImages {
+  primary: ProductImage[];
+  secondary: ProductImage[];
+}
 
 const FormAddProduct = () => {
   const t = useTranslations("Inventory");
   const [loading, setLoading] = useState(false);
-  const [existingImages, setExistingImages] = useState<ProductImage[]>([]);
+  const [existingImages, setExistingImages] = useState<ExistingImages>({
+    primary: [],
+    secondary: [],
+  });
   const [mainImage, setMainImage] = useState<File[]>([]);
+  const [imagesToDelete, setImagesToDelete] = useState<ProductImage[]>([]);
   const [secondaryImages, setSecondaryImages] = useState<File[]>([]);
   const companyId = useAppSelector((state) => state.company.id);
   const params = useParams();
   const productId = z.uuidv4().safeParse(params.id).success
     ? (params.id as string)
     : undefined;
-  console.log({ companyId });
   const { categories, isLoading: loadingCategories } = useCategories(companyId);
-  const { product, isLoading: loadingProduct } = useProduct(productId);
+  const { product, isLoading: loadingProduct, refetch } = useProduct(productId);
   const loadingData = loadingCategories || loadingProduct || !companyId;
   const router = useRouter();
   const {
@@ -64,6 +73,7 @@ const FormAddProduct = () => {
     defaultValues,
   });
   const form = watch();
+  console.log({ form, errors, existingImages, imagesToDelete });
 
   const errorHandler = () => {
     console.log({ errors });
@@ -71,9 +81,21 @@ const FormAddProduct = () => {
 
   const addProductHandler: SubmitHandler<SchemaType> = async (data) => {
     const r = toast.custom(
-      () => <Toast text={t("form.responses.loading")} type="loading" />,
+      () => (
+        <Toast
+          text={
+            productId
+              ? t("form.responses.updating")
+              : t("form.responses.creating")
+          }
+          type="loading"
+        />
+      ),
       { duration: 1000 * 100 },
     );
+    for (const image of imagesToDelete) {
+      await deleteProductImage(image.id);
+    }
     setLoading(true);
     try {
       const body = {
@@ -95,6 +117,7 @@ const FormAddProduct = () => {
         const body: CreateProductImage = {
           product_id: productId || newProductId || "",
           url: secure_url,
+          name: image.name,
           is_primary: true,
           is_deleted: false,
         };
@@ -105,43 +128,55 @@ const FormAddProduct = () => {
         const body: CreateProductImage = {
           product_id: productId || newProductId || "",
           url: secure_url,
+          name: image.name,
           is_primary: false,
           is_deleted: false,
         };
         await createProductImage(body);
       }
       toast.custom(() => (
-        <Toast text={t("form.responses.success")} type="success" />
+        <Toast
+          text={
+            productId
+              ? t("form.responses.successUpdate")
+              : t("form.responses.successCreate")
+          }
+          type="success"
+        />
       ));
+      if (productId) refetch();
     } catch (err) {
       console.log({ err });
       toast.custom(() => (
         <Toast text={t("form.responses.server_error")} type="error" />
       ));
     } finally {
+      router.push("/inventory");
       toast.dismiss(r);
       setLoading(false);
     }
   };
 
-  // useEffect(() => {
-  //   const mainImageUrl = mainImage.map((image) => URL.createObjectURL(image));
-  //   const secondaryImageUrl = secondaryImages.map((image) =>
-  //     URL.createObjectURL(image),
-  //   );
-  //   setValue("main_image", [...mainImageUrl]);
-  //   setValue("secondary_images", [...secondaryImageUrl]);
-  //   if (isDirty) trigger("main_image");
-  // }, [mainImage, secondaryImages]);
+  useEffect(() => {
+    const mainImageUrl = mainImage.map((image) => URL.createObjectURL(image));
+    const secondaryImageUrl = secondaryImages.map((image) =>
+      URL.createObjectURL(image),
+    );
+    const p1 = productId ? existingImages.primary.map((i) => i.url) : [];
+    const p2 = productId ? existingImages.secondary.map((i) => i.url) : [];
+    setValue("main_image", [...p1, ...mainImageUrl]);
+    setValue("secondary_images", [...p2, ...secondaryImageUrl]);
+    if (isDirty) trigger("main_image");
+  }, [mainImage, secondaryImages]);
 
   useEffect(() => {
-    console.log("Getting existing product");
     if (!companyId || !product || !categories) return;
+    const category = categories.find((c) => c.id === product.category_id);
     reset({
       name: product.name,
       description: product.description,
       brand: product.brand,
-      category_id: product.category_id,
+      category_id: category?.id,
       status: product.status,
       sku: product.sku,
       cost_price: product.cost_price,
@@ -154,15 +189,16 @@ const FormAddProduct = () => {
       width: product.width,
       height: product.height,
       length: product.length,
+      main_image: product.images.filter((i) => i.is_primary).map((i) => i.url),
+      secondary_images: product.images
+        .filter((i) => !i.is_primary)
+        .map((i) => i.url),
     });
-    setExistingImages(product?.images || []);
+    setExistingImages({
+      primary: product?.images.filter((i) => i.is_primary),
+      secondary: product?.images.filter((i) => !i.is_primary),
+    });
   }, [loadingData]);
-  console.log({
-    loadingData,
-    product,
-    categories,
-    form,
-  });
   if (loadingData)
     return <Loader className="h-[calc(100vh-148px)] static w-full" />;
   return (
@@ -171,7 +207,7 @@ const FormAddProduct = () => {
         className="grid lg:grid-cols-12 gap-4 lg:gap-x-10"
         onSubmit={handleSubmit(addProductHandler, errorHandler)}
       >
-        <div className="lg:justify-between lg:col-span-12">
+        <div className="lg:justify-between lg:flex lg:col-span-12">
           <div className="flex items-center gap-4">
             <Button
               variant="icon"
@@ -185,7 +221,7 @@ const FormAddProduct = () => {
               {t("form.head.title")}
             </h1>
           </div>
-          <p className="hidden lg:block text-sm text-text-2">
+          <p className="block text-sm text-text-2">
             {t("form.head.description")}
           </p>
         </div>
@@ -205,19 +241,19 @@ const FormAddProduct = () => {
               errors[name] && errors[name].message
                 ? t(errors[name].message)
                 : undefined;
+
             const opts =
               name === "category_id"
                 ? categories?.map((cat) => ({
                     label: cat.name,
                     value: cat.id,
-                  }))
-                : options?.map((opt) => ({ ...opt, label: t(opt.label) }));
+                  })) || []
+                : options?.map((opt) => ({ ...opt, label: t(opt.label) })) ||
+                  [];
             return type === "select" ? (
               <SelectForm
                 key={index}
                 control={control}
-                value={form[name] as string}
-                onChange={(val) => setValue(name, val)}
                 name={name}
                 placeholder={t(placeholder)}
                 options={opts}
@@ -252,16 +288,15 @@ const FormAddProduct = () => {
               errors[name] && errors[name].message
                 ? t(errors[name].message)
                 : "";
-            const opts = options?.map((opt) => ({
-              ...opt,
-              label: t(opt.label),
-            }));
+            const opts =
+              options?.map((opt) => ({
+                ...opt,
+                label: t(opt.label),
+              })) || [];
             return type === "select" ? (
               <SelectForm
                 key={index}
                 control={control}
-                value={watch(name) as string}
-                onChange={(val) => setValue(name, val)}
                 name={name}
                 placeholder={t(placeholder)}
                 options={opts}
@@ -305,7 +340,6 @@ const FormAddProduct = () => {
                 type={type}
                 register={register}
                 className={className}
-                control={control}
               />
             );
           })}
@@ -318,16 +352,11 @@ const FormAddProduct = () => {
             </p>
           </div>
           {controls.details.map((field, index) => {
-            const { label, name, type, placeholder, className, options } =
-              field;
+            const { label, name, type, placeholder, className } = field;
             const error =
               errors[name] && errors[name].message
                 ? t(errors[name].message)
                 : "";
-            const opts = options?.map((opt) => ({
-              ...opt,
-              label: t(opt.label),
-            }));
             return (
               <FormControl
                 key={index}
@@ -336,10 +365,8 @@ const FormAddProduct = () => {
                 name={name}
                 error={error}
                 type={type}
-                options={opts}
                 register={register}
                 className={className}
-                control={control}
               />
             );
           })}
@@ -359,9 +386,12 @@ const FormAddProduct = () => {
           <DropZone
             placeholder={t("form.sections.images.main_image.placeholder")}
             buttonText={t("form.sections.images.main_image.button")}
-            images={mainImage}
             setImages={setMainImage}
-            limit={1}
+            show={
+              productId
+                ? existingImages.primary.length + mainImage.length < 1
+                : mainImage.length < 1
+            }
             className={mainImage.length >= 1 ? "hidden" : ""}
           />
           <PreviewImage
@@ -369,6 +399,19 @@ const FormAddProduct = () => {
             className={mainImage.length > 0 ? "" : "hidden"}
             onDelete={(index) => {
               setMainImage((prev) => prev.filter((_, i) => i !== index));
+            }}
+          />
+          <PreviewImage
+            images={existingImages.primary}
+            onDelete={(index) => {
+              setImagesToDelete((prev) => [
+                ...prev,
+                existingImages.primary[index],
+              ]);
+              setExistingImages((prev) => ({
+                ...prev,
+                primary: existingImages.primary.filter((_, i) => i !== index),
+              }));
             }}
           />
           {errors["main_image"] && (
@@ -382,9 +425,12 @@ const FormAddProduct = () => {
           <DropZone
             placeholder={t("form.sections.images.secondary_images.placeholder")}
             buttonText={t("form.sections.images.secondary_images.button")}
-            images={secondaryImages}
             setImages={setSecondaryImages}
-            limit={3}
+            show={
+              productId
+                ? existingImages.secondary.length + secondaryImages.length < 3
+                : secondaryImages.length < 3
+            }
             className={secondaryImages.length >= 3 ? "hidden" : ""}
           />
           <PreviewImage
@@ -395,9 +441,18 @@ const FormAddProduct = () => {
             }}
           />
           <PreviewImage
-            images={existingImages}
+            images={existingImages?.secondary}
             onDelete={(index) => {
-              setSecondaryImages((prev) => prev.filter((_, i) => i !== index));
+              setImagesToDelete((prev) => [
+                ...prev,
+                existingImages.secondary[index],
+              ]);
+              setExistingImages((prev) => ({
+                ...prev,
+                secondary: existingImages.secondary.filter(
+                  (_, i) => i !== index,
+                ),
+              }));
             }}
           />
         </div>
@@ -410,7 +465,7 @@ const FormAddProduct = () => {
           {loading && (
             <LoaderIcon className="animate-spin text-text-3 w-5 h-5 stroke-current" />
           )}
-          {t("form.button.submit")}
+          {productId ? t("form.button.update") : t("form.button.submit")}
         </Button>
       </form>
     </CardApp>

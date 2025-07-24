@@ -110,7 +110,7 @@ const MainSidebar = () => {
     <>
       <div
         className={cn(
-          "fixed inset-0 duration-200 bg-black/50 transition-opacity top-0 left-0",
+          "fixed inset-0 z-20 duration-200 bg-black/50 transition-opacity top-0 left-0",
           sidebarOpen
             ? "opacity-50 pointer-events-auto"
             : "opacity-0 pointer-events-none",
@@ -119,7 +119,7 @@ const MainSidebar = () => {
       />
       <div
         className={cn(
-          "pt-11 w-fit fixed top-0 left-0 h-screen transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg:border-r border-r-border-2",
+          "pt-11 w-fit z-20 fixed top-0 left-0 h-screen transition-[width] overflow-x-hidden bg-bg-1 duration-200 lg:border-r border-r-border-2",
           sidebarOpen ? "w-[272px]" : "w-0 lg:w-[68px]",
         )}
         style={{

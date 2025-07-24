@@ -101,7 +101,16 @@ const useInventoryColumns = ({ setIdProduct, setOpenDialog }: Props) => {
       header: t("table.columns.created_at.header"),
       accessorKey: "created_at",
       cell: (info) => {
-        return moment(info.getValue() as string).fromNow();
+        const formatted = info.getValue() as string;
+        return moment(formatted).locale(locale).fromNow();
+      },
+    },
+    {
+      header: t("table.columns.updated_at.header"),
+      accessorKey: "updated_at",
+      cell: (info) => {
+        const formatted = info.getValue() as string;
+        return moment(formatted).locale(locale).fromNow();
       },
     },
     {

@@ -264,8 +264,10 @@
     "form": {
       "responses": {
         "server_error": "Server error, please try again later.",
-        "success": "Product was added successfully",
-        "loading": "Creating product..."
+        "successCreate": "Product was added successfully",
+        "successUpdate": "Product was updated successfully",
+        "creating": "Creating product...",
+        "updating": "Updating product..."
       },
       "head": {
         "title": "Add New Product",
@@ -317,7 +319,7 @@
         }
       },
       "description": {
-        "label": "Description *",
+        "label": "Description",
         "placeholder": "Enter a product description",
         "errors": {
           "required": "The description is required"
@@ -449,6 +451,7 @@
       },
       "button": {
         "submit": "Create Product",
+        "update": "Update Product",
         "cancel": "Cancel"
       },
       "images": {
@@ -482,6 +485,9 @@
         },
         "created_at": {
           "header": "Created At"
+        },
+        "updated_at": {
+          "header": "Updated At"
         },
         "price": {
           "header": "Price"

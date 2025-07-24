@@ -7,7 +7,7 @@ const schema = z.object({
   }),
   description: z.string(),
   image: z
-    .array(z.instanceof(File))
+    .array(z.string())
     .min(1, {
       message: "form.image.errors.required",
     })

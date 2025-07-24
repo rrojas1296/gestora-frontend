@@ -5,6 +5,7 @@ export type Status = (typeof statusOptions)[number];
 export interface ProductImage {
   url: string;
   id: string;
+  name: string;
   is_primary: boolean;
   is_deleted: boolean;
 }

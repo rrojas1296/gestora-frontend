@@ -68,7 +68,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex sticky top-0 py-4 left-0 lg:py-6 bg-bg-2 items-center justify-between w-full">
+    <div className="flex sticky z-10 top-0 py-4 left-0 lg:py-6 bg-bg-2 items-center justify-between w-full">
       <div className="flex items-center gap-4">
         <Button variant="icon" onClick={openSidebar}>
           <MenuIcon className="w-6 h-6 text-text-1 stroke-current" />

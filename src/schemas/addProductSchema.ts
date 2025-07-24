@@ -21,15 +21,11 @@ const schema = z
     brand: z.string().min(1, {
       message: "form.brand.errors.required",
     }),
-    category_id: z
-      .string({
-        error: "form.category.errors.required",
-      })
-      .min(1, {
-        error: "form.category.errors.required",
-      }),
+    category_id: z.string().min(1, {
+      message: "form.category.errors.required",
+    }),
     status: z.enum(statusOptions, {
-      error: () => ({ message: "form.status.errors.required" }),
+      error: "form.status.errors.required",
     }),
     sku: z.string().min(1, {
       error: "form.sku.errors.required",
@@ -42,7 +38,7 @@ const schema = z
     }),
 
     currency: z.enum(currencyOptions, {
-      error: () => ({ message: "form.currency.errors.required" }),
+      error: "form.currency.errors.required",
     }),
     quantity: z.number({
       error: "form.quantity.errors.required",

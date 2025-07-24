@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { controls, SchemaType } from "@/schemas/addCategorySchema";
 import FormControl from "@/components/shared/FormControl";
 import { useFormContext } from "react-hook-form";
@@ -10,6 +10,7 @@ import { createCategory } from "@/utils/api/categories/createCategory";
 import { uploadImage } from "@/utils/cloudinary/uploadImage";
 import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";
+import PreviewImage from "@/components/shared/PreviewImage";
 
 interface Props {
   refetch: () => void;
@@ -19,17 +20,14 @@ interface Props {
 const AddCategoryForm = ({ refetch, setOpen }: Props) => {
   const [loadingForm, setLoadingForm] = useState(false);
   const companyId = useAppSelector((state) => state.company.id);
+  const [image, setImage] = useState<File[]>([]);
   const {
     register,
-    control,
     handleSubmit,
-    trigger,
     setValue,
-    watch,
     formState: { errors },
   } = useFormContext<SchemaType>();
   const t = useTranslations("Category");
-  const image = watch("image");
   const handleSubmitForm = async (data: SchemaType) => {
     try {
       setLoadingForm(true);
@@ -60,6 +58,11 @@ const AddCategoryForm = ({ refetch, setOpen }: Props) => {
     }
   };
 
+  useEffect(() => {
+    const urls = image.map((i) => URL.createObjectURL(i));
+    setValue("image", urls);
+  }, [image]);
+
   return (
     <form className="grid gap-2" onSubmit={handleSubmit(handleSubmitForm)}>
       <h1 className="font-bold text-xl mb-2 text-left lg:w-full">
@@ -77,7 +80,6 @@ const AddCategoryForm = ({ refetch, setOpen }: Props) => {
             className={className}
             placeholder={t(placeholder)}
             register={register}
-            control={control}
             error={error}
           />
         );
@@ -86,15 +88,24 @@ const AddCategoryForm = ({ refetch, setOpen }: Props) => {
         {t("form.image.title")}
       </h2>
       <DropZone
-        images={image}
-        name="image"
-        limit={1}
-        trigger={trigger}
         buttonText={t("form.image.button")}
         placeholder={t("form.image.placeholder")}
-        setValue={setValue}
+        setImages={setImage}
+        show={image.length < 1}
         error={errors["image"]?.message ? t(errors["image"].message) : ""}
       />
+      <PreviewImage
+        files={image}
+        className={image.length > 0 ? "" : "hidden"}
+        onDelete={(index) => {
+          setImage((prev) => prev.filter((_, i) => i !== index));
+        }}
+      />
+      {errors["image"] && (
+        <span className="text-danger text-sm">
+          {t(errors["image"].message!)}
+        </span>
+      )}
       <div className="flex gap-4">
         <Button
           className="w-full"
