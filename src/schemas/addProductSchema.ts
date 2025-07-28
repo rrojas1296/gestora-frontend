@@ -56,11 +56,14 @@ const schema = z
       .min(1, {
         message: "form.sections.images.main_image.errors.min",
       })
+      .max(1, {
+        message: "form.sections.images.main_image.errors.max",
+      })
       .optional(),
     secondary_images: z
       .array(z.string())
       .max(3, {
-        message: "form.sections.images.secondary_image.errors.max",
+        message: "form.sections.images.secondary_images.errors.max",
       })
       .optional(),
   })
@@ -95,7 +98,7 @@ const information: Control<SchemaFields>[] = [
   {
     name: "brand",
     label: "form.brand.label",
-    type: "text",
+    type: "autocomplete",
     placeholder: "form.brand.placeholder",
     className: "lg:col-span-1",
   },

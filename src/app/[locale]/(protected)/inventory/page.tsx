@@ -207,9 +207,20 @@ const Inventory = () => {
         dialogClassName="flex flex-col gap-2 max-w-md w-11/12"
       >
         <h1 className="text-lg text-text-1 font-semibold">
-          {t("deleteDialog.title")}
+          {itemsSelected.length > 1
+            ? t("deleteDialog.multiple.title")
+            : t("deleteDialog.single.title")}
         </h1>
-        <h2 className="text-sm text-text-2">{t("deleteDialog.description")}</h2>
+        {itemsSelected.length > 0 && (
+          <p className="text-sm">
+            Se eliminaran {itemsSelected.length} productos
+          </p>
+        )}
+        {itemsSelected.length < 1 && (
+          <h2 className="text-sm text-text-2">
+            {t("deleteDialog.single.description")}
+          </h2>
+        )}
         <div className="flex gap-4 self-end">
           <Button
             variant="ghost"
@@ -219,7 +230,10 @@ const Inventory = () => {
             {t("deleteDialog.button.cancel")}
           </Button>
           <Button
-            onClick={handleDeleteProduct}
+            onClick={() => {
+              if (itemsSelected.length > 0) return handleDeleteMultiple();
+              handleDeleteProduct();
+            }}
             className="bg-danger font-semibold hover:bg-danger h-8"
           >
             {loadingDelete && (
@@ -236,11 +250,13 @@ const Inventory = () => {
             "opacity-0 pointer-events-none translate-y-4",
         )}
       >
-        {itemsSelected.length} items are selected
+        {itemsSelected.length} {t("snackbar.selectedItems")}
         <Button
           variant="icon"
           className="hover:bg-bg-2 h-9 w-9"
-          onClick={handleDeleteMultiple}
+          onClick={() => {
+            setOpenDialog(true);
+          }}
         >
           <TrashIcon className="w-4 h-4 stroke-current text-danger" />
         </Button>

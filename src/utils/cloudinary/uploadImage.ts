@@ -12,7 +12,7 @@ export const uploadImage = async (image: File) => {
   body.append("folder", "gestora");
 
   const responseCloudinary = await fetch(
-    `https://api.cloudinary.com/v1_1/${environments.CLOUDINARY_CLOUD_NAME}/image/upload`,
+    `${environments.CLOUDINARY_URL}/${environments.CLOUDINARY_CLOUD_NAME}/image/upload`,
     {
       method: "POST",
       body,

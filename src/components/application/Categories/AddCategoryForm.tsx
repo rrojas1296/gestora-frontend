@@ -111,7 +111,10 @@ const AddCategoryForm = ({ refetch, setOpen }: Props) => {
         <Button
           className="w-full"
           type="button"
-          onClick={() => setOpen(false)}
+          onClick={() => {
+            setImage([]);
+            setOpen(false);
+          }}
           variant="outlined"
         >
           Cancel

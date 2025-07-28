@@ -1,6 +1,6 @@
 import { Button } from "gestora-lib";
 import Image from "next/image";
-import React from "react";
+import React, { memo } from "react";
 import XIcon from "../Icons/XIcon";
 import { cn } from "@/utils/cn";
 import { ProductImage } from "@/types/api/inventory";

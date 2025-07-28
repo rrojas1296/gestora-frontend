@@ -298,6 +298,7 @@
             "placeholder": "Drop an image here",
             "button": "Upload main image",
             "errors": {
+              "max": "Upload max of 1 image",
               "min": "Upload the main image"
             }
           },
@@ -501,12 +502,21 @@
       }
     },
     "deleteDialog": {
-      "title": "Are you sure you want to delete this product?",
-      "description": "This action cannot be undone",
+      "multiple": {
+        "title": "Are you sure you want to delete these products?",
+        "description": "This action cannot be undone"
+      },
+      "single": {
+        "title": "Are you sure you want to delete this product?",
+        "description": "This action cannot be undone"
+      },
       "button": {
-        "cancel": "Cancel",
-        "delete": "Delete"
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
       }
+    },
+    "snackbar": {
+      "selectedItems": "items were selected"
     }
   },
   "Category": {

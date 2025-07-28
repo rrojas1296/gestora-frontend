@@ -59,26 +59,33 @@ const UpsertProductImages = ({
         }
         className={newImages.primary.length >= 1 ? "hidden" : ""}
       />
-      <PreviewImage
-        files={newImages.primary}
-        className={newImages.primary.length > 0 ? "" : "hidden"}
-        onDelete={(index) => {
-          setNewImages((prev) => ({
-            ...prev,
-            primary: prev.primary.filter((_, i) => i !== index),
-          }));
-        }}
-      />
-      <PreviewImage
-        images={existingImages.primary}
-        onDelete={(index) => {
-          setImagesToDelete((prev) => [...prev, existingImages.primary[index]]);
-          setExistingImages((prev) => ({
-            ...prev,
-            primary: prev.primary.filter((_, i) => i !== index),
-          }));
-        }}
-      />
+      {newImages.primary.length > 0 && (
+        <PreviewImage
+          files={newImages.primary}
+          className={newImages.primary.length > 0 ? "" : "hidden"}
+          onDelete={(index) => {
+            setNewImages((prev) => ({
+              ...prev,
+              primary: prev.primary.filter((_, i) => i !== index),
+            }));
+          }}
+        />
+      )}
+      {existingImages.primary.length > 0 && (
+        <PreviewImage
+          images={existingImages.primary}
+          onDelete={(index) => {
+            setImagesToDelete((prev) => [
+              ...prev,
+              existingImages.primary[index],
+            ]);
+            setExistingImages((prev) => ({
+              ...prev,
+              primary: prev.primary.filter((_, i) => i !== index),
+            }));
+          }}
+        />
+      )}
       {errors["main_image"] && (
         <span className="text-danger text-sm">
           {t(errors["main_image"].message!)}
@@ -103,29 +110,38 @@ const UpsertProductImages = ({
         }
         className={newImages.secondary.length >= 3 ? "hidden" : ""}
       />
-      <PreviewImage
-        files={newImages.secondary}
-        className={newImages.secondary.length > 0 ? "" : "hidden"}
-        onDelete={(index) => {
-          setNewImages((prev) => ({
-            ...prev,
-            secondary: prev.secondary.filter((_, i) => i !== index),
-          }));
-        }}
-      />
-      <PreviewImage
-        images={existingImages?.secondary}
-        onDelete={(index) => {
-          setImagesToDelete((prev) => [
-            ...prev,
-            existingImages.secondary[index],
-          ]);
-          setExistingImages((prev) => ({
-            ...prev,
-            secondary: prev.secondary.filter((_, i) => i !== index),
-          }));
-        }}
-      />
+      {newImages.secondary.length > 0 && (
+        <PreviewImage
+          files={newImages.secondary}
+          className={newImages.secondary.length > 0 ? "" : "hidden"}
+          onDelete={(index) => {
+            setNewImages((prev) => ({
+              ...prev,
+              secondary: prev.secondary.filter((_, i) => i !== index),
+            }));
+          }}
+        />
+      )}
+      {existingImages.secondary.length > 0 && (
+        <PreviewImage
+          images={existingImages?.secondary}
+          onDelete={(index) => {
+            setImagesToDelete((prev) => [
+              ...prev,
+              existingImages.secondary[index],
+            ]);
+            setExistingImages((prev) => ({
+              ...prev,
+              secondary: prev.secondary.filter((_, i) => i !== index),
+            }));
+          }}
+        />
+      )}
+      {errors["secondary_images"] && (
+        <span className="text-danger text-sm">
+          {t(errors["secondary_images"].message!)}
+        </span>
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
-import { Input, Textarea } from "gestora-lib";
+import { AutoComplete, Input, Textarea } from "gestora-lib";
 import type { ComponentProps, HTMLInputTypeAttribute, JSX } from "react";
-import { type UseFormRegister } from "react-hook-form";
+import { Control, Controller, type UseFormRegister } from "react-hook-form";
 
 interface Props extends ComponentProps<"input"> {
   label: string;
@@ -9,6 +9,7 @@ interface Props extends ComponentProps<"input"> {
   Icon?: JSX.Element;
   error?: string;
   className?: string;
+  control?: Control<any>;
 }
 
 const inputTypes: HTMLInputTypeAttribute[] = [
@@ -23,6 +24,7 @@ const FormControl = ({
   type,
   placeholder,
   label,
+  control,
   name = "",
   register,
   error,
@@ -48,6 +50,7 @@ const FormControl = ({
           inputClassName={cn("text-text-1 placeholder:text-text-2 w-full")}
           Icon={Icon}
           type={type}
+          autoComplete="off"
           placeholder={placeholder}
           id={name}
           {...register(name, {
@@ -64,6 +67,38 @@ const FormControl = ({
               "border-danger placeholder:text-danger focus-within:ring-danger",
           )}
           {...register(name)}
+        />
+      ) : type === "autocomplete" ? (
+        <Controller
+          name={name}
+          control={control}
+          render={({ field }) => (
+            <AutoComplete
+              containerClassName="w-full"
+              triggerClassName={cn(error && "border-danger")}
+              value={field.value}
+              id={name}
+              autoComplete="off"
+              options={[
+                {
+                  value: "razer",
+                  label: "Razer",
+                },
+                {
+                  value: "apple",
+                  label: "Apple",
+                },
+                {
+                  value: "google",
+                  label: "Google",
+                },
+              ]}
+              placeholder={placeholder}
+              handleSelect={(val) => {
+                field.onChange(val.value);
+              }}
+            />
+          )}
         />
       ) : null}
       {error && <p className="text-danger text-sm">{error}</p>}

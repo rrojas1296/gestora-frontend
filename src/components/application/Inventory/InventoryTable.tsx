@@ -10,13 +10,19 @@ interface Props {
 
 const InventoryTable = ({ table }: Props) => {
   return (
-    <div className="overflow-x-auto grid gap-6">
-      <table className="w-[1500px] lg:w-[1800px] xl:w-full">
+    <div className="overflow-x-auto grid gap-6 custom-scroll">
+      <table className="w-[1500px] lg:w-[1800px] xl:w-[2200px]">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className="py-2 text-start pr-6 text-sm">
+                <th
+                  key={header.id}
+                  className={cn(
+                    "py-2 text-start pr-6 text-sm",
+                    header.id === "select" && "w-11",
+                  )}
+                >
                   {!header.isPlaceholder &&
                     flexRender(
                       header.column.columnDef.header,

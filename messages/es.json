@@ -298,7 +298,8 @@
             "placeholder": "Suelta una imagen aquí",
             "button": "Subir imagen principal",
             "errors": {
-              "min": "Sube la imagen principal"
+              "min": "Sube la imagen principal",
+              "max": "Sube maximo 1 imagen"
             }
           },
           "secondary_images": {
@@ -482,6 +483,12 @@
         "quantity": {
           "header": "Cantidad"
         },
+        "brand": {
+          "header": "Brand"
+        },
+        "min_stock": {
+          "header": "Stock mínimo"
+        },
         "created_at": {
           "header": "Creado en"
         },
@@ -500,12 +507,21 @@
       }
     },
     "deleteDialog": {
-      "title": "¿Estás seguro de que deseas eliminar este producto?",
-      "description": "Esta acción no se puede deshacer",
+      "multiple": {
+        "title": "¿Estás seguro de que deseas estos productos?",
+        "description": "Estas acciones no se pueden deshacer"
+      },
+      "single": {
+        "title": "¿Estás seguro de que deseas eliminar este producto?",
+        "description": "Esta accion no se pueden deshacer"
+      },
       "button": {
         "cancel": "Cancelar",
         "delete": "Eliminar"
       }
+    },
+    "snackbar": {
+      "selectedItems": "elementos fueron selecionados"
     }
   },
   "Category": {

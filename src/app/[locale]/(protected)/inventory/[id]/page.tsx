@@ -1,6 +1,5 @@
 "use client";
 import LoaderIcon from "@/components/Icons/LoaderIcon";
-import FormControl from "@/components/shared/FormControl";
 import { createProduct } from "@/utils/api/products/addProduct";
 import { toast } from "sonner";
 import { uploadImage } from "@/utils/cloudinary/uploadImage";
@@ -13,12 +12,7 @@ import useCategories from "@/hooks/useCategories";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CardApp from "@/components/shared/CardApp";
-import {
-  controls,
-  schema,
-  defaultValues,
-  SchemaType,
-} from "@/schemas/addProductSchema";
+import { schema, defaultValues, SchemaType } from "@/schemas/addProductSchema";
 import ArrowLeft from "@/components/Icons/CloseIcon";
 import { useRouter } from "@/i18n/navigation";
 import { useParams } from "next/navigation";
@@ -27,10 +21,11 @@ import { updateProduct } from "@/utils/api/products/updateProduct";
 import z from "zod";
 import Loader from "@/components/shared/Loader";
 import useProduct from "@/hooks/useProduct";
-import SelectForm from "@/components/shared/SelectForm";
 import { deleteProductImage } from "@/utils/api/productImages/deleteProductImage";
 import UpsertProductImages from "@/components/application/Inventory/UpsertProductImages";
 import { destroyCloudinaryImage } from "@/utils/cloudinary/destroyCloudinaryImage";
+import UpsertProductInfoControls from "@/components/application/Inventory/UpsertProductInfoControls";
+import { capitalize } from "@/utils/capitalize";
 
 export interface ExistimgImages {
   primary: ProductImage[];
@@ -64,7 +59,7 @@ const FormAddProduct = () => {
   const loadingData = loadingCategories || loadingProduct || !companyId;
   const router = useRouter();
   const {
-    formState: { errors, isDirty },
+    formState: { errors },
     handleSubmit,
     control,
     register,
@@ -171,7 +166,12 @@ const FormAddProduct = () => {
     const es = productId ? existingImages.secondary.map((i) => i.url) : [];
     setValue("main_image", [...ep, ...mainImageUrl]);
     setValue("secondary_images", [...es, ...secondaryImageUrl]);
-    if (isDirty) trigger("main_image");
+    if (mainImageUrl.length > 0) {
+      trigger("main_image");
+    }
+    if (secondaryImageUrl.length > 0) {
+      trigger("secondary_images");
+    }
   }, [newImages]);
 
   useEffect(() => {
@@ -180,7 +180,7 @@ const FormAddProduct = () => {
     reset({
       name: product.name,
       description: product.description,
-      brand: product.brand,
+      brand: capitalize(product.brand),
       category_id: category?.id,
       status: product.status,
       sku: product.sku,
@@ -236,152 +236,12 @@ const FormAddProduct = () => {
             {t("form.head.description")}
           </p>
         </div>
-        <div className="grid gap-6 lg:grid-cols-2 lg:col-span-8">
-          <div className="grid gap-2">
-            <h1 className="text-xl font-normal text-text-1">
-              {t("form.sections.information.title")}
-            </h1>
-            <p className="text-text-2 text-sm">
-              {t("form.sections.information.description")}
-            </p>
-          </div>
-          {controls.information.map((field, index) => {
-            const { label, name, type, placeholder, className, options } =
-              field;
-            const error =
-              errors[name] && errors[name].message
-                ? t(errors[name].message)
-                : undefined;
-
-            const opts =
-              name === "category_id"
-                ? categories?.map((cat) => ({
-                    label: cat.name,
-                    value: cat.id,
-                  })) || []
-                : options?.map((opt) => ({ ...opt, label: t(opt.label) })) ||
-                  [];
-            return type === "select" ? (
-              <SelectForm
-                key={index}
-                control={control}
-                name={name}
-                placeholder={t(placeholder)}
-                options={opts}
-                label={t(label)}
-                error={error}
-              />
-            ) : (
-              <FormControl
-                key={index}
-                placeholder={t(placeholder)}
-                label={t(label)}
-                name={name}
-                type={type}
-                className={className}
-                error={error}
-                register={register}
-              />
-            );
-          })}
-          <div className="lg:col-span-2 grid gap-2">
-            <h1 className="text-xl font-normal text-text-1">
-              {t("form.sections.pricing.title")}
-            </h1>
-            <p className="text-text-2 text-sm">
-              {t("form.sections.pricing.description")}
-            </p>
-          </div>
-          {controls.pricing.map((field, index) => {
-            const { label, name, type, placeholder, className, options } =
-              field;
-            const error =
-              errors[name] && errors[name].message
-                ? t(errors[name].message)
-                : "";
-            const opts =
-              options?.map((opt) => ({
-                ...opt,
-                label: t(opt.label),
-              })) || [];
-            return type === "select" ? (
-              <SelectForm
-                key={index}
-                control={control}
-                name={name}
-                placeholder={t(placeholder)}
-                options={opts}
-                label={t(label)}
-                error={error}
-              />
-            ) : (
-              <FormControl
-                key={index}
-                placeholder={t(placeholder)}
-                label={t(label)}
-                name={name}
-                error={error}
-                type={type}
-                register={register}
-                className={className}
-              />
-            );
-          })}
-          <div className="lg:col-span-2 grid gap-2">
-            <h1 className="text-xl font-normal text-text-1">
-              {t("form.sections.inventory.title")}
-            </h1>
-            <p className="text-text-2 text-sm">
-              {t("form.sections.inventory.description")}
-            </p>
-          </div>
-          {controls.inventory.map((field, index) => {
-            const { label, name, type, placeholder, className } = field;
-            const error =
-              errors[name] && errors[name].message
-                ? t(errors[name].message)
-                : "";
-            return (
-              <FormControl
-                key={index}
-                placeholder={t(placeholder)}
-                label={t(label)}
-                name={name}
-                error={error}
-                type={type}
-                register={register}
-                className={className}
-              />
-            );
-          })}
-          <div className="lg:col-span-2 grid gap-2">
-            <h1 className="text-xl font-normal text-text-1">
-              {t("form.sections.details.title")}
-            </h1>
-            <p className="text-text-2 text-sm">
-              {t("form.sections.details.description")}
-            </p>
-          </div>
-          {controls.details.map((field, index) => {
-            const { label, name, type, placeholder, className } = field;
-            const error =
-              errors[name] && errors[name].message
-                ? t(errors[name].message)
-                : "";
-            return (
-              <FormControl
-                key={index}
-                placeholder={t(placeholder)}
-                label={t(label)}
-                name={name}
-                error={error}
-                type={type}
-                register={register}
-                className={className}
-              />
-            );
-          })}
-        </div>
+        <UpsertProductInfoControls
+          errors={errors}
+          categories={categories}
+          control={control}
+          register={register}
+        />
         <UpsertProductImages
           setExistingImages={setExistingImages}
           setImagesToDelete={setImagesToDelete}

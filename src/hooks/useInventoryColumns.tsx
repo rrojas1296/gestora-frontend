@@ -83,6 +83,16 @@ const useInventoryColumns = ({ setIdProduct, setOpenDialog }: Props) => {
       accessorKey: "quantity",
     },
     {
+      header: t("table.columns.min_stock.header"),
+      cell: (info) => info.getValue(),
+      accessorKey: "min_stock",
+    },
+    {
+      header: t("table.columns.brand.header"),
+      cell: (info) => info.getValue(),
+      accessorKey: "brand",
+    },
+    {
       header: t("table.columns.currency.header"),
       accessorKey: "currency",
       cell: (info) => info.getValue(),
